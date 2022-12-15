@@ -69,10 +69,10 @@ function unlockAllCells(){
 function unlockCells(count,i,j){
     switch(count){
         case 1:
-            if(i+1<8){gameField[i+1][j].availability = true;document.getElementById(`${i+1}-${j}`).style.border = '1px solid blue';}
-            if(j+1<8){gameField[i][j+1].availability = true;document.getElementById(`${i}-${j+1}`).style.border = '1px solid blue';}
-            if(i-1>-1){gameField[i-1][j].availability = true;document.getElementById(`${i-1}-${j}`).style.border = '1px solid blue';}
-            if(j-1>-1){gameField[i][j-1].availability = true;document.getElementById(`${i}-${j-1}`).style.border = '1px solid blue';}
+            if(i+1<8)if(gameField[i+1][j].contains == undefined){gameField[i+1][j].availability = true;document.getElementById(`${i+1}-${j}`).style.border = '1px solid blue';}
+            if(j+1<8)if(gameField[i][j+1].contains == undefined){gameField[i][j+1].availability = true;document.getElementById(`${i}-${j+1}`).style.border = '1px solid blue';}
+            if(i-1>-1)if(gameField[i-1][j].contains == undefined){gameField[i-1][j].availability = true;document.getElementById(`${i-1}-${j}`).style.border = '1px solid blue';}
+            if(j-1>-1)if(gameField[i][j-1].contains == undefined){gameField[i][j-1].availability = true;document.getElementById(`${i}-${j-1}`).style.border = '1px solid blue';}
             break;
         case 2:
             if(i+1<8){gameField[i+1][j].availability = true;document.getElementById(`${i+1}-${j}`).style.border = 'green';}
