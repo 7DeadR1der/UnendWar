@@ -25,7 +25,7 @@
 .gfCell:hover{
     border: 1px solid red;
 }
-
+/*
 .gfCell:nth-child(-n+8):nth-child(odd){background-color: rgb(53, 140, 63);}
 .gfCell:nth-child(n+9):nth-child(-n+16):nth-child(even){background-color: rgb(53, 140, 63);}
 .gfCell:nth-child(n+17):nth-child(-n+24):nth-child(odd){background-color: rgb(53, 140, 63);}
@@ -34,3 +34,4 @@
 .gfCell:nth-child(n+41):nth-child(-n+48):nth-child(even){background-color: rgb(53, 140, 63);}
 .gfCell:nth-child(n+49):nth-child(-n+56):nth-child(odd){background-color: rgb(53, 140, 63);}
 .gfCell:nth-child(n+57):nth-child(-n+64):nth-child(even){background-color: rgb(53, 140, 63);}
+*/
