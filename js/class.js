@@ -1,4 +1,16 @@
 "use strict";
+class Unit{
+
+}
+
+class Building{
+
+}
+
+class Warchief{
+    
+}
+
 
 let peasant = {
     type: 'unit',

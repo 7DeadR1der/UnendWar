@@ -13,8 +13,8 @@ if (isset($_GET['page'])) {
     ?>
 </head>
 <body>
+<script src="js/class.js"></script>
 <script src="js/functionsFile.js"></script>
-<script src="js/unitsTest.js"></script>
 <script src="js/game.js"></script>
     <?php 
         switch($page){

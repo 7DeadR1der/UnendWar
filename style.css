@@ -17,7 +17,7 @@
     width: 50px;
     height: 50px;
     margin: 1px;
-    background-color: rgb(148, 203, 154);
+    background-color: #aacd95;
     border: 1px solid black;
 }
 .gfCell:focus{
@@ -25,6 +25,10 @@
 }
 .gfCell:hover{
     border: 1px solid yellow;
+}
+
+.goldCell{
+    background-color:yellow;
 }
 /*
 .gfCell:nth-child(-n+8):nth-child(odd){background-color: rgb(53, 140, 63);}

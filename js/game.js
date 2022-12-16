@@ -8,6 +8,7 @@ let player = {
 }
 
 function createUnits(){
+    gameField[2][3].resCount = 3;
     gameField[4][4].contains = townhall;
     gameField[3][3].contains = peasant;
 }
@@ -37,6 +38,10 @@ function pressCell(i,j){
         update();
     }
     
+}
+
+function endTurn(){
+
 }
 
 

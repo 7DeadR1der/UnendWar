@@ -1,4 +1,10 @@
 "use strict"
+//player colors
+//red blue orange purple
+const colorPlayers = ['#fc9393', '#9393fc', '#fcb64d', '#b64dfc'];
+//colors cursors?
+const colorCursor = ['2px solid blue', '2px solid red', ];
+
 let gameField = new Array(8);
 /*async*/ function newGameGenerate(){ 
     //Generate Game Field
@@ -28,9 +34,10 @@ function update(){
     let string = "";
     for(let i=0;i<8;i++){
         for (let j=0;j<8;j++){
+            let titleText = "";
+            if (gameField[i][j].resCount>0)titleText = `Золото = ${gameField[i][j].resCount}, `;
             if(gameField[i][j].contains != undefined){
-                let test1 = gameField[i][j];
-                switch(test1.contains.name){
+                switch(gameField[i][j].contains.name){
                     case 'Peasant':
                         string = "img/units/peasant.png";
                         break;
@@ -41,11 +48,19 @@ function update(){
                         string = "";
                         break;
                 }
+                if(gameField[i][j].contains.owner == 1)document.getElementById(`${i}-${j}`).style.backgroundColor = colorPlayers[0];
                 document.getElementById(`${i}-${j}`).setAttribute('src',string);
+                titleText += `${gameField[i][j].contains.name} - hp = ${gameField[i][j].contains.hp}/${gameField[i][j].contains.hpMax}, atk = ${gameField[i][j].contains.attack}, move = ${gameField[i][j].contains.movePoint}`
+                
             }else{
-                document.getElementById(`${i}-${j}`).removeAttribute('src');
+                document.getElementById(`${i}-${j}`).setAttribute('src',"img/null.png");
+                if (gameField[i][j].resCount > 0){
+                    document.getElementById(`${i}-${j}`).style.backgroundColor = 'yellow';
+                }else document.getElementById(`${i}-${j}`).style.backgroundColor = '#aacd95';
             }
-            document.getElementById(`${i}-${j}`).removeAttribute('style');
+            //document.getElementById(`${i}-${j}`).removeAttribute('style');
+            document.getElementById(`${i}-${j}`).title = titleText;
+            document.getElementById(`${i}-${j}`).style.border = '';
             string = "";
         }
     }
@@ -67,29 +82,21 @@ function unlockAllCells(){
     }
 }
 function unlockCells(count,i,j){
-    switch(count){
-        case 1:
-            if(i+1<8)if(gameField[i+1][j].contains == undefined){gameField[i+1][j].availability = true;document.getElementById(`${i+1}-${j}`).style.border = '1px solid blue';}
-            if(j+1<8)if(gameField[i][j+1].contains == undefined){gameField[i][j+1].availability = true;document.getElementById(`${i}-${j+1}`).style.border = '1px solid blue';}
-            if(i-1>-1)if(gameField[i-1][j].contains == undefined){gameField[i-1][j].availability = true;document.getElementById(`${i-1}-${j}`).style.border = '1px solid blue';}
-            if(j-1>-1)if(gameField[i][j-1].contains == undefined){gameField[i][j-1].availability = true;document.getElementById(`${i}-${j-1}`).style.border = '1px solid blue';}
-            break;
-        case 2:
-            if(i+1<8){gameField[i+1][j].availability = true;document.getElementById(`${i+1}-${j}`).style.border = 'green';}
-            if(i+2<8){gameField[i+2][j].availability = true;document.getElementById(`${i+2}-${j}`).style.border = 'green';}
-            if(j+1<8){gameField[i][j+1].availability = true;document.getElementById(`${i}-${j+1}`).style.border = 'green';}
-            if(j+2<8){gameField[i][j+2].availability = true;document.getElementById(`${i}-${j+2}`).style.border = 'green';}
-            if(i-1>-1){gameField[i-1][j].availability = true;document.getElementById(`${i-1}-${j}`).style.border = 'green';}
-            if(i-2>-1){gameField[i-2][j].availability = true;document.getElementById(`${i-2}-${j}`).style.border = 'green';}
-            if(j-1>-1){gameField[i][j-1].availability = true;document.getElementById(`${i}-${j-1}`).style.border = 'green';}
-            if(j-2>-1){gameField[i][j-2].availability = true;document.getElementById(`${i}-${j-2}`).style.border = 'green';}
-            if(i+1<8&&j+1<8){gameField[i+1][j+1].availability = true;document.getElementById(`${i+1}-${j+1}`).style.border = 'green';}
-            if(i+1<8&&j-1>-1){gameField[i+1][j-1].availability = true;document.getElementById(`${i+1}-${j-1}`).style.border = 'green';}
-            if(i-1>-1&&j+1<8){gameField[i-1][j+1].availability = true;document.getElementById(`${i-1}-${j+1}`).style.border = 'green';}
-            if(i-1>-1&&j-1>-1){gameField[i-1][j-1].availability = true;document.getElementById(`${i-1}-${j-1}`).style.border = 'green';}
-            break;
-        default:
-            break;
+    if (count>0){
+        if(i+1<8)if(gameField[i+1][j].contains == undefined){gameField[i+1][j].availability = true;document.getElementById(`${i+1}-${j}`).style.border = colorCursor[0];}
+        if(j+1<8)if(gameField[i][j+1].contains == undefined){gameField[i][j+1].availability = true;document.getElementById(`${i}-${j+1}`).style.border = colorCursor[0];}
+        if(i-1>-1)if(gameField[i-1][j].contains == undefined){gameField[i-1][j].availability = true;document.getElementById(`${i-1}-${j}`).style.border = colorCursor[0];}
+        if(j-1>-1)if(gameField[i][j-1].contains == undefined){gameField[i][j-1].availability = true;document.getElementById(`${i}-${j-1}`).style.border = colorCursor[0];}
+        if(count>1){
+            if(i+2<8){gameField[i+2][j].availability = true;document.getElementById(`${i+2}-${j}`).style.border = colorCursor[0];}
+            if(j+2<8){gameField[i][j+2].availability = true;document.getElementById(`${i}-${j+2}`).style.border = colorCursor[0];}
+            if(i-2>-1){gameField[i-2][j].availability = true;document.getElementById(`${i-2}-${j}`).style.border = colorCursor[0];}
+            if(j-2>-1){gameField[i][j-2].availability = true;document.getElementById(`${i}-${j-2}`).style.border = colorCursor[0];}
+            if(i+1<8&&j+1<8){gameField[i+1][j+1].availability = true;document.getElementById(`${i+1}-${j+1}`).style.border = colorCursor[0];}
+            if(i+1<8&&j-1>-1){gameField[i+1][j-1].availability = true;document.getElementById(`${i+1}-${j-1}`).style.border = colorCursor[0];}
+            if(i-1>-1&&j+1<8){gameField[i-1][j+1].availability = true;document.getElementById(`${i-1}-${j+1}`).style.border = colorCursor[0];}
+            if(i-1>-1&&j-1>-1){gameField[i-1][j-1].availability = true;document.getElementById(`${i-1}-${j-1}`).style.border = colorCursor[0];}
+        }     
     }
 }
 
