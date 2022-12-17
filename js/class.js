@@ -10,12 +10,12 @@ class Player{
         this.owner = num;
         //this.color
         this.gold = 0;
-
+        this.counts = 0
     }
 }
 
 class Unit{
-    constructor(arrInf, owner, idPos){
+    constructor(arrInf, owner){
         this.type = arrInf[0];
         this.class = arrInf[1];
         this.name = arrInf[2];
@@ -26,10 +26,10 @@ class Unit{
         this.movePoint = arrInf[6];
         this.range = arrInf[7];
         //this.ability = arrInf[8];
-        this.posMove = false;
-        this.posAttack = false;
+        this.canMove = true;
+        this.canAction = true;
         this.owner = owner;
-        this.position = idIndex++;
+        this.id = idIndex++;
 
         
     }
@@ -44,14 +44,15 @@ class Warchief{
 }
 
 let peasant = ['unit','T1','Peasant','description',1,1,1,1,0];
+let scout2 = ['unit','T2','Scout','description',1,1,2,1,1];
 //let townhall = [];
 let townhall = {
     type: 'building',
     class: 'Townhall',
     name: 'Townhall',
     description: 'building test',
-    posMove: undefined,
-    posAttack: undefined,
+    canMove: undefined,
+    canAction: undefined,
     hp: 5,
     attack: 0,
     movePoint: 0,
@@ -63,8 +64,8 @@ let exampleUnit = {
     class: 'T1/T2/T3/Warchief/Townhall/Tower',
     name: 'name)',
     description: 'example unit',
-    posMove: true,
-    posAttack: true,
+    canMove: true,
+    canAction: true,
     hp: 1,
     attack: 1,
     movePoint: 1,
