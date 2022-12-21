@@ -1,12 +1,31 @@
 <a href="index.php">назад</a>
 <button onclick="newGameGenerate()">Новая игра</button>
 <button onclick="update()">Обновить</button>
-<button onclick="endTurn()">Закончить ход</button>
+<button id="btnEndTurn" onclick="endTurn()">Закончить ход</button>
 <button onclick="createUnits()">Create</button>
 <div class="gridGameField">
 </div>
 <button id="btnCancel" onclick="cancel()" style="display: none">Отмена</button>
-<button id="btnBuildTownhall" onclick="buildTownhall()" style="display: none">Построить Townhall</button>
-<button id="btnBuildTower" onclick="buildTower()" style="display: none">Построить Tower</button>
-<button id="btnBuyT1" onclick="buyT1()" style="display: none">Нанять T1</button>
-<button id="btnBuyT2" onclick="buyT2()" style="display: none">Нанять T2</button>
+<button id="btnBuildTownhall" onclick="build('townhall')" style="display: none">Построить Townhall</button>
+<button id="btnBuildTower" onclick="build('tower')" style="display: none">Построить Tower</button>
+<button id="btnBuyT1" onclick="buyUnit('t1')" style="display: none">Нанять T1</button>
+<button id="btnBuyT2" onclick="buyUnit('t2')" style="display: none">Нанять T2</button>
+<button id="btnBuyT3" onclick="buyUnit('t3')" style="display: none">Нанять T3</button>
+<button id="btnBuyWarchief" onclick="buyUnit('warchief')" style="display: none">Нанять Warchief</button>
+<button id="btnSurgeryHeal" onclick="heal('surgery')" style="display: none">Лечение</button>
+<div id="panelInfo">
+    <ul id="list_player" style="background-Color: grey;">
+        <li id="li_PlayerName"></li>
+        <li id="li_PlayerGold"></li>
+        <li id="li_PlayerLevel"></li>
+        <li id="li_PlayerExp"></li>
+        <li id="li_limit_workers"></li>
+        <li id="li_limit_army"></li>
+        <li id="li_limit_warchiefs"></li>
+        <li id="li_limit_townhalls"></li>
+        <li id="li_limit_towers"></li>
+    </ul>
+    <ul>
+
+    </ul>
+</div>

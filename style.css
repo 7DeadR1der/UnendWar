@@ -30,6 +30,9 @@
 .goldCell{
     background-color:yellow;
 }
+#list_player{
+    width: 150px;
+}
 /*
 .gfCell:nth-child(-n+8):nth-child(odd){background-color: rgb(53, 140, 63);}
 .gfCell:nth-child(n+9):nth-child(-n+16):nth-child(even){background-color: rgb(53, 140, 63);}
