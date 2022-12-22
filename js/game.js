@@ -50,8 +50,10 @@ function pressCell(i,j){
         if(gameField[cashCell.i][cashCell.j].contains.canAction == true){
             let atkUnit = cashUnit;
             let defUnit = gameField[i][j].contains;
-            if(defUnit.hp - atkUnit.attack > 0){
-                defUnit.hp = defUnit.hp - atkUnit.attack;
+            let atk = atkUnit.attack;
+            if(atkUnit.ability.includes('cavalryStrike',0) && atkUnit.canMove == false){atk = Math.round(atk*1.5)}
+            if(defUnit.hp - atk > 0){
+                defUnit.hp = defUnit.hp - atk;
             }else {
                 gameField[i][j].contains = undefined;
                 players[atkUnit.owner].exp += 1;
@@ -127,22 +129,22 @@ function lvlUp(playerLvlUp){
     switch(skillsChoise[result-1]){
         case gameSettings.skills[0]: //Strength I - +1 attack to Warchief
             players[playerLvlUp].faction.warchief[5] += 1;
-            obj.attack += 1;
+            if(obj)obj.attack += 1;
             break;
         case gameSettings.skills[1]: //Strength II - +2 hp to Warchief
             players[playerLvlUp].faction.warchief[4] += 2;
-            obj.hpMax += 2;
+            if(obj)obj.hpMax += 2;
             break;
         case gameSettings.skills[2]: //Pathfinder - +1 move to Warchief
             players[playerLvlUp].faction.warchief[6] += 1;
-            obj.movePoint += 1;
+            if(obj)obj.movePoint += 1;
             break;
         case gameSettings.skills[3]: //Surgery - add skill "Heal" to Warchief
             players[playerLvlUp].faction.warchief[9].push('surgery');
-            obj.ability.push('surgery');
+            if(obj)obj.ability.push('surgery');
             break;
-        case gameSettings.skills[4]: //Estates I - +5 gold 
-            players[playerLvlUp].gold += 5;
+        case gameSettings.skills[4]: //Estates I - +4 gold 
+            players[playerLvlUp].gold += 4;
             break;
         case gameSettings.skills[5]: //Estates II - +1 gold every turn
             break;
@@ -179,7 +181,7 @@ function build(typeBuilding){ // Постройка зданий
         }else alert('недостаточно денег, надо ' + building[8])
     }else alert('нельзя строить, тут есть золото')
 }
-function buyUnit(typeUnit){
+function buyUnit(typeUnit){ // Покупка юнитов
     let unit;
     let checkLimit = false;
     switch(typeUnit){
@@ -199,9 +201,12 @@ function buyUnit(typeUnit){
             unit = players[gameSettings.turnOwner].faction.t3;
             break;
         case 'warchief':
-            if(players[gameSettings.turnOwner].count_warchiefs<gameSettings.limit_warchiefs)
-                checkLimit = true;
-            unit = players[gameSettings.turnOwner].faction.warchief;
+            if(players[gameSettings.turnOwner].count_warchiefs<gameSettings.limit_warchiefs){
+                if(players[gameSettings.turnOwner].count_towers>=2){
+                    checkLimit = true;
+                    unit = players[gameSettings.turnOwner].faction.warchief;
+                }else alert('Для Вождя нужно 2 башни');
+            }
             break;
         default:
             alert('ошибка в выборе юнита');
@@ -211,20 +216,18 @@ function buyUnit(typeUnit){
     if(checkLimit == true){
         if(players[gameSettings.turnOwner].gold >= unit[8]){
             if(gameField[cashCell.i][cashCell.j].contains.canAction == true){
-                if(cashCell.i-1>-1 && gameField[cashCell.i-1][cashCell.j].contains == undefined)
-           {gameField[cashCell.i-1][cashCell.j].contains = new Unit(unit,gameSettings.turnOwner,false);
-            gameField[cashCell.i][cashCell.j].contains.canAction = false;players[gameSettings.turnOwner].gold -= unit[8];}
-           else if(cashCell.j+1<8 && gameField[cashCell.i][cashCell.j+1].contains == undefined)
-           {gameField[cashCell.i][cashCell.j+1].contains = new Unit(unit,gameSettings.turnOwner,false);
-            gameField[cashCell.i][cashCell.j].contains.canAction = false;players[gameSettings.turnOwner].gold -= unit[8];}
-           else if(cashCell.i+1<8 && gameField[cashCell.i+1][cashCell.j].contains == undefined)
-           {gameField[cashCell.i+1][cashCell.j].contains = new Unit(unit,gameSettings.turnOwner,false);
-            gameField[cashCell.i][cashCell.j].contains.canAction = false;players[gameSettings.turnOwner].gold -= unit[8];}
-           else if(cashCell.j-1>-1 && gameField[cashCell.i][cashCell.j-1].contains == undefined)
-           {gameField[cashCell.i][cashCell.j-1].contains = new Unit(unit,gameSettings.turnOwner,false);
-            gameField[cashCell.i][cashCell.j].contains.canAction = false;players[gameSettings.turnOwner].gold -= unit[8];}
-           else {alert('Некуда разместить юнита'); gameField[cashCell.i][cashCell.j].canAction = true}
-           cancel();
+                let arrayCells = new Array();
+                if(cashCell.i-1>-1 && gameField[cashCell.i-1][cashCell.j].contains == undefined) arrayCells.push(gameField[cashCell.i-1][cashCell.j]);
+                if(cashCell.j+1<8 && gameField[cashCell.i][cashCell.j+1].contains == undefined) arrayCells.push(gameField[cashCell.i][cashCell.j+1]);
+                if(cashCell.i+1<8 && gameField[cashCell.i+1][cashCell.j].contains == undefined) arrayCells.push(gameField[cashCell.i+1][cashCell.j]);
+                if(cashCell.j-1>-1 && gameField[cashCell.i][cashCell.j-1].contains == undefined) arrayCells.push(gameField[cashCell.i][cashCell.j-1]);
+                if(arrayCells.length>0){
+                    let cell = arrayCells[getRandomInt(0,arrayCells.length)]; 
+                    cell.contains = new Unit(unit,gameSettings.turnOwner,false);
+                    gameField[cashCell.i][cashCell.j].contains.canAction = false;
+                    players[gameSettings.turnOwner].gold -= unit[8];
+                }else{alert('Некуда разместить юнита'); gameField[cashCell.i][cashCell.j].canAction = true;}
+            cancel();
             }    
         }else alert('недостаточно денег, надо ' + unit[8])
     }else alert('лимит юнитов достигнут')
@@ -288,7 +291,7 @@ function endTurn(){
                 players[cell.contains.owner].counts++;
                 cell.contains.canMove = true;
                 cell.contains.canAction = true;
-                if(newRound == true && cell.resCount > 0){
+                if(newRound == true && cell.resCount > 0 && cell.contains.ability.includes('worker',0)){
                     cell.resCount--;
                     players[cell.contains.owner].gold++;
                 }

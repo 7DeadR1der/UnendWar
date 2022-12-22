@@ -17,9 +17,25 @@ const gameSettings = {
         {name:'Strength II', description:'Увеличивает здоровье Вождя на 2'},
         {name:'Pathfinder', description:'Увеличивает скорость Вождя на 1'},
         {name:'Surgery', description:'Позволяет вождю лечить себя или союзников'},
-        {name:'Estates I', description:'Единовременно дает 5 золота'},
+        {name:'Estates I', description:'Единовременно дает 4 золота'},
         {name:'Estates II', description:'Каждый ход дает 1 золото'}]
 };
+const kingdom = {
+    name:'Human',
+    t1:['unit','T1','Peasant','description',1,1,1,1,0,['worker'],"img/units/HumanT1.png",'Townhall'],
+    t2:['unit','T2','Scout','description',1,1,2,1,1,[],"img/units/HumanT2.png",'Townhall'],
+    t3:['unit','T3','Knight','description',3,1,1,1,2,[],"img/units/swordsman.png",'Tower'],
+    warchief:['unit','Warchief','Lord','description',4,1,2,1,5,['cavalryStrike'],"img/units/HumanWarchief2.png",'Tower'],
+    townhall:['building','Townhall','Townhall','description',5,0,0,0,5,['hire'],"img/units/citadel.png"],
+    tower:['building','Tower','Tower','description',3,1,0,2,3,['hire'],"img/units/Tower.png"],
+
+    start() {
+        this.gold += 2;
+    }
+};
+
+
+
 class Player{
     constructor(name, num){
         this.name = name;
@@ -35,15 +51,7 @@ class Player{
         this.count_warchiefs = 0;
         this.count_townhalls = 0;
         this.count_towers = 0;
-        this.faction = {
-            name:'Human',
-            t1:['unit','T1','Peasant','description',1,1,1,1,0,['worker'],"img/units/HumanT1.png",'Townhall'],
-            t2:['unit','T2','Scout','description',1,1,2,1,1,[],"img/units/HumanT2.png",'Townhall'],
-            t3:['unit','T3','Knight','description',3,1,1,1,2,[],"img/units/swordsman.png",'Tower'],
-            warchief:['unit','Warchief','Lord','description',4,1,2,1,5,['cavalryStrike'],"img/units/HumanWarchief2.png",'Tower'],
-            townhall:['building','Townhall','Townhall','description',5,0,0,0,5,['hire'],"img/units/citadel.png"],
-            tower:['building','Tower','Tower','description',3,1,0,2,3,['hire'],"img/units/Tower.png"]
-        }
+        this.faction = kingdom;
     }
 }
 
@@ -128,6 +136,16 @@ function mapMaker(num){
         gameField[1][5].contains = new Unit(players[2].faction.t1,2,true);
         gameField[5][2].contains = new Unit(players[1].faction.t2,1,true);
         gameField[2][5].contains = new Unit(players[2].faction.t2,2,true);
+        gameField[0][0].mountains = true;
+        gameField[0][1].mountains = true;
+        gameField[1][0].mountains = true;
+        gameField[2][4].mountains = true;
+        gameField[3][7].mountains = true;
+        gameField[4][0].mountains = true;
+        gameField[5][3].mountains = true;
+        gameField[6][7].mountains = true;
+        gameField[7][6].mountains = true;
+        gameField[7][7].mountains = true;
     }
     else if(num == 2){
         gameField[7][7].contains = new Building(players[1].faction.townhall,1,true);
@@ -169,8 +187,8 @@ function mapMaker(num){
     }else if(num == 3){
         gameField[0][2].contains = new Building(players[1].faction.townhall,1,true);
         gameField[2][7].contains = new Building(players[2].faction.townhall,2,true);
-        gameField[5][0].contains = new Building(players[3].faction.townhall,3,true);
-        gameField[7][5].contains = new Building(players[4].faction.townhall,4,true);
+        gameField[7][5].contains = new Building(players[3].faction.townhall,3,true);
+        gameField[5][0].contains = new Building(players[4].faction.townhall,4,true);
         gameField[0][0].resCount = 10;
         gameField[0][7].resCount = 10;
         gameField[7][0].resCount = 10;
@@ -179,13 +197,32 @@ function mapMaker(num){
         gameField[3][0].resCount = 10;
         gameField[4][7].resCount = 10;
         gameField[7][3].resCount = 10;
-        gameField[0][1].mountains = true;
-        gameField[1][7].mountains = true;
         gameField[2][4].mountains = true;
         gameField[3][2].mountains = true;
         gameField[4][5].mountains = true;
         gameField[5][3].mountains = true;
-        gameField[6][0].mountains = true;
-        gameField[7][6].mountains = true;
+    }else if(num == 4){
+        players[1].gold += 5;
+        players[2].gold += 5;
+        players[3].gold += 5;
+        players[4].gold += 5;
+        gameField[3][0].contains = new Building(players[1].faction.t1,1,true);
+        gameField[0][3].contains = new Building(players[2].faction.t1,2,true);
+        gameField[4][7].contains = new Building(players[3].faction.t1,3,true);
+        gameField[7][4].contains = new Building(players[4].faction.t1,4,true);
+        gameField[0][0].resCount = 15;
+        gameField[0][7].resCount = 15;
+        gameField[7][0].resCount = 15;
+        gameField[7][7].resCount = 15;
+        gameField[3][3].resCount = 15;
+        gameField[4][4].resCount = 15;
+        gameField[0][2].mountains = true;
+        gameField[1][6].mountains = true;
+        gameField[2][0].mountains = true;
+        gameField[3][4].mountains = true;
+        gameField[4][3].mountains = true;
+        gameField[5][7].mountains = true;
+        gameField[6][1].mountains = true;
+        gameField[7][5].mountains = true;
     }
 }
