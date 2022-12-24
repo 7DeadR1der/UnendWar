@@ -7,51 +7,55 @@ const colorCursor = ['2px solid white','2px solid blue', '2px solid red','2px so
 
 //document.getElementById('btnCancel').style.opacity = '0';
 let gameField = new Array(8);
-/*async*/ function newGameGenerate(){
+/*async*/ function newGameGenerate(type){
     if(confirm('Вы уверены, что хотите начать новую игру?')){
-        document.querySelector('div.gridGameField').innerHTML = '';
         gameSettings.turnOwner = 1;
         //new players
         //let countPlayers = prompt('1 или 2 игрока? вводить число', '')
         //let countPlayers = 2;
+        let factionType = 'Kingdom';
         let result=null;
         while(result==null || (result!=1 && result!=2 && result!=3 && result!=4))
         result = prompt('Выберите карту (Введите цифру): 1)LastRefuge(1х1) 2)Classic(1x1) 3)LostTemple(4 ffa) 4)CentourGrove(4 ffa)');
         let countPlayers = (result == 3 || result == 4) ? 4 : 2;
         for (let k = 1; k<=countPlayers; k++){
             let name = prompt('Введите имя игрока '+ k, '');
-            players[k] = new Player(name, k);
-            players[k].faction.start();
+            players[k] = new Player(name, k,factionType);
+            players[k].faction.start(k);
         }
         
         //Generate Game Field
-        for(let i=0;i<gameField.length;i++){
-            let gameRows = new Array(8);
-            for (let j=0;j<gameRows.length;j++){ 
-                gameRows[j] = {
-                    contains: undefined,
-                    resCount: 0,
-                    availability: true,
-                    mountains: false,
-                    row: i,
-                    column: j
-                };
-                let cellAdd = document.createElement('img');
-                cellAdd.className = 'gfCell';
-                cellAdd.id = `${i}-${j}`;
-                cellAdd.src = '';
-                cellAdd.onclick = function () {pressCell(i,j)};
-                document.querySelector('div.gridGameField').appendChild(cellAdd);
-            }
-            gameField[i] = gameRows;
-    
-            //delete it
-        }
+        generateGameField();
         //create townhalls and peasants
         mapMaker(result);
         update();
     }
 }
+function generateGameField(){
+    document.querySelector('div.gridGameField').innerHTML = '';
+    for(let i=0;i<gameField.length;i++){
+        let gameRows = new Array(8);
+        for (let j=0;j<gameRows.length;j++){ 
+            gameRows[j] = {
+                contains: undefined,
+                resCount: 0,
+                availability: true,
+                mountains: false,
+                row: i,
+                column: j
+            };
+            let cellAdd = document.createElement('img');
+            cellAdd.className = 'gfCell';
+            cellAdd.id = `${i}-${j}`;
+            cellAdd.src = '';
+            cellAdd.onclick = function () {pressCell(i,j)};
+            document.querySelector('div.gridGameField').appendChild(cellAdd);
+        }
+        gameField[i] = gameRows;
+    }
+}
+
+
 function update(){
     players.forEach(el => {
         if(el != undefined){
@@ -71,22 +75,22 @@ function update(){
             if(gameField[i][j].contains != undefined){
                 document.getElementById(`${i}-${j}`).style.backgroundColor = colorPlayers[gameField[i][j].contains.owner-1];
                 switch(gameField[i][j].contains.class){
-                    case'T1':
+                    case't1':
                         players[gameField[i][j].contains.owner].count_workers++;
                         break;
-                    case'T2':
+                    case't2':
                         players[gameField[i][j].contains.owner].count_army++;
                         break;
-                    case'T3':
+                    case't3':
                         players[gameField[i][j].contains.owner].count_army++;
                         break;
-                    case'Warchief':
+                    case'warchief':
                         players[gameField[i][j].contains.owner].count_warchiefs++;
                         break;
-                    case'Townhall':
+                    case'townhall':
                         players[gameField[i][j].contains.owner].count_townhalls++;
                         break;
-                    case'Tower':
+                    case'tower':
                         players[gameField[i][j].contains.owner].count_towers++;
                         break;
                     default:
@@ -139,35 +143,36 @@ function unlockAllCells(){
     }
 }
 function unlockCells(count,i,j, type){
+    let k;
     document.getElementById(`${i}-${j}`).style.border = colorCursor[0];
     if(type == 'move'){
         if (count>0){
-            if(i+1<8) if(gameField[i+1][j].contains == undefined){gameField[i+1][j].availability = true;document.getElementById(`${i+1}-${j}`).style.border = colorCursor[1];}
-            if(j+1<8) if(gameField[i][j+1].contains == undefined){gameField[i][j+1].availability = true;document.getElementById(`${i}-${j+1}`).style.border = colorCursor[1];}
-            if(i-1>-1)if(gameField[i-1][j].contains == undefined){gameField[i-1][j].availability = true;document.getElementById(`${i-1}-${j}`).style.border = colorCursor[1];}
-            if(j-1>-1)if(gameField[i][j-1].contains == undefined){gameField[i][j-1].availability = true;document.getElementById(`${i}-${j-1}`).style.border = colorCursor[1];}
+            if(i+1<8) {k = gameField[i+1][j];if(k.contains == undefined && k.mountains == false){k.availability = true;document.getElementById(`${i+1}-${j}`).style.border = colorCursor[1];}}
+            if(j+1<8) {k = gameField[i][j+1];if(k.contains == undefined && k.mountains == false){k.availability = true;document.getElementById(`${i}-${j+1}`).style.border = colorCursor[1];}}
+            if(i-1>-1){k = gameField[i-1][j];if(k.contains == undefined && k.mountains == false){k.availability = true;document.getElementById(`${i-1}-${j}`).style.border = colorCursor[1];}}
+            if(j-1>-1){k = gameField[i][j-1];if(k.contains == undefined && k.mountains == false){k.availability = true;document.getElementById(`${i}-${j-1}`).style.border = colorCursor[1];}}
             if(count>1){
-                if(i+2<8) if(gameField[i+2][j].contains == undefined){gameField[i+2][j].availability = true;document.getElementById(`${i+2}-${j}`).style.border = colorCursor[1];}
-                if(j+2<8) if(gameField[i][j+2].contains == undefined){gameField[i][j+2].availability = true;document.getElementById(`${i}-${j+2}`).style.border = colorCursor[1];}
-                if(i-2>-1)if(gameField[i-2][j].contains == undefined){gameField[i-2][j].availability = true;document.getElementById(`${i-2}-${j}`).style.border = colorCursor[1];}
-                if(j-2>-1)if(gameField[i][j-2].contains == undefined){gameField[i][j-2].availability = true;document.getElementById(`${i}-${j-2}`).style.border = colorCursor[1];}
-                if(i+1<8&&j+1<8)  if(gameField[i+1][j+1].contains == undefined){gameField[i+1][j+1].availability = true;document.getElementById(`${i+1}-${j+1}`).style.border = colorCursor[1];}
-                if(i+1<8&&j-1>-1) if(gameField[i+1][j-1].contains == undefined){gameField[i+1][j-1].availability = true;document.getElementById(`${i+1}-${j-1}`).style.border = colorCursor[1];}
-                if(i-1>-1&&j+1<8) if(gameField[i-1][j+1].contains == undefined){gameField[i-1][j+1].availability = true;document.getElementById(`${i-1}-${j+1}`).style.border = colorCursor[1];}
-                if(i-1>-1&&j-1>-1)if(gameField[i-1][j-1].contains == undefined){gameField[i-1][j-1].availability = true;document.getElementById(`${i-1}-${j-1}`).style.border = colorCursor[1];}
+                if(i+2<8) {k = gameField[i+2][j];if(k.contains == undefined && k.mountains == false){k.availability = true;document.getElementById(`${i+2}-${j}`).style.border = colorCursor[1];}}
+                if(j+2<8) {k = gameField[i][j+2];if(k.contains == undefined && k.mountains == false){k.availability = true;document.getElementById(`${i}-${j+2}`).style.border = colorCursor[1];}}
+                if(i-2>-1){k = gameField[i-2][j];if(k.contains == undefined && k.mountains == false){k.availability = true;document.getElementById(`${i-2}-${j}`).style.border = colorCursor[1];}}
+                if(j-2>-1){k = gameField[i][j-2];if(k.contains == undefined && k.mountains == false){k.availability = true;document.getElementById(`${i}-${j-2}`).style.border = colorCursor[1];}}
+                if(i+1<8&&j+1<8)  {k = gameField[i+1][j+1];if(k.contains == undefined && k.mountains == false){k.availability = true;document.getElementById(`${i+1}-${j+1}`).style.border = colorCursor[1];}}
+                if(i+1<8&&j-1>-1) {k = gameField[i+1][j-1];if(k.contains == undefined && k.mountains == false){k.availability = true;document.getElementById(`${i+1}-${j-1}`).style.border = colorCursor[1];}}
+                if(i-1>-1&&j+1<8) {k = gameField[i-1][j+1];if(k.contains == undefined && k.mountains == false){k.availability = true;document.getElementById(`${i-1}-${j+1}`).style.border = colorCursor[1];}}
+                if(i-1>-1&&j-1>-1){k = gameField[i-1][j-1];if(k.contains == undefined && k.mountains == false){k.availability = true;document.getElementById(`${i-1}-${j-1}`).style.border = colorCursor[1];}}
                 if(count>2){
-                    if(i+3<8) if(gameField[i+3][j].contains == undefined){gameField[i+3][j].availability = true;document.getElementById(`${i+3}-${j}`).style.border = colorCursor[1];}
-                    if(j+3<8) if(gameField[i][j+3].contains == undefined){gameField[i][j+3].availability = true;document.getElementById(`${i}-${j+3}`).style.border = colorCursor[1];}
-                    if(i-3>-1)if(gameField[i-3][j].contains == undefined){gameField[i-3][j].availability = true;document.getElementById(`${i-3}-${j}`).style.border = colorCursor[1];}
-                    if(j-3>-1)if(gameField[i][j-3].contains == undefined){gameField[i][j-3].availability = true;document.getElementById(`${i}-${j-3}`).style.border = colorCursor[1];}
-                    if(i+2<8&&j+1<8)  if(gameField[i+2][j+1].contains == undefined){gameField[i+2][j+1].availability = true;document.getElementById(`${i+2}-${j+1}`).style.border = colorCursor[1];}
-                    if(i+2<8&&j-1>-1) if(gameField[i+2][j-1].contains == undefined){gameField[i+2][j-1].availability = true;document.getElementById(`${i+2}-${j-1}`).style.border = colorCursor[1];}
-                    if(i-2>-1&&j+1<8) if(gameField[i-2][j+1].contains == undefined){gameField[i-2][j+1].availability = true;document.getElementById(`${i-2}-${j+1}`).style.border = colorCursor[1];}
-                    if(i-2>-1&&j-1>-1)if(gameField[i-2][j-1].contains == undefined){gameField[i-2][j-1].availability = true;document.getElementById(`${i-2}-${j-1}`).style.border = colorCursor[1];}
-                    if(i+1<8&&j+2<8)  if(gameField[i+1][j+2].contains == undefined){gameField[i+1][j+2].availability = true;document.getElementById(`${i+1}-${j+2}`).style.border = colorCursor[1];}
-                    if(i+1<8&&j-2>-1) if(gameField[i+1][j-2].contains == undefined){gameField[i+1][j-2].availability = true;document.getElementById(`${i+1}-${j-2}`).style.border = colorCursor[1];}
-                    if(i-1>-1&&j+2<8) if(gameField[i-1][j+2].contains == undefined){gameField[i-1][j+2].availability = true;document.getElementById(`${i-1}-${j+2}`).style.border = colorCursor[1];}
-                    if(i-1>-1&&j-2>-1)if(gameField[i-1][j-2].contains == undefined){gameField[i-1][j-2].availability = true;document.getElementById(`${i-1}-${j-2}`).style.border = colorCursor[1];}
+                    if(i+3<8) {k = gameField[i+3][j];if(k.contains == undefined && k.mountains == false){k.availability = true;document.getElementById(`${i+3}-${j}`).style.border = colorCursor[1];}}
+                    if(j+3<8) {k = gameField[i][j+3];if(k.contains == undefined && k.mountains == false){k.availability = true;document.getElementById(`${i}-${j+3}`).style.border = colorCursor[1];}}
+                    if(i-3>-1){k = gameField[i-3][j];if(k.contains == undefined && k.mountains == false){k.availability = true;document.getElementById(`${i-3}-${j}`).style.border = colorCursor[1];}}
+                    if(j-3>-1){k = gameField[i][j-3];if(k.contains == undefined && k.mountains == false){k.availability = true;document.getElementById(`${i}-${j-3}`).style.border = colorCursor[1];}}
+                    if(i+2<8&&j+1<8)  {k = gameField[i+2][j+1];if(k.contains == undefined && k.mountains == false){k.availability = true;document.getElementById(`${i+2}-${j+1}`).style.border = colorCursor[1];}}
+                    if(i+2<8&&j-1>-1) {k = gameField[i+2][j-1];if(k.contains == undefined && k.mountains == false){k.availability = true;document.getElementById(`${i+2}-${j-1}`).style.border = colorCursor[1];}}
+                    if(i-2>-1&&j+1<8) {k = gameField[i-2][j+1];if(k.contains == undefined && k.mountains == false){k.availability = true;document.getElementById(`${i-2}-${j+1}`).style.border = colorCursor[1];}}
+                    if(i-2>-1&&j-1>-1){k = gameField[i-2][j-1];if(k.contains == undefined && k.mountains == false){k.availability = true;document.getElementById(`${i-2}-${j-1}`).style.border = colorCursor[1];}}
+                    if(i+1<8&&j+2<8)  {k = gameField[i+1][j+2];if(k.contains == undefined && k.mountains == false){k.availability = true;document.getElementById(`${i+1}-${j+2}`).style.border = colorCursor[1];}}
+                    if(i+1<8&&j-2>-1) {k = gameField[i+1][j-2];if(k.contains == undefined && k.mountains == false){k.availability = true;document.getElementById(`${i+1}-${j-2}`).style.border = colorCursor[1];}}
+                    if(i-1>-1&&j+2<8) {k = gameField[i-1][j+2];if(k.contains == undefined && k.mountains == false){k.availability = true;document.getElementById(`${i-1}-${j+2}`).style.border = colorCursor[1];}}
+                    if(i-1>-1&&j-2>-1){k = gameField[i-1][j-2];if(k.contains == undefined && k.mountains == false){k.availability = true;document.getElementById(`${i-1}-${j-2}`).style.border = colorCursor[1];}}
                 
                 }
             }     
@@ -195,10 +200,10 @@ function unlockCells(count,i,j, type){
             document.getElementById('btnBuildTower').style.display = 'inline';
         }
         if(gameField[i][j].contains.ability.includes('hire',0)){
-            if(gameField[i][j].contains.class == 'Townhall'){
+            if(gameField[i][j].contains.class == 'townhall'){
                 document.getElementById('btnBuyT1').style.display = 'inline';
                 document.getElementById('btnBuyT2').style.display = 'inline';
-            }else if(gameField[i][j].contains.class == 'Tower'){
+            }else if(gameField[i][j].contains.class == 'tower'){
                 document.getElementById('btnBuyWarchief').style.display = 'inline';
                 document.getElementById('btnBuyT3').style.display = 'inline';
             }
@@ -216,6 +221,54 @@ function unlockCells(count,i,j, type){
 }
 
 
+function getRandomCell(i,j){
+        //Проверка на зону игрового поля
+    if(i<4){
+        if(j<4){//Зона 1 (Верхняя левая)
+             if(j+1<8  && gameField[i][j+1].contains == undefined && gameField[i][j+1].mountains == false) return gameField[i][j+1];
+        else if(i+1<8  && gameField[i+1][j].contains == undefined && gameField[i+1][j].mountains == false) return gameField[i+1][j];
+        else if(j-1>-1 && gameField[i][j-1].contains == undefined && gameField[i][j-1].mountains == false) return gameField[i][j-1]; 
+        else if(i-1>-1 && gameField[i-1][j].contains == undefined && gameField[i-1][j].mountains == false) return gameField[i-1][j];
+        else return false;
+        }else if(j>3){//Зона 2 (Верхняя правая)
+             if(i+1<8  && gameField[i+1][j].contains == undefined && gameField[i+1][j].mountains == false) return gameField[i+1][j];
+        else if(j-1>-1 && gameField[i][j-1].contains == undefined && gameField[i][j-1].mountains == false) return gameField[i][j-1]; 
+        else if(i-1>-1 && gameField[i-1][j].contains == undefined && gameField[i-1][j].mountains == false) return gameField[i-1][j];
+        else if(j+1<8  && gameField[i][j+1].contains == undefined && gameField[i][j+1].mountains == false) return gameField[i][j+1];
+        else return false;
+        }
+    }else if(i>3){
+        if(j<4){//Зона 3 (Нижняя левая)
+             if(i-1>-1 && gameField[i-1][j].contains == undefined && gameField[i-1][j].mountains == false) return gameField[i-1][j];
+        else if(j+1<8  && gameField[i][j+1].contains == undefined && gameField[i][j+1].mountains == false) return gameField[i][j+1];
+        else if(i+1<8  && gameField[i+1][j].contains == undefined && gameField[i+1][j].mountains == false) return gameField[i+1][j];
+        else if(j-1>-1 && gameField[i][j-1].contains == undefined && gameField[i][j-1].mountains == false) return gameField[i][j-1]; 
+        else return false;
+        }else if(j>3){//Зона 4 (Нижняя правая)
+             if(j-1>-1 && gameField[i][j-1].contains == undefined && gameField[i][j-1].mountains == false) return gameField[i][j-1]; 
+        else if(i-1>-1 && gameField[i-1][j].contains == undefined && gameField[i-1][j].mountains == false) return gameField[i-1][j];
+        else if(j+1<8  && gameField[i][j+1].contains == undefined && gameField[i][j+1].mountains == false) return gameField[i][j+1];
+        else if(i+1<8  && gameField[i+1][j].contains == undefined && gameField[i+1][j].mountains == false) return gameField[i+1][j];
+        else return false;
+        }
+    }else return false;
+}
+
+function getBoleanToInt(c){
+    if (c == true){
+        return 1;
+    }else if (c == false){
+        return 0;
+    }else return undefined;
+}
+function getIntToBolean(num){
+    if (num == 0){
+        return false;
+    }else if (num == 1){
+        return true;
+    }else return undefined;
+}
+
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
@@ -223,3 +276,6 @@ function getRandomInt(min, max) {
 function cf (){
     alert("checked!");
 }
+
+
+

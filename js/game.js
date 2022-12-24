@@ -126,25 +126,28 @@ function lvlUp(playerLvlUp){
             }
         });
     });
-    switch(skillsChoise[result-1]){
+    skillAdd(skillsChoise[result-1],playerLvlUp);
+}
+function skillAdd(skill, owner){
+    switch(skill){
         case gameSettings.skills[0]: //Strength I - +1 attack to Warchief
-            players[playerLvlUp].faction.warchief[5] += 1;
+            players[owner].faction.warchief[5] += 1;
             if(obj)obj.attack += 1;
             break;
         case gameSettings.skills[1]: //Strength II - +2 hp to Warchief
-            players[playerLvlUp].faction.warchief[4] += 2;
-            if(obj)obj.hpMax += 2;
+            players[owner].faction.warchief[4] += 2;
+            if(obj){obj.hpMax += 2;obj.hp += 2;}
             break;
         case gameSettings.skills[2]: //Pathfinder - +1 move to Warchief
-            players[playerLvlUp].faction.warchief[6] += 1;
+            players[owner].faction.warchief[6] += 1;
             if(obj)obj.movePoint += 1;
             break;
         case gameSettings.skills[3]: //Surgery - add skill "Heal" to Warchief
-            players[playerLvlUp].faction.warchief[9].push('surgery');
+            players[owner].faction.warchief[9].push('surgery');
             if(obj)obj.ability.push('surgery');
             break;
         case gameSettings.skills[4]: //Estates I - +4 gold 
-            players[playerLvlUp].gold += 4;
+            players[owner].gold += 4;
             break;
         case gameSettings.skills[5]: //Estates II - +1 gold every turn
             break;
@@ -152,6 +155,8 @@ function lvlUp(playerLvlUp){
             break;
     }
 }
+
+
 
 
 // -------BTN FUNCTIONS-------
@@ -174,11 +179,13 @@ function build(typeBuilding){ // Постройка зданий
             break;
     }
     if(gameField[cashCell.i][cashCell.j].resCount <=0){
-        if(players[gameSettings.turnOwner].gold>=building[8]){
-            players[gameSettings.turnOwner].gold -= building[8];
-            gameField[cashCell.i][cashCell.j].contains = new Building(building,gameSettings.turnOwner,false);
-            cancel();
-        }else alert('недостаточно денег, надо ' + building[8])
+        if(checkLimit == true){
+            if(players[gameSettings.turnOwner].gold>=building[8]){
+                players[gameSettings.turnOwner].gold -= building[8];
+                gameField[cashCell.i][cashCell.j].contains = new Building(building,gameSettings.turnOwner,false);
+                cancel();
+            }else alert('недостаточно денег, надо ' + building[8])
+        }else alert('Лимит зданий достигнут')
     }else alert('нельзя строить, тут есть золото')
 }
 function buyUnit(typeUnit){ // Покупка юнитов
@@ -216,18 +223,20 @@ function buyUnit(typeUnit){ // Покупка юнитов
     if(checkLimit == true){
         if(players[gameSettings.turnOwner].gold >= unit[8]){
             if(gameField[cashCell.i][cashCell.j].contains.canAction == true){
-                let arrayCells = new Array();
-                if(cashCell.i-1>-1 && gameField[cashCell.i-1][cashCell.j].contains == undefined) arrayCells.push(gameField[cashCell.i-1][cashCell.j]);
-                if(cashCell.j+1<8 && gameField[cashCell.i][cashCell.j+1].contains == undefined) arrayCells.push(gameField[cashCell.i][cashCell.j+1]);
-                if(cashCell.i+1<8 && gameField[cashCell.i+1][cashCell.j].contains == undefined) arrayCells.push(gameField[cashCell.i+1][cashCell.j]);
-                if(cashCell.j-1>-1 && gameField[cashCell.i][cashCell.j-1].contains == undefined) arrayCells.push(gameField[cashCell.i][cashCell.j-1]);
+                /*let arrayCells = new Array();
+                if(cashCell.i-1>-1 && gameField[cashCell.i-1][cashCell.j].contains == undefined && gameField[cashCell.i-1][cashCell.j].mountains == false) arrayCells.push(gameField[cashCell.i-1][cashCell.j]);
+                if(cashCell.j+1<8 && gameField[cashCell.i][cashCell.j+1].contains == undefined && gameField[cashCell.i][cashCell.j+1].mountains == false) arrayCells.push(gameField[cashCell.i][cashCell.j+1]);
+                if(cashCell.i+1<8 && gameField[cashCell.i+1][cashCell.j].contains == undefined && gameField[cashCell.i+1][cashCell.j].mountains == false) arrayCells.push(gameField[cashCell.i+1][cashCell.j]);
+                if(cashCell.j-1>-1 && gameField[cashCell.i][cashCell.j-1].contains == undefined && gameField[cashCell.i][cashCell.j-1].mountains == false) arrayCells.push(gameField[cashCell.i][cashCell.j-1]);
                 if(arrayCells.length>0){
-                    let cell = arrayCells[getRandomInt(0,arrayCells.length)]; 
+                    //let cell = arrayCells[getRandomInt(0,arrayCells.length)]; */
+                let cell = getRandomCell(cashCell.i,cashCell.j);
+                if (cell != false){
                     cell.contains = new Unit(unit,gameSettings.turnOwner,false);
                     gameField[cashCell.i][cashCell.j].contains.canAction = false;
                     players[gameSettings.turnOwner].gold -= unit[8];
                 }else{alert('Некуда разместить юнита'); gameField[cashCell.i][cashCell.j].canAction = true;}
-            cancel();
+                cancel();
             }    
         }else alert('недостаточно денег, надо ' + unit[8])
     }else alert('лимит юнитов достигнут')
@@ -304,10 +313,132 @@ function endTurn(){
             delete players[k];
         }
     }
-    
     cancel();
-    
 }
 
 
 
+function Save(){
+    cancel();
+    let saveString = '';
+    let cellsString = '';
+    let locSep = '-';
+    let globSep = '_';
+    let cellSep = '*';
+    //gameSettings
+    saveString += gameField.length + locSep; //Количество строк
+    saveString += gameField[0].length + locSep; // Количество ячеек
+    saveString += gameSettings.turnOwner/* + locSep*/; //чей ход
+    saveString += globSep;
+    players.forEach(player => {
+        if(player != undefined){
+            saveString += `${player.name}` + locSep;
+            saveString += `${player.owner}` + locSep;
+            saveString += `${player.faction.name}` + locSep;
+            saveString += `${player.gold}` + locSep;
+            saveString += `${player.level}` + locSep;
+            saveString += `${player.exp}` + locSep;
+            player.skills.forEach(skill => {
+                saveString += `${skill}` + ',';
+            });
+        }else saveString += 'null';
+        saveString += '*';
+    });
+    saveString += globSep;
+    gameField.forEach(str => {
+        str.forEach(cell => {
+            cellsString += `${cell.row}` + locSep; //i ячейки
+            cellsString += `${cell.column}` + locSep; //j ячейки
+            cellsString += `${getBoleanToInt(cell.mountains)}` + locSep; //горы
+            cellsString += `${cell.resCount}` + locSep; //золото
+            if(cell.contains != undefined){
+                cellsString += `${cell.contains.type}` + locSep; //тип юнита
+                cellsString += `${cell.contains.owner}` + locSep; //владелец юнита
+                cellsString += `${cell.contains.class}` + locSep; // класс юнита
+                cellsString += `${cell.contains.hp}` + locSep; //здоровье юнита
+                cellsString += `${getBoleanToInt(cell.contains.canMove)}` + locSep;
+                cellsString += `${getBoleanToInt(cell.contains.canAction)}`;
+            }else cellsString += `null`;
+            cellsString += cellSep;
+        });
+    });
+    saveString += cellsString;
+    alert (saveString);
+}
+function Load(){
+    let loadString = prompt('вставьте сохранение',undefined);
+    if(loadString!=undefined){
+        generateGameField();
+        let saveArr = loadString.split('_');
+        saveArr[0] = saveArr[0].split('-');
+        saveArr[1] = saveArr[1].split('*');
+        for (let k = 0;k<saveArr[1].length-1;k++){
+            saveArr[1][k] = saveArr[1][k].split('-');
+        }
+        saveArr[2] = saveArr[2].split('*');
+        for (let k = 0;k<saveArr[2].length-1;k++){
+            saveArr[2][k] = saveArr[2][k].split('-');
+        }
+        saveArr[1].pop();
+        saveArr[2].pop();
+        gameSettings.turnOwner = saveArr[0][2];
+        players.splice(0,players.length);
+        for(let n = 0;n<saveArr[1].length;n++){
+            players[n+1] = new Player (saveArr[1][n][0],saveArr[1][n][1],saveArr[1][n][2]);
+            players[n+1].gold = saveArr[1][n][3];
+            players[n+1].level = saveArr[1][n][4];
+            players[n+1].exp = saveArr[1][n][5];
+            if(saveArr[1][n][6] != ''){
+                saveArr[1][n][6] = saveArr[1][n][6].split(',');
+                saveArr[1][n][6].forEach(skill => {
+                    players[n+1].skills.push(skill);
+                    skillAdd(skill,saveArr[1][n][1]);
+                });
+            }
+        }
+        for(let m = 0;m<saveArr[2].length;m++){
+            let unit;
+            let i = saveArr[2][m][0];
+            let j = saveArr[2][m][1];
+            gameField[i][j].mountains = getBoleanToInt(saveArr[2][m][2]);
+            gameField[i][j].resCount = Number(saveArr[2][m][3]);
+            if(saveArr[2][m][4] != 'null'){
+                if(saveArr[2][m][4] == 'unit'){
+                    switch (saveArr[2][m][6]){
+                        case 't1':
+                            unit = players[saveArr[2][m][5]].faction.t1;
+                            break;
+                        case 't2':
+                            unit = players[saveArr[2][m][5]].faction.t2;
+                            break;
+                        case 't3':
+                            unit = players[saveArr[2][m][5]].faction.t3;
+                            break;
+                        case 'warchief':
+                            unit = players[saveArr[2][m][5]].faction.warchief;
+                            break;
+                        default:
+                            break;
+                    }
+                    gameField[i][j].contains = new Unit(unit,Number(saveArr[2][m][5]),false);
+                }else if (saveArr[2][m][4] == 'building'){
+                    switch (saveArr[2][m][6]){
+                        case 'townhall':
+                            unit = players[saveArr[2][m][5]].faction.townhall;
+                            break;
+                        case 'tower':
+                            unit = players[saveArr[2][m][5]].faction.tower;
+                            break;
+                        default:
+                            break;
+                    }
+                    gameField[i][j].contains = new Building(unit,Number(saveArr[2][m][5]),false);
+                }
+                gameField[i][j].contains.hp = Number(saveArr[2][m][7]);
+                gameField[i][j].contains.canMove = getIntToBolean(saveArr[2][m][8]);
+                gameField[i][j].contains.canAction = getIntToBolean(saveArr[2][m][9]);
+            }
+        }
+        update();
+    }else alert('Не введенно сохранение');
+}

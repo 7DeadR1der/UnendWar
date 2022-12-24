@@ -20,24 +20,26 @@ const gameSettings = {
         {name:'Estates I', description:'Единовременно дает 4 золота'},
         {name:'Estates II', description:'Каждый ход дает 1 золото'}]
 };
-const kingdom = {
-    name:'Human',
-    t1:['unit','T1','Peasant','description',1,1,1,1,0,['worker'],"img/units/HumanT1.png",'Townhall'],
-    t2:['unit','T2','Scout','description',1,1,2,1,1,[],"img/units/HumanT2.png",'Townhall'],
-    t3:['unit','T3','Knight','description',3,1,1,1,2,[],"img/units/swordsman.png",'Tower'],
-    warchief:['unit','Warchief','Lord','description',4,1,2,1,5,['cavalryStrike'],"img/units/HumanWarchief2.png",'Tower'],
-    townhall:['building','Townhall','Townhall','description',5,0,0,0,5,['hire'],"img/units/citadel.png"],
-    tower:['building','Tower','Tower','description',3,1,0,2,3,['hire'],"img/units/Tower.png"],
-
-    start() {
-        this.gold += 2;
+class Kingdom {
+    constructor(){
+        this.name = 'Kingdom';
+        this.t1 = ['unit','t1','Peasant','description',1,1,1,1,0,['worker'],"img/units/KingdomT1.png",'Townhall'];
+        this.t2 = ['unit','t2','Scout','description',1,1,2,1,1,[],"img/units/KingdomT2.png",'Townhall'];
+        this.t3 = ['unit','t3','Knight','description',3,1,1,1,2,[],"img/units/swordsman.png",'Tower'];
+        this.warchief = ['unit','warchief','Lord','description',4,1,2,1,5,['cavalryStrike'],"img/units/KingdomWarchief.png",'Tower'];
+        this.townhall = ['building','townhall','Townhall','description',5,0,0,0,5,['hire'],"img/units/citadel.png"];
+        this.tower = ['building','tower','Tower','description',3,1,0,2,3,['hire'],"img/units/Tower.png"];
     }
+    start(owner) {
+        players[owner].gold +=2;
+        //this.gold += 2;
+    };
 };
 
 
 
 class Player{
-    constructor(name, num){
+    constructor(name, num, factionType){
         this.name = name;
         this.owner = num;
         //this.color
@@ -51,7 +53,16 @@ class Player{
         this.count_warchiefs = 0;
         this.count_townhalls = 0;
         this.count_towers = 0;
-        this.faction = kingdom;
+        switch(factionType){
+            case ('Kingdom'):
+                this.faction = new Kingdom();
+                break;
+            case ('SeaMercenaries'):
+                //this.faction = new Kingdom();
+                break;
+            default:
+                break;
+        }
     }
 }
 
@@ -98,25 +109,6 @@ class Building{
     }
 }
 
-class Warchief{
-
-}
-
-let exampleUnit = {
-    type: 'unit/building',
-    class: 'T1/T2/T3/Warchief/Townhall/Tower',
-    name: 'name)',
-    description: 'example unit',
-    canMove: true,
-    canAction: true,
-    hp: 1,
-    attack: 1,
-    movePoint: 1,
-    range: 1,
-    owner: 0
-
-
-};
 
 
 // DELETE HIR AFTER 
@@ -206,10 +198,10 @@ function mapMaker(num){
         players[2].gold += 5;
         players[3].gold += 5;
         players[4].gold += 5;
-        gameField[3][0].contains = new Building(players[1].faction.t1,1,true);
-        gameField[0][3].contains = new Building(players[2].faction.t1,2,true);
-        gameField[4][7].contains = new Building(players[3].faction.t1,3,true);
-        gameField[7][4].contains = new Building(players[4].faction.t1,4,true);
+        gameField[3][0].contains = new Unit(players[1].faction.t1,1,true);
+        gameField[0][3].contains = new Unit(players[2].faction.t1,2,true);
+        gameField[4][7].contains = new Unit(players[3].faction.t1,3,true);
+        gameField[7][4].contains = new Unit(players[4].faction.t1,4,true);
         gameField[0][0].resCount = 15;
         gameField[0][7].resCount = 15;
         gameField[7][0].resCount = 15;
