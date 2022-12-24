@@ -6,16 +6,18 @@
 <button onclick="Load()">Загрузить</button>
 <div class="gridGameField">
 </div>
-<button id="btnCancel" onclick="cancel()" style="display: none">Отмена</button>
-<button id="btnBuildTownhall" onclick="build('townhall')" style="display: none">Построить Townhall</button>
-<button id="btnBuildTower" onclick="build('tower')" style="display: none">Построить Tower</button>
-<button id="btnBuyT1" onclick="buyUnit('t1')" style="display: none">Нанять T1</button>
-<button id="btnBuyT2" onclick="buyUnit('t2')" style="display: none">Нанять T2</button>
-<button id="btnBuyT3" onclick="buyUnit('t3')" style="display: none">Нанять T3</button>
-<button id="btnBuyWarchief" onclick="buyUnit('warchief')" style="display: none">Нанять Warchief</button>
-<button id="btnSurgeryHeal" onclick="heal('surgery')" style="display: none">Лечение</button>
+<div id="panelBtns">
+    <button id="btnCancel" onclick="cancel()" style="display: none">Отмена</button>
+    <button id="btnBuildTownhall" onclick="build('townhall')" style="display: none">Построить Townhall</button>
+    <button id="btnBuildTower" onclick="build('tower')" style="display: none">Построить Tower</button>
+    <button id="btnBuyT1" onclick="buyUnit('t1')" style="display: none">Нанять T1</button>
+    <button id="btnBuyT2" onclick="buyUnit('t2')" style="display: none">Нанять T2</button>
+    <button id="btnBuyT3" onclick="buyUnit('t3')" style="display: none">Нанять T3</button>
+    <button id="btnBuyWarchief" onclick="buyUnit('warchief')" style="display: none">Нанять Warchief</button>
+    <button id="btnSurgeryHeal" onclick="heal('surgery')" style="display: none">Лечение</button>
+</div>
 <div id="panelInfo">
-    <ul id="list_player" style="background-Color: grey;">
+    <ul id="list_player">
         <li id="li_PlayerName"></li>
         <li id="li_PlayerGold"></li>
         <li id="li_PlayerLevel"></li>
@@ -26,7 +28,13 @@
         <li id="li_limit_townhalls"></li>
         <li id="li_limit_towers"></li>
     </ul>
-    <ul>
-
+    <ul id="list_cell">
+        <li id="li_goldCell"></li>
+        <li id="li_nameUnit"></li>
+        <li id="li_descriptionUnit"></li>
+        <li id="li_ownerUnit"></li>
+        <li id="li_hpUnit"></li>
+        <li id="li_attackUnit"></li>
+        <li id="li_moveUnit"></li>
     </ul>
 </div>

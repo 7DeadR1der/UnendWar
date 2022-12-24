@@ -112,6 +112,7 @@ function update(){
                 }
             }
             //document.getElementById(`${i}-${j}`).removeAttribute('style');
+            document.getElementById('list_player').style.backgroundColor = colorPlayers[gameSettings.turnOwner-1];
             document.getElementById(`${i}-${j}`).title = titleText;
             document.getElementById(`${i}-${j}`).style.border = '';
             document.getElementById('li_PlayerName').textContent = `${players[gameSettings.turnOwner].name}`;

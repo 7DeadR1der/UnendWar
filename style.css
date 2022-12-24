@@ -5,6 +5,7 @@
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
 }
+/* ------------------------GAME STYLES------------------------ */
 .gridGameField{
     width: 422px;
     padding: 3px;
@@ -30,8 +31,30 @@
 .goldCell{
     background-color:yellow;
 }
+#panelInfo{
+    display: flex;
+    justify-content: flex-start;
+    align-items:stretch;
+}
+#panelInfo ul{
+    margin: 0,8px;
+    background-color:rgb(201, 201, 201);
+    min-width: 150px;
+    min-height: 145px;
+    padding: 4px;
+}
+#panelInfo li{
+    list-style-type: none;
+}
 #list_player{
     width: 150px;
+}
+#panelBtns{
+    min-height: 25px;
+    margin: 5px,0;
+}
+#panelBtns button{
+    height:25px;
 }
 /*
 .gfCell:nth-child(-n+8):nth-child(odd){background-color: rgb(53, 140, 63);}
@@ -43,3 +66,11 @@
 .gfCell:nth-child(n+49):nth-child(-n+56):nth-child(odd){background-color: rgb(53, 140, 63);}
 .gfCell:nth-child(n+57):nth-child(-n+64):nth-child(even){background-color: rgb(53, 140, 63);}
 */
+
+/* ------------------------other pages STYLES------------------------ */
+
+.headerPage{
+    font-size: 20px;
+    text-align: center;
+    margin: 10px auto;
+}

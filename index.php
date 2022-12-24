@@ -20,19 +20,23 @@ if (isset($_GET['page'])) {
         switch($page){
             case "game":
                 include("page/game.html");  
-            break;
-
+                break;
+        
             case "conquest":
                 
-            break;
+                break;
 
             case "settings":
                 
-            break;
+                break;
+
+            case "about":
+                include("page/about.html");
+                break;
 
             default:
                 include("page/main.html");  
-            break;
+                break;
         }
     ?>
 

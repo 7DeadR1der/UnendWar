@@ -88,7 +88,24 @@ function pressCell(i,j){
     }else if(turnFlag == 1 && gameField[i][j] == gameField[cashCell.i][cashCell.j]){//
         cancel();//отмена путем нажатия на туже клетку что и в первый раз
     }
-    
+    //cell desc
+    if(gameField[i][j].resCount>0)document.getElementById('li_goldCell').textContent = `Золото = ${gameField[i][j].resCount}`;
+    else document.getElementById('li_goldCell').textContent = ``;
+    if(gameField[i][j].contains != undefined){
+        document.getElementById('li_nameUnit').textContent = `${gameField[i][j].contains.name}`;
+        document.getElementById('li_descriptionUnit').textContent = `${gameField[i][j].contains.description}`;
+        document.getElementById('li_ownerUnit').textContent = `Владелец - ${players[gameField[i][j].contains.owner].name}`;
+        document.getElementById('li_hpUnit').textContent = `Здоровье - ${gameField[i][j].contains.hp}/${gameField[i][j].contains.hpMax}`;
+        document.getElementById('li_attackUnit').textContent = `Атака - ${gameField[i][j].contains.attack}`;
+        document.getElementById('li_moveUnit').textContent = `Скорость - ${gameField[i][j].contains.movePoint}`;
+    }else{
+        document.getElementById('li_nameUnit').textContent = '';
+        document.getElementById('li_descriptionUnit').textContent = '';
+        document.getElementById('li_ownerUnit').textContent = '';
+        document.getElementById('li_hpUnit').textContent = '';
+        document.getElementById('li_attackUnit').textContent = '';
+        document.getElementById('li_moveUnit').textContent = '';
+    }
 }
 
 function lvlUp(playerLvlUp){
@@ -292,7 +309,6 @@ function endTurn(){
             }
         }
     }
-    document.getElementById('btnEndTurn').style.backgroundColor = colorPlayers[gameSettings.turnOwner-1];
     for(let i = 0; i<gameField.length; i++){
         for(let j = 0; j<gameField[i].length; j++){
             let cell = gameField[i][j];
