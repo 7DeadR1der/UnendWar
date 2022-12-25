@@ -255,6 +255,19 @@ function getRandomCell(i,j){
     }else return false;
 }
 
+function clipboardCopy(string){
+    let copyTextarea = document.createElement("textarea");
+    copyTextarea.style.position = "fixed";
+    copyTextarea.style.opacity = "0";
+    //copyTextarea.setAttribute('value',string);
+    copyTextarea.textContent = string;
+ 
+    document.body.appendChild(copyTextarea);
+    copyTextarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(copyTextarea);
+}
+
 function getBoleanToInt(c){
     if (c == true){
         return 1;

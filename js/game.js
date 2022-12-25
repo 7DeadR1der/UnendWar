@@ -137,15 +137,15 @@ function lvlUp(playerLvlUp){
     gameField.forEach(arr => {
         arr.forEach(elem => {
             if (elem.contains != undefined){
-                if (elem.contains.class == 'Warchief' && elem.contains.owner == playerLvlUp){
+                if (elem.contains.class == 'warchief' && elem.contains.owner == playerLvlUp){
                     obj = elem.contains;
                 }
             }
         });
     });
-    skillAdd(skillsChoise[result-1],playerLvlUp);
+    skillAdd(skillsChoise[result-1],playerLvlUp, obj);
 }
-function skillAdd(skill, owner){
+function skillAdd(skill, owner, obj){
     switch(skill){
         case gameSettings.skills[0]: //Strength I - +1 attack to Warchief
             players[owner].faction.warchief[5] += 1;
@@ -240,13 +240,6 @@ function buyUnit(typeUnit){ // Покупка юнитов
     if(checkLimit == true){
         if(players[gameSettings.turnOwner].gold >= unit[8]){
             if(gameField[cashCell.i][cashCell.j].contains.canAction == true){
-                /*let arrayCells = new Array();
-                if(cashCell.i-1>-1 && gameField[cashCell.i-1][cashCell.j].contains == undefined && gameField[cashCell.i-1][cashCell.j].mountains == false) arrayCells.push(gameField[cashCell.i-1][cashCell.j]);
-                if(cashCell.j+1<8 && gameField[cashCell.i][cashCell.j+1].contains == undefined && gameField[cashCell.i][cashCell.j+1].mountains == false) arrayCells.push(gameField[cashCell.i][cashCell.j+1]);
-                if(cashCell.i+1<8 && gameField[cashCell.i+1][cashCell.j].contains == undefined && gameField[cashCell.i+1][cashCell.j].mountains == false) arrayCells.push(gameField[cashCell.i+1][cashCell.j]);
-                if(cashCell.j-1>-1 && gameField[cashCell.i][cashCell.j-1].contains == undefined && gameField[cashCell.i][cashCell.j-1].mountains == false) arrayCells.push(gameField[cashCell.i][cashCell.j-1]);
-                if(arrayCells.length>0){
-                    //let cell = arrayCells[getRandomInt(0,arrayCells.length)]; */
                 let cell = getRandomCell(cashCell.i,cashCell.j);
                 if (cell != false){
                     cell.contains = new Unit(unit,gameSettings.turnOwner,false);
@@ -379,6 +372,9 @@ function Save(){
         });
     });
     saveString += cellsString;
+    clipboardCopy(saveString);
+    //navigator.clipboard.writeText(saveString);
+    //copyClipBoardString(saveString);
     alert (saveString);
 }
 function Load(){
