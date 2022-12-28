@@ -1,4 +1,9 @@
 "use strict";
+//player colors
+//red blue orange purple
+const colorPlayers = ['#fc9393', '#9393fc', '#fcb64d', '#b64dfc', '#1dc304', '#eeff2f'];
+//colors cursors?
+const colorCursor = ['2px solid white','2px solid blue', '2px solid red','2px solid #00ff00'];
 let idIndex = 1;
 const players = new Array();
 const gameSettings = {
@@ -25,10 +30,10 @@ class Kingdom {
         this.name = 'Kingdom';
         this.t1 = ['unit','t1','Peasant','description',1,1,1,1,0,['worker'],"img/units/KingdomT1.png",'Townhall'];
         this.t2 = ['unit','t2','Scout','description',1,1,2,1,1,[],"img/units/KingdomT2.png",'Townhall'];
-        this.t3 = ['unit','t3','Knight','description',3,1,1,1,2,[],"img/units/swordsman.png",'Tower'];
+        this.t3 = ['unit','t3','Knight','description',3,1,1,1,2,[],"img/units/KingdomT3.png",'Tower'];
         this.warchief = ['unit','warchief','Lord','description',4,1,2,1,5,['cavalryStrike'],"img/units/KingdomWarchief.png",'Tower'];
-        this.townhall = ['building','townhall','Townhall','description',5,0,0,0,5,['hire'],"img/units/citadel.png"];
-        this.tower = ['building','tower','Tower','description',3,1,0,2,3,['hire'],"img/units/Tower.png"];
+        this.townhall = ['building','townhall','Townhall','description',5,0,0,0,4,['hire'],"img/units/KingdomTownhall.png"];
+        this.tower = ['building','tower','Tower','description',3,1,0,2,3,['hire'],"img/units/KingdomTower.png"];
     }
     start(owner) {
         players[owner].gold +=2;
@@ -112,14 +117,8 @@ class Building{
 
 
 // DELETE HIR AFTER 
-function mapMaker(num){
+function mapMaker2(num){
     if(num == 1){
-        gameField[7][0].resCount = 10;
-        gameField[0][7].resCount = 10;
-        gameField[0][3].resCount = 10;
-        gameField[2][0].resCount = 10;
-        gameField[7][4].resCount = 10;
-        gameField[5][7].resCount = 10;
         gameField[6][1].contains = new Building(players[1].faction.townhall,1,true);
         gameField[1][6].contains = new Building(players[2].faction.townhall,2,true);
         gameField[6][2].contains = new Unit(players[1].faction.t1,1,true);
@@ -128,16 +127,7 @@ function mapMaker(num){
         gameField[1][5].contains = new Unit(players[2].faction.t1,2,true);
         gameField[5][2].contains = new Unit(players[1].faction.t2,1,true);
         gameField[2][5].contains = new Unit(players[2].faction.t2,2,true);
-        gameField[0][0].mountains = true;
-        gameField[0][1].mountains = true;
-        gameField[1][0].mountains = true;
-        gameField[2][4].mountains = true;
-        gameField[3][7].mountains = true;
-        gameField[4][0].mountains = true;
-        gameField[5][3].mountains = true;
-        gameField[6][7].mountains = true;
-        gameField[7][6].mountains = true;
-        gameField[7][7].mountains = true;
+        
     }
     else if(num == 2){
         gameField[7][7].contains = new Building(players[1].faction.townhall,1,true);
@@ -181,18 +171,7 @@ function mapMaker(num){
         gameField[2][7].contains = new Building(players[2].faction.townhall,2,true);
         gameField[7][5].contains = new Building(players[3].faction.townhall,3,true);
         gameField[5][0].contains = new Building(players[4].faction.townhall,4,true);
-        gameField[0][0].resCount = 10;
-        gameField[0][7].resCount = 10;
-        gameField[7][0].resCount = 10;
-        gameField[7][7].resCount = 10;
-        gameField[0][4].resCount = 10;
-        gameField[3][0].resCount = 10;
-        gameField[4][7].resCount = 10;
-        gameField[7][3].resCount = 10;
-        gameField[2][4].mountains = true;
-        gameField[3][2].mountains = true;
-        gameField[4][5].mountains = true;
-        gameField[5][3].mountains = true;
+        
     }else if(num == 4){
         players[1].gold += 5;
         players[2].gold += 5;

@@ -1,5 +1,5 @@
 <a href="index.php">назад</a>
-<button onclick="newGameGenerate('new')">Новая игра</button>
+<button onclick="newGameConfirm()">Новая игра</button>
 <!-- <button onclick="update()">Обновить</button> -->
 <button id="btnEndTurn" onclick="endTurn()">Закончить ход</button>
 <button onclick="Save()">Сохранить</button>
@@ -37,4 +37,36 @@
         <li id="li_attackUnit"></li>
         <li id="li_moveUnit"></li>
     </ul>
+</div>
+
+
+
+<div class="dialog-block">
+    <div class="dialog-form">
+        <h4>Введите параметры новой игры</h4>
+        <!-- <form name="formNewGame" action=""> -->
+            <label>Выберите тип игры</label>
+            <select id="selectGameType" name="gameType"> 
+                <option value="classic">Classic</option> 
+                <option value="fast">Fast</option> 
+                <option value="nomad">Nomad</option> 
+            </select>
+            <br>
+            <label>Выберите карту</label>
+            <select id="selectGameMap" name="gameMap" onchange="selectMapType(this.value)"> 
+                <option value="lr">Last Refuge</option>
+                <option value="gm">Golden Mountains</option>
+                <option value="lt">Lost Temple</option>
+                <option value="cg">Centour Grove</option>
+                <option value="gn">Gold Nothing</option>
+                <option value="rnd">Random</option>
+            </select>
+            
+            <label>Выберите количество игроков</label>
+            <input name="gamePlayers" id="inputRangePlayers" type="range" min="1" max="6" step="1" value="2" onchange="document.getElementById('countRangeDisplay').textContent=this.value"> 
+            <label id="countRangeDisplay"></label>
+            <br>
+            <button onclick="newGameGenerate()">Начать</button>
+        <!-- </form> -->
+    </div>
 </div>

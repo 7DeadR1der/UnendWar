@@ -1,35 +1,59 @@
 "use strict"
-//player colors
-//red blue orange purple
-const colorPlayers = ['#fc9393', '#9393fc', '#fcb64d', '#b64dfc'];
-//colors cursors?
-const colorCursor = ['2px solid white','2px solid blue', '2px solid red','2px solid #00ff00'];
+
+function newGameConfirm(){
+    if(confirm('Вы уверены, что хотите начать новую игру?')){
+        let dialog = document.getElementsByClassName('dialog-block')[0];
+        dialog.style.opacity = '1';
+        dialog.style.pointerEvents = 'auto';
+    }
+}
+
+function selectMapType(val){
+    if(val=='lr' || val=='gm'){
+        document.getElementById('inputRangePlayers').max = "2";
+        document.getElementById('inputRangePlayers').value = "2";
+    }else if(val=='lt' || val=='cg'){
+        document.getElementById('inputRangePlayers').max = "4";
+        document.getElementById('inputRangePlayers').value = "2";
+    }else {
+        document.getElementById('inputRangePlayers').max = "6";
+        document.getElementById('inputRangePlayers').value = "2";
+    }
+    document.getElementById('countRangeDisplay').textContent='2';
+}
 
 //document.getElementById('btnCancel').style.opacity = '0';
 let gameField = new Array(8);
-/*async*/ function newGameGenerate(type){
-    if(confirm('Вы уверены, что хотите начать новую игру?')){
-        gameSettings.turnOwner = 1;
-        //new players
-        //let countPlayers = prompt('1 или 2 игрока? вводить число', '')
-        //let countPlayers = 2;
-        let factionType = 'Kingdom';
-        let result=null;
-        while(result==null || (result!=1 && result!=2 && result!=3 && result!=4))
-        result = prompt('Выберите карту (Введите цифру): 1)LastRefuge(1х1) 2)Classic(1x1) 3)LostTemple(4 ffa) 4)CentourGrove(4 ffa)');
-        let countPlayers = (result == 3 || result == 4) ? 4 : 2;
-        for (let k = 1; k<=countPlayers; k++){
-            let name = prompt('Введите имя игрока '+ k, '');
-            players[k] = new Player(name, k,factionType);
-            players[k].faction.start(k);
-        }
-        
-        //Generate Game Field
-        generateGameField();
-        //create townhalls and peasants
-        mapMaker(result);
-        update();
+/*async*/ function newGameGenerate(){
+    
+    //event.preventDefault();
+    let dialog = document.getElementsByClassName('dialog-block')[0];
+    dialog.style.opacity = '0';
+    dialog.style.pointerEvents = 'none';
+
+    let type = document.getElementById('selectGameType').value;
+    let map = document.getElementById('selectGameMap').value;
+    let count = document.getElementById('inputRangePlayers').value;
+    gameSettings.turnOwner = 1;
+    //new players
+    //let countPlayers = prompt('1 или 2 игрока? вводить число', '')
+    //let countPlayers = 2;
+    let factionType = 'Kingdom';
+    /*let result=null;
+    while(result==null || (result!=1 && result!=2 && result!=3 && result!=4))
+    result = prompt('Выберите карту (Введите цифру): 1)LastRefuge(1х1) 2)Classic(1x1) 3)LostTemple(4 ffa) 4)CentourGrove(4 ffa)');
+    let countPlayers = (result == 3 || result == 4) ? 4 : 2;*/
+    for (let k = 1; k<=count; k++){
+        let name = prompt('Введите имя игрока '+ k, '');
+        players[k] = new Player(name, k,factionType);
+        players[k].faction.start(k);
     }
+    
+    //Generate Game Field
+    generateGameField();
+    //create townhalls and peasants
+    mapMaker(type, map,count);
+    update();
 }
 function generateGameField(){
     document.querySelector('div.gridGameField').innerHTML = '';
@@ -52,6 +76,164 @@ function generateGameField(){
             document.querySelector('div.gridGameField').appendChild(cellAdd);
         }
         gameField[i] = gameRows;
+    }
+}
+
+function mapMaker(type,map,count){
+    let startPosition = [];
+    switch (map){
+        case 'lr':
+            gameField[7][0].resCount = 10;
+            gameField[0][7].resCount = 10;
+            gameField[0][3].resCount = 10;
+            gameField[2][0].resCount = 10;
+            gameField[7][4].resCount = 10;
+            gameField[5][7].resCount = 10;
+            gameField[0][0].mountains = true;
+            gameField[0][1].mountains = true;
+            gameField[1][0].mountains = true;
+            gameField[2][4].mountains = true;
+            gameField[3][7].mountains = true;
+            gameField[4][0].mountains = true;
+            gameField[5][3].mountains = true;
+            gameField[6][7].mountains = true;
+            gameField[7][6].mountains = true;
+            gameField[7][7].mountains = true;
+            startPosition.push(gameField[6][1]);
+            startPosition.push(gameField[1][6]);
+            break;
+        case 'lt':
+            gameField[0][0].resCount = 10;
+            gameField[0][7].resCount = 10;
+            gameField[7][0].resCount = 10;
+            gameField[7][7].resCount = 10;
+            gameField[0][4].resCount = 10;
+            gameField[3][0].resCount = 10;
+            gameField[4][7].resCount = 10;
+            gameField[7][3].resCount = 10;
+            gameField[2][4].mountains = true;
+            gameField[3][2].mountains = true;
+            gameField[4][5].mountains = true;
+            gameField[5][3].mountains = true;
+            startPosition.push(gameField[0][2]);
+            startPosition.push(gameField[2][7]);
+            startPosition.push(gameField[7][5]);
+            startPosition.push(gameField[5][0]);
+            break;
+        case 'gm':
+            gameField[0][2].resCount = 10;
+            gameField[4][0].resCount = 10;
+            gameField[0][7].resCount = 10;
+            gameField[5][7].resCount = 10;
+            gameField[7][3].resCount = 10;
+            gameField[7][0].mountains = true;
+            gameField[6][0].mountains = true;
+            gameField[7][1].mountains = true;
+            gameField[0][3].mountains = true;
+            gameField[0][4].mountains = true;
+            gameField[0][5].mountains = true;
+            gameField[1][3].mountains = true;
+            gameField[1][4].mountains = true;
+            gameField[2][7].mountains = true;
+            gameField[3][6].mountains = true;
+            gameField[3][7].mountains = true;
+            gameField[4][6].mountains = true;
+            gameField[4][7].mountains = true;
+            gameField[3][1].mountains = true;
+            gameField[4][1].mountains = true;
+            gameField[4][2].mountains = true;
+            gameField[5][2].mountains = true;
+            gameField[5][3].mountains = true;
+            gameField[6][3].mountains = true;
+            gameField[6][4].mountains = true;
+            startPosition.push(gameField[1][0]);
+            startPosition.push(gameField[7][6]);
+            break;
+        case 'cg':
+            gameField[0][0].resCount = 15;
+            gameField[0][7].resCount = 15;
+            gameField[7][0].resCount = 15;
+            gameField[7][7].resCount = 15;
+            gameField[3][3].resCount = 15;
+            gameField[4][4].resCount = 15;
+            gameField[0][2].mountains = true;
+            gameField[1][6].mountains = true;
+            gameField[2][0].mountains = true;
+            gameField[3][4].mountains = true;
+            gameField[4][3].mountains = true;
+            gameField[5][7].mountains = true;
+            gameField[6][1].mountains = true;
+            gameField[7][5].mountains = true;
+            startPosition.push(gameField[3][0]);
+            startPosition.push(gameField[0][3]);
+            startPosition.push(gameField[4][7]);
+            startPosition.push(gameField[7][4]);
+            break;
+        case 'gn':
+            gameField.forEach(row => {
+                row.forEach(cell => {
+                    cell.resCount = 3;
+                });
+            });
+            startPosition.push(gameField[0][0]);
+            startPosition.push(gameField[0][4]);
+            startPosition.push(gameField[2][7]);
+            startPosition.push(gameField[5][0]);
+            startPosition.push(gameField[7][3]);
+            startPosition.push(gameField[7][7]);
+            break;
+        case 'rnd':
+            break;
+        default:
+            break;
+    }
+    console.log(startPosition);
+    playerMaker(type,startPosition,count);
+}
+
+function playerMaker(type,array,count){
+    let n = count;
+    let l = array.length;
+    for(let i=0;i<l;i++){
+        if(n>0){
+            let k = getRandomInt(0,array.length);
+            array[k].resCount = 0;
+            switch(type){
+                case 'classic':
+                    array[k].contains = new Building(players[i+1].faction.townhall,i+1,true);
+                    break;
+                case 'nomad':
+                    array[k].contains = new Unit(players[i+1].faction.t1,i+1,true);
+                    players[i+1].gold += 4; 
+                    break;
+                case 'fast':
+                    array[k].contains = new Building(players[i+1].faction.townhall,i+1,true);
+                    let v = 0;
+                    let w = 0;
+                    if(array[k].row<4 && array[k].column<4){
+                        v = 1;
+                        w = 1;
+                    }else if(array[k].row<4 && array[k].column>3){
+                        v = 1;
+                        w = -1;
+                    }else if(array[k].row>3 && array[k].column<4){
+                        v = -1;
+                        w = 1;
+                    }else {
+                        v = -1;
+                        w = -1;
+                    }
+
+                    gameField[array[k].row+v][array[k].column].contains = new Unit(players[i+1].faction.t1,i+1,true)
+                    gameField[array[k].row][array[k].column+w].contains = new Unit(players[i+1].faction.t1,i+1,true)
+                    gameField[array[k].row+v][array[k].column+w].contains = new Unit(players[i+1].faction.t2,i+1,true)
+                    break;
+                default:
+                    break;
+            }
+            n--;
+            array.splice(k,1);
+        }
     }
 }
 
@@ -107,7 +289,8 @@ function update(){
                 }else{
                     document.getElementById(`${i}-${j}`).setAttribute('src',"img/null.png");
                     if (gameField[i][j].resCount > 0){
-                        document.getElementById(`${i}-${j}`).style.backgroundColor = 'yellow';
+                        document.getElementById(`${i}-${j}`).setAttribute('src',"img/goldOre.png");
+                        document.getElementById(`${i}-${j}`).style.backgroundColor = '#aacd95';
                     }else document.getElementById(`${i}-${j}`).style.backgroundColor = '#aacd95';
                 }
             }
