@@ -85,7 +85,7 @@ function pressCell(i,j){
         gameField[i][j].contains.hp +=1;
         cashUnit.canAction = false;
         cancel();
-    }else if(turnFlag == 1 && gameField[i][j] == gameField[cashCell.i][cashCell.j]){//
+    }else if(turnFlag == 1 && (gameField[i][j] == gameField[cashCell.i][cashCell.j] || gameField[i][j].contains == undefined || (gameField[i][j].availability == false && gameField[i][j].contains.owner == gameSettings.turnOwner))){//
         cancel();//отмена путем нажатия на туже клетку что и в первый раз
     }
     //cell desc
@@ -114,7 +114,7 @@ function lvlUp(playerLvlUp){
     players[playerLvlUp].level += 1;
     let skillsChoise = new Array(2);
     while(skillsPoint <2){
-        let randomSkill = gameSettings.skills[getRandomInt(0,6)];
+        let randomSkill = gameSettings.skills[getRandomInt(0,gameSettings.skills.length)];
         if(!players[playerLvlUp].skills.includes(randomSkill,0)){
             if (skillsChoise[0] != randomSkill && randomSkill == gameSettings.skills[1] && players[playerLvlUp].skills.includes(gameSettings.skills[0],0)){
                 skillsChoise[skillsPoint] = randomSkill;
@@ -167,6 +167,20 @@ function skillAdd(skill, owner, obj){
             players[owner].gold += 4;
             break;
         case gameSettings.skills[5]: //Estates II - +1 gold every turn
+            break;
+        case gameSettings.skills[6]: //Engineering- +1 hp to all building
+            players[owner].faction.townhall[4] +=1;
+            players[owner].faction.tower[4] +=1;
+            gameField.forEach(row => {
+                row.forEach(cell => {
+                    if(cell.contains != undefined){
+                        if(cell.contains.type == 'building' && cell.contains.owner == owner){
+                            cell.contains.hp += 1;
+                            cell.contains.hpMax += 1;
+                        }
+                    }
+                });
+            });
             break;
         default:
             break;

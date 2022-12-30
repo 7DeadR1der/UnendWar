@@ -15,6 +15,7 @@ if (isset($_GET['page'])) {
 <body>
 <script src="js/class.js"></script>
 <script src="js/functionsFile.js"></script>
+<script src="js/gameMaps.js"></script>
 <script src="js/game.js"></script>
     <?php 
         switch($page){
@@ -30,8 +31,11 @@ if (isset($_GET['page'])) {
                 
                 break;
 
-            case "about":
-                include("page/about.html");
+            case "about_game":
+                include("page/about_game.html");
+                break;
+            case "authors":
+                include("page/authors.html");
                 break;
 
             default:

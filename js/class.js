@@ -1,7 +1,7 @@
 "use strict";
 //player colors
 //red blue orange purple
-const colorPlayers = ['#fc9393', '#9393fc', '#fcb64d', '#b64dfc', '#1dc304', '#eeff2f'];
+const colorPlayers = ['#fc9393', '#60c0ff', '#54fd7a', '#e3f054', '#ffae58', '#f190ff'];
 //colors cursors?
 const colorCursor = ['2px solid white','2px solid blue', '2px solid red','2px solid #00ff00'];
 let idIndex = 1;
@@ -9,8 +9,8 @@ const players = new Array();
 const gameSettings = {
     turnOwner: 0,
     level1: 5,
-    level2: 10,
-    level3: 15,
+    level2: 15,
+    level3: 30,
     limit_workers : 6,
     limit_army : 4,
     limit_warchiefs : 1,
@@ -23,7 +23,8 @@ const gameSettings = {
         {name:'Pathfinder', description:'Увеличивает скорость Вождя на 1'},
         {name:'Surgery', description:'Позволяет вождю лечить себя или союзников'},
         {name:'Estates I', description:'Единовременно дает 4 золота'},
-        {name:'Estates II', description:'Каждый ход дает 1 золото'}]
+        {name:'Estates II', description:'Каждый ход дает 1 золото'},
+        {name:'Engineering', description:'Все здания получают +1 к прочности'}]
 };
 class Kingdom {
     constructor(){
@@ -40,6 +41,18 @@ class Kingdom {
         //this.gold += 2;
     };
 };
+
+class SeaMercs {
+    constructor(){
+        this.name = 'Kingdom';
+        this.t1 = ['unit','t1','Robber','description',1,1,1,1,0,['worker'],"img/units/SeaMercsT1.png",'Townhall'];
+        this.t2 = ['unit','t2','Rider','description',1,1,2,1,1,['pillage'],"img/units/SeamercsT2.png",'Townhall'];
+        this.t3 = ['unit','t3','Merc','description',3,1,1,1,2,[],"img/units/SeamercsT3.png",'Tower'];
+        this.warchief = ['unit','warchief',' Hersir','description',4,1,1,1,4,['regeneration'],"img/units/SeamercsWarchief.png",'Tower'];
+        this.townhall = ['building','townhall','Townhall','description',5,0,0,0,4,['hire'],"img/units/SeamercsTownhall.png"];
+        this.tower = ['building','tower','Tower','description',3,1,0,2,3,['hire'],"img/units/SeamercsTower.png"];
+    }
+}
 
 
 
@@ -62,8 +75,8 @@ class Player{
             case ('Kingdom'):
                 this.faction = new Kingdom();
                 break;
-            case ('SeaMercenaries'):
-                //this.faction = new Kingdom();
+            case ('SeaMercs'):
+                this.faction = new SeaMercs();
                 break;
             default:
                 break;

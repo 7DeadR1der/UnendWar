@@ -9,17 +9,9 @@ function newGameConfirm(){
 }
 
 function selectMapType(val){
-    if(val=='lr' || val=='gm'){
-        document.getElementById('inputRangePlayers').max = "2";
-        document.getElementById('inputRangePlayers').value = "2";
-    }else if(val=='lt' || val=='cg'){
-        document.getElementById('inputRangePlayers').max = "4";
-        document.getElementById('inputRangePlayers').value = "2";
-    }else {
-        document.getElementById('inputRangePlayers').max = "6";
-        document.getElementById('inputRangePlayers').value = "2";
-    }
-    document.getElementById('countRangeDisplay').textContent='2';
+    document.getElementById('countRangeDisplay').textContent=val[0];
+    document.getElementById('inputRangePlayers').max = val[0];
+    document.getElementById('inputRangePlayers').value = val[0];
 }
 
 //document.getElementById('btnCancel').style.opacity = '0';
@@ -79,117 +71,6 @@ function generateGameField(){
     }
 }
 
-function mapMaker(type,map,count){
-    let startPosition = [];
-    switch (map){
-        case 'lr':
-            gameField[7][0].resCount = 10;
-            gameField[0][7].resCount = 10;
-            gameField[0][3].resCount = 10;
-            gameField[2][0].resCount = 10;
-            gameField[7][4].resCount = 10;
-            gameField[5][7].resCount = 10;
-            gameField[0][0].mountains = true;
-            gameField[0][1].mountains = true;
-            gameField[1][0].mountains = true;
-            gameField[2][4].mountains = true;
-            gameField[3][7].mountains = true;
-            gameField[4][0].mountains = true;
-            gameField[5][3].mountains = true;
-            gameField[6][7].mountains = true;
-            gameField[7][6].mountains = true;
-            gameField[7][7].mountains = true;
-            startPosition.push(gameField[6][1]);
-            startPosition.push(gameField[1][6]);
-            break;
-        case 'lt':
-            gameField[0][0].resCount = 10;
-            gameField[0][7].resCount = 10;
-            gameField[7][0].resCount = 10;
-            gameField[7][7].resCount = 10;
-            gameField[0][4].resCount = 10;
-            gameField[3][0].resCount = 10;
-            gameField[4][7].resCount = 10;
-            gameField[7][3].resCount = 10;
-            gameField[2][4].mountains = true;
-            gameField[3][2].mountains = true;
-            gameField[4][5].mountains = true;
-            gameField[5][3].mountains = true;
-            startPosition.push(gameField[0][2]);
-            startPosition.push(gameField[2][7]);
-            startPosition.push(gameField[7][5]);
-            startPosition.push(gameField[5][0]);
-            break;
-        case 'gm':
-            gameField[0][2].resCount = 10;
-            gameField[4][0].resCount = 10;
-            gameField[0][7].resCount = 10;
-            gameField[5][7].resCount = 10;
-            gameField[7][3].resCount = 10;
-            gameField[7][0].mountains = true;
-            gameField[6][0].mountains = true;
-            gameField[7][1].mountains = true;
-            gameField[0][3].mountains = true;
-            gameField[0][4].mountains = true;
-            gameField[0][5].mountains = true;
-            gameField[1][3].mountains = true;
-            gameField[1][4].mountains = true;
-            gameField[2][7].mountains = true;
-            gameField[3][6].mountains = true;
-            gameField[3][7].mountains = true;
-            gameField[4][6].mountains = true;
-            gameField[4][7].mountains = true;
-            gameField[3][1].mountains = true;
-            gameField[4][1].mountains = true;
-            gameField[4][2].mountains = true;
-            gameField[5][2].mountains = true;
-            gameField[5][3].mountains = true;
-            gameField[6][3].mountains = true;
-            gameField[6][4].mountains = true;
-            startPosition.push(gameField[1][0]);
-            startPosition.push(gameField[7][6]);
-            break;
-        case 'cg':
-            gameField[0][0].resCount = 15;
-            gameField[0][7].resCount = 15;
-            gameField[7][0].resCount = 15;
-            gameField[7][7].resCount = 15;
-            gameField[3][3].resCount = 15;
-            gameField[4][4].resCount = 15;
-            gameField[0][2].mountains = true;
-            gameField[1][6].mountains = true;
-            gameField[2][0].mountains = true;
-            gameField[3][4].mountains = true;
-            gameField[4][3].mountains = true;
-            gameField[5][7].mountains = true;
-            gameField[6][1].mountains = true;
-            gameField[7][5].mountains = true;
-            startPosition.push(gameField[3][0]);
-            startPosition.push(gameField[0][3]);
-            startPosition.push(gameField[4][7]);
-            startPosition.push(gameField[7][4]);
-            break;
-        case 'gn':
-            gameField.forEach(row => {
-                row.forEach(cell => {
-                    cell.resCount = 3;
-                });
-            });
-            startPosition.push(gameField[0][0]);
-            startPosition.push(gameField[0][4]);
-            startPosition.push(gameField[2][7]);
-            startPosition.push(gameField[5][0]);
-            startPosition.push(gameField[7][3]);
-            startPosition.push(gameField[7][7]);
-            break;
-        case 'rnd':
-            break;
-        default:
-            break;
-    }
-    console.log(startPosition);
-    playerMaker(type,startPosition,count);
-}
 
 function playerMaker(type,array,count){
     let n = count;
@@ -284,14 +165,14 @@ function update(){
             }else{
                 if(gameField[i][j].mountains == true){
                     document.getElementById(`${i}-${j}`).setAttribute('src',"img/mountains.png");
-                    document.getElementById(`${i}-${j}`).style.backgroundColor = '#aacd95';
+                    document.getElementById(`${i}-${j}`).style.backgroundColor = '#b1c37b';
                     titleText = 'Горы, непроходимая клетка';
                 }else{
                     document.getElementById(`${i}-${j}`).setAttribute('src',"img/null.png");
                     if (gameField[i][j].resCount > 0){
                         document.getElementById(`${i}-${j}`).setAttribute('src',"img/goldOre.png");
-                        document.getElementById(`${i}-${j}`).style.backgroundColor = '#aacd95';
-                    }else document.getElementById(`${i}-${j}`).style.backgroundColor = '#aacd95';
+                        document.getElementById(`${i}-${j}`).style.backgroundColor = '#b1c37b';
+                    }else document.getElementById(`${i}-${j}`).style.backgroundColor = '#b1c37b';
                 }
             }
             //document.getElementById(`${i}-${j}`).removeAttribute('style');
