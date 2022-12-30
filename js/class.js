@@ -29,12 +29,12 @@ const gameSettings = {
 class Kingdom {
     constructor(){
         this.name = 'Kingdom';
-        this.t1 = ['unit','t1','Peasant','description',1,1,1,1,0,['worker'],"img/units/KingdomT1.png",'Townhall'];
-        this.t2 = ['unit','t2','Scout','description',1,1,2,1,1,[],"img/units/KingdomT2.png",'Townhall'];
-        this.t3 = ['unit','t3','Knight','description',3,1,1,1,2,[],"img/units/KingdomT3.png",'Tower'];
-        this.warchief = ['unit','warchief','Lord','description',4,1,2,1,5,['cavalryStrike'],"img/units/KingdomWarchief.png",'Tower'];
-        this.townhall = ['building','townhall','Townhall','description',5,0,0,0,4,['hire'],"img/units/KingdomTownhall.png"];
-        this.tower = ['building','tower','Tower','description',3,1,0,2,3,['hire'],"img/units/KingdomTower.png"];
+        this.t1 = ['unit','t1','Peasant','Обычный житель, готовый в случае опасности встать на защиту Королевства. Способен собирать ресурсы и строить здания',1,1,1,1,0,['worker'],"img/units/KingdomT1.png",'Townhall'];
+        this.t2 = ['unit','t2','Scout','Разведчик Королевства. Быстро передвигается засчет своего коня.',1,1,2,1,1,[],"img/units/KingdomT2.png",'Townhall'];
+        this.t3 = ['unit','t3','Knight','Основная армия Королевства. Благодаря своему обмундированию способен пережить не одну атаку.',3,1,1,1,2,[],"img/units/KingdomT3.png",'Tower'];
+        this.warchief = ['unit','warchief','Lord','Лидер Королевства. Очень силен. Обладает способностью "Кавалерийский удар", удар после движения наносит х1.5 урон.',4,1,2,1,5,['cavalryStrike'],"img/units/KingdomWarchief.png",'Tower'];
+        this.townhall = ['building','townhall','Townhall','Крепкая крепость Королевства. Можно нанимать Крестьян и Всадников.',5,0,0,0,4,['hire'],"img/units/KingdomTownhall.png"];
+        this.tower = ['building','tower','Tower','Крепкая крепость Королевства. Можно нанимать Крестьян и Всадников.',3,1,0,2,3,['hire'],"img/units/KingdomTower.png"];
     }
     start(owner) {
         players[owner].gold +=2;
