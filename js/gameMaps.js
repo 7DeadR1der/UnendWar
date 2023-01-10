@@ -264,6 +264,6 @@ function mapMaker(type,map,count){
         default:
             break;
     }
-    console.log(startPosition);
+    //console.log(startPosition);
     playerMaker(type,startPosition,count);
 }

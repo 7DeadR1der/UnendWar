@@ -1,78 +1,79 @@
-<a href="index.php">назад</a>
-<button onclick="newGameConfirm()">Новая игра</button>
-<!-- <button onclick="update()">Обновить</button> -->
-<button id="btnEndTurn" onclick="endTurn()">Закончить ход</button>
-<button onclick="Save()">Сохранить</button>
-<button onclick="Load()">Загрузить</button>
-<div class="gridGameField">
-</div>
-<div id="panelBtns">
-    <button id="btnCancel" onclick="cancel()" style="display: none">Отмена</button>
-    <button id="btnBuildTownhall" onclick="build('townhall')" style="display: none">Построить Townhall</button>
-    <button id="btnBuildTower" onclick="build('tower')" style="display: none">Построить Tower</button>
-    <button id="btnBuyT1" onclick="buyUnit('t1')" style="display: none">Нанять T1</button>
-    <button id="btnBuyT2" onclick="buyUnit('t2')" style="display: none">Нанять T2</button>
-    <button id="btnBuyT3" onclick="buyUnit('t3')" style="display: none">Нанять T3</button>
-    <button id="btnBuyWarchief" onclick="buyUnit('warchief')" style="display: none">Нанять Warchief</button>
-    <button id="btnSurgeryHeal" onclick="heal('surgery')" style="display: none">Лечение</button>
-</div>
-<div id="panelInfo">
-    <ul id="list_player">
-        <li id="li_PlayerName"></li>
-        <li id="li_PlayerGold"></li>
-        <li id="li_PlayerLevel"></li>
-        <li id="li_PlayerExp"></li>
-        <li id="li_limit_workers"></li>
-        <li id="li_limit_army"></li>
-        <li id="li_limit_warchiefs"></li>
-        <li id="li_limit_townhalls"></li>
-        <li id="li_limit_towers"></li>
-    </ul>
-    <ul id="list_cell">
-        <li id="li_goldCell"></li>
-        <li id="li_nameUnit"></li>
-        <li id="li_descriptionUnit"></li>
-        <li id="li_ownerUnit"></li>
-        <li id="li_hpUnit"></li>
-        <li id="li_attackUnit"></li>
-        <li id="li_moveUnit"></li>
-    </ul>
-</div>
 
-
-
-<div class="dialog-block">
-    <div class="dialog-form">
-        <h4>Введите параметры новой игры</h4>
-        <!-- <form name="formNewGame" action=""> -->
-            <label>Выберите тип игры</label>
-            <select id="selectGameType" name="gameType"> 
-                <option value="classic">Classic</option> 
-                <option value="fast">Fast</option> 
-                <option value="nomad">Nomad</option> 
-            </select>
-            <br>
-            <label>Выберите карту</label>
-            <select id="selectGameMap" name="gameMap" onchange="selectMapType(this.value)"> 
-                <option value="2lr">Last Refuge</option>
-                <option value="2gm">Golden Mountains</option>
-                <option value="2lm">Lonely Mountain</option>
-                <option value="2mc">Meeting Cave</option>
-                <option value="2or">One Road</option>
-                <option value="2wp">Windy Peaks</option>
-                <option value="4s">Socotra</option>
-                <option value="4lt">Lost Temple</option>
-                <option value="4cg">Centour Grove</option>
-                <option value="6gw">Gnoll Wood</option>
-                <option value="6gn">Gold Nothing</option>
-                <option value="6rnd">Random</option>
-            </select>
-            
-            <label>Выберите количество игроков</label>
-            <input name="gamePlayers" id="inputRangePlayers" type="range" min="1" max="6" step="1" value="2" onchange="document.getElementById('countRangeDisplay').textContent=this.value"> 
-            <label id="countRangeDisplay"></label>
-            <br>
-            <button onclick="newGameGenerate()">Начать</button>
-        <!-- </form> -->
+    <a href="index.php">назад</a>
+    <button onclick="newGameConfirm()">Новая игра</button>
+    <!-- <button onclick="update()">Обновить</button> -->
+    <button id="btnEndTurn" onclick="endTurn()">Закончить ход</button>
+    <button onclick="Save()">Сохранить</button>
+    <button onclick="Load()">Загрузить</button>
+    <div class="gridGameField">
     </div>
-</div>
+    <div id="panelBtns">
+        <button id="btnCancel" onclick="cancel()" style="display: none">Отмена</button>
+        <button id="btnBuildTownhall" onclick="build('townhall')" style="display: none">Построить Townhall</button>
+        <button id="btnBuildTower" onclick="build('tower')" style="display: none">Построить Tower</button>
+        <button id="btnBuyT1" onclick="buyUnit('t1')" style="display: none">Нанять T1</button>
+        <button id="btnBuyT2" onclick="buyUnit('t2')" style="display: none">Нанять T2</button>
+        <button id="btnBuyT3" onclick="buyUnit('t3')" style="display: none">Нанять T3</button>
+        <button id="btnBuyWarchief" onclick="buyUnit('warchief')" style="display: none">Нанять Warchief</button>
+        <button id="btnSurgeryHeal" onclick="heal('surgery')" style="display: none">Лечение</button>
+    </div>
+    <div id="panelInfo">
+        <ul id="list_player">
+            <li id="li_PlayerName"></li>
+            <li id="li_PlayerGold"></li>
+            <li id="li_PlayerLevel"></li>
+            <li id="li_PlayerExp"></li>
+            <li id="li_limit_workers"></li>
+            <li id="li_limit_army"></li>
+            <li id="li_limit_warchiefs"></li>
+            <li id="li_limit_townhalls"></li>
+            <li id="li_limit_towers"></li>
+        </ul>
+        <ul id="list_cell">
+            <li id="li_goldCell"></li>
+            <li id="li_nameUnit"></li>
+            <li id="li_descriptionUnit"></li>
+            <li id="li_ownerUnit"></li>
+            <li id="li_hpUnit"></li>
+            <li id="li_attackUnit"></li>
+            <li id="li_moveUnit"></li>
+        </ul>
+    </div>
+
+
+
+    <div class="dialog-block">
+        <div class="dialog-form">
+            <h4>Введите параметры новой игры</h4>
+            <!-- <form name="formNewGame" action=""> -->
+                <label>Выберите тип игры</label>
+                <select id="selectGameType" name="gameType"> 
+                    <option value="classic">Classic</option> 
+                    <option value="fast">Fast</option> 
+                    <option value="nomad">Nomad</option> 
+                </select>
+                <br>
+                <label>Выберите карту</label>
+                <select id="selectGameMap" name="gameMap" onchange="selectMapType(this.value)"> 
+                    <option value="2lr">(2)Last Refuge</option>
+                    <option value="2gm">(2)Golden Mountains</option>
+                    <option value="2lm">(2)Lonely Mountain</option>
+                    <option value="2mc">(2)Meeting Cave</option>
+                    <option value="2or">(2)One Road</option>
+                    <option value="2wp">(2)Windy Peaks</option>
+                    <option value="4s">(4)Socotra</option>
+                    <option value="4lt">(4)Lost Temple</option>
+                    <option value="4cg">(4)Centour Grove</option>
+                    <option value="6gw">(6)Gnoll Wood</option>
+                    <option value="6gn">(6)Gold Nothing</option>
+                    <option value="6rnd">Random</option>
+                </select>
+                
+                <label>Выберите количество игроков</label>
+                <input name="gamePlayers" id="inputRangePlayers" type="range" min="1" max="6" step="1" value="2" onchange="document.getElementById('countRangeDisplay').textContent=this.value"> 
+                <label id="countRangeDisplay"></label>
+                <br>
+                <button onclick="newGameGenerate()">Начать</button>
+            <!-- </form> -->
+        </div>
+    </div>

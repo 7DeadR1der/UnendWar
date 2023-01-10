@@ -264,8 +264,6 @@ function buyUnit(typeUnit){ // Покупка юнитов
             }    
         }else alert('недостаточно денег, надо ' + unit[8])
     }else alert('лимит юнитов достигнут')
-    
-         
 }
 function heal(type){
     if (type == 'surgery'){
@@ -362,7 +360,7 @@ function Save(){
             saveString += `${player.level}` + locSep;
             saveString += `${player.exp}` + locSep;
             player.skills.forEach(skill => {
-                saveString += `${skill}` + ',';
+                saveString += `${skill.name}` + ',';
             });
         }else saveString += 'null';
         saveString += '*';

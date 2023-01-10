@@ -1,7 +1,7 @@
 "use strict";
 //player colors
-//red blue orange purple
-const colorPlayers = ['#fc9393', '#60c0ff', '#54fd7a', '#e3f054', '#ffae58', '#f190ff'];
+//red blue orange purple green yellow
+const colorPlayers = ['#fc9393', '#60c0ff', '#ffae58', '#f190ff', '#54fd7a', '#e3f054'];
 //colors cursors?
 const colorCursor = ['2px solid white','2px solid blue', '2px solid red','2px solid #00ff00'];
 let idIndex = 1;
@@ -52,6 +52,10 @@ class SeaMercs {
         this.townhall = ['building','townhall','Townhall','description',5,0,0,0,4,['hire'],"img/units/SeamercsTownhall.png"];
         this.tower = ['building','tower','Tower','description',3,1,0,2,3,['hire'],"img/units/SeamercsTower.png"];
     }
+    start(owner) {
+        //players[owner].gold +=2;
+        //this.gold += 2;
+    };
 }
 
 
