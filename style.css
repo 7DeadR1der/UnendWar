@@ -5,6 +5,9 @@
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
 }
+.pointer{
+    cursor: pointer;
+}
 /* ------------------------GAME STYLES------------------------ */
 .gridGameField{
     width: 422px;
@@ -14,23 +17,7 @@
     flex-flow: row wrap;
     align-items:flex-start;
 }
-.gfCell{
-    width: 50px;
-    height: 50px;
-    margin: 1px;
-    background-color: #aacd95;
-    border: 1px solid black;
-}
-.gfCell:focus{
-    border: 1px solid green;
-}
-.gfCell:hover{
-    border: 1px solid yellow;
-}
 
-.goldCell{
-    background-color:yellow;
-}
 #panelInfo{
     display: flex;
     justify-content: flex-start;
@@ -100,6 +87,144 @@
 .gfCell:nth-child(n+49):nth-child(-n+56):nth-child(odd){background-color: rgb(53, 140, 63);}
 .gfCell:nth-child(n+57):nth-child(-n+64):nth-child(even){background-color: rgb(53, 140, 63);}
 */
+/* ------------------------Profile Styles------------------------ */
+#profile-button{
+    width: 50px;
+    height: 50px;
+    background-color:blue;
+    margin: 10px 10px 0 0;
+    position: fixed;
+    z-index: 5;
+    right: 0;
+    top: 0;
+}
+#profile-block{
+    width: 350px;
+    height: 500px;
+    margin: 15px;
+    border-radius:10px;
+    background-color:green;
+    position: fixed;
+    z-index: 6;
+    right: 0;
+    top: 0;
+    display: none;
+    
+}
+.profile-header{
+    padding: 5px 10px;
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+    border-bottom: 2px solid black;
+    max-height: 40px;
+}
+.profile-header h4{
+    font-size: 25px;
+}
+.profile-close{
+    font-size: 20px;
+}
+#profile-content{
+    max-height: 460px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+/* ------------------------GAME & ROOMS STYLES------------------------*/
+#room-block{
+    background-color: rgb(172, 255, 255);
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    width: 450px;
+    height: 600px;
+}
+.room-header{
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid black;
+}
+#room-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 5px;
+    overflow-y: scroll;
+}
+.room-game{
+    background-color: rgb(139, 253, 253);
+    margin: 0px 10px 10px 10px;
+    border: 1px solid black;
+    border-radius: 3px;
+    padding: 4px;
+}
+
+
+#game-block{
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 450;
+    height: 600px;
+}
+#game-header{
+    width: 422px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+#game-field{
+    width: 422px;
+    padding: 3px;
+    background-color: gray;
+    display: flex;
+    flex-flow: row wrap;
+    align-items:flex-start;
+}
+.gfCell{
+    width: 50px;
+    height: 50px;
+    margin: 1px;
+    background-color: #aacd95;
+    border: 1px solid black;
+}
+.gfCell:focus{
+    border: 1px solid green;
+}
+.gfCell:hover{
+    border: 1px solid yellow;
+}
+.goldCell{
+    background-color:yellow;
+}
+#game-btns{
+    min-height: 25px;
+    margin: 5px,0;
+}
+#game-btns button{
+    height:25px;
+}
+#game-info{
+    display: flex;
+    justify-content: flex-start;
+    align-items:stretch;
+    max-width: 450px;
+}
+#game-info ul{
+    margin: 0,8px;
+    background-color:rgb(201, 201, 201);
+    min-width: 150px;
+    min-height: 145px;
+    padding: 4px;
+}
+#game-info li{
+    list-style-type: none;
+}
 
 /* ------------------------other pages STYLES------------------------ */
 

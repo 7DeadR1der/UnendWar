@@ -1,7 +1,8 @@
 
     <a href="index.php">назад</a>
+
+<!--
     <button onclick="newGameConfirm()">Новая игра</button>
-    <!-- <button onclick="update()">Обновить</button> -->
     <button id="btnEndTurn" onclick="endTurn()">Закончить ход</button>
     <button onclick="Save()">Сохранить</button>
     <button onclick="Load()">Загрузить</button>
@@ -39,18 +40,39 @@
             <li id="li_moveUnit"></li>
         </ul>
     </div>
+-->
 
-
+<main>
+    <div id="room-block">
+        <div class="room-header">
+            <button onclick="dialogCreateRoom(1)">create</button>
+            <h4>список лобби</h4>
+            <button onclick="loadRooms()">refresh</button>
+        </div>
+        <div id="room-content">
+        </div>
+    </div>
+    <div id="game-block">
+    </div>
+</main>
 
     <div class="dialog-block">
         <div class="dialog-form">
             <h4>Введите параметры новой игры</h4>
             <!-- <form name="formNewGame" action=""> -->
-                <label>Выберите тип игры</label>
-                <select id="selectGameType" name="gameType"> 
-                    <option value="classic">Classic</option> 
+                <label>Название игры</label>
+                <input id="inputGameName" type="text" name="gameName">
+                <label>Выберите мод игры</label>
+                <select id="selectGameMode" name="gameMode"> 
+                    <option selected value="classic">Classic</option> 
                     <option value="fast">Fast</option> 
                     <option value="nomad">Nomad</option> 
+                </select>
+                <label>Выберите тип игры</label>
+                <select id="selectGameType" name="gameType"> 
+                    <option selected value="domination">domination</option> 
+                    <option value="hunt">-!-hunt</option> 
+                    <option value="collect">-!-collect</option> 
                 </select>
                 <br>
                 <label>Выберите карту</label>
@@ -58,7 +80,7 @@
                     <option value="2lr">(2)Last Refuge</option>
                     <option value="2gm">(2)Golden Mountains</option>
                     <option value="2lm">(2)Lonely Mountain</option>
-                    <option value="2mc">(2)Meeting Cave</option>
+                    <!-- <option value="2mc">(2)Meeting Cave</option> -->
                     <option value="2or">(2)One Road</option>
                     <option value="2wp">(2)Windy Peaks</option>
                     <option value="4s">(4)Socotra</option>
@@ -66,14 +88,17 @@
                     <option value="4cg">(4)Centour Grove</option>
                     <option value="6gw">(6)Gnoll Wood</option>
                     <option value="6gn">(6)Gold Nothing</option>
-                    <option value="6rnd">Random</option>
+                    <option value="6rnd">-!-Random</option>
                 </select>
                 
                 <label>Выберите количество игроков</label>
-                <input name="gamePlayers" id="inputRangePlayers" type="range" min="1" max="6" step="1" value="2" onchange="document.getElementById('countRangeDisplay').textContent=this.value"> 
+                <input name="gamePlayers" id="inputRangePlayers" type="range" min="2" max="2" step="1" value="2" onchange="document.getElementById('countRangeDisplay').textContent=this.value"> 
                 <label id="countRangeDisplay"></label>
                 <br>
-                <button onclick="newGameGenerate()">Начать</button>
+                <button onclick="createRoom()">Начать</button>
+                <button onclick="dialogCreateRoom()">Закрыть</button>
             <!-- </form> -->
         </div>
     </div>
+    <script src="js/rooms.js"></script>
+    <script src="js/game.js"></script>
