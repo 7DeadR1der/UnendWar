@@ -1,4 +1,5 @@
 "use strict"
+
 // PROFILE
 const regNode = 
     //'<form name="reg" id="formReg" action="includes/signup.php" method="post">'+
@@ -21,6 +22,7 @@ const loginNode =
             '<input name="login" type="text">'+
         '<label>Password</label>'+
             '<input name="password" type="password">'+
+        '<br><p><input name="remember" type="checkbox" value="1">Remember Me</p><br>'+
         '<button onclick="loginFunction()">Войти</button>'+
         '<p>Нет аккаунта? <a class="pointer" onclick="profileContent.innerHTML = regNode;">Зарегистрироваться</a></p>'+
         '<p>Утеряли доступ к аккаунту? <a href="index.php?page=support">Тех. Поддержка</a></p>';//+
@@ -30,6 +32,7 @@ const profileNode = 'ok';
 
 let profileBlock = document.getElementById('profile-block');
 profileBlock.style.display = "none"; 
+
 function toggle_profile(){
     if(profileBlock.style.display == "none"){
         profileBlock.style.display = "block";
@@ -51,7 +54,7 @@ function regFunction(){
         email: document.querySelector('input[name="email"]').value
     }
     let request = new XMLHttpRequest();
-    request.open('POST', '/game.exe/includes/login/signup.php', true);
+    request.open('POST', folder+'/includes/login/signup.php', true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
 
     request.onreadystatechange = function () {
@@ -76,12 +79,17 @@ function regFunction(){
 // ----------LOGIN----------
 
 function loginFunction () {
+
     let formData = {
         login: document.querySelector('input[name="login"]').value,
         pass: document.querySelector('input[name="password"]').value,
+        rm: 0,
+    }
+    if (document.querySelector('input[name="remember"]').checked){
+        formData.rm=1;
     }
     let request = new XMLHttpRequest();
-    request.open('POST', '/game.exe/includes/login/signin.php', true);
+    request.open('POST', folder+'/includes/login/signin.php', true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
     request.onreadystatechange = function () {
         if(request.readyState === 4 && request.status === 200){
@@ -95,12 +103,12 @@ function loginFunction () {
         }
     };
     request.send('login=' + encodeURIComponent(formData.login) +
-    '&password=' + encodeURIComponent(formData.pass));
+    '&password=' + encodeURIComponent(formData.pass) + '&remember=' + encodeURIComponent(formData.rm));
 }
 // ----------LOGOUT----------
 function logout(){
     let request = new XMLHttpRequest();
-    request.open('POST', '/game.exe/includes/login/logout.php', true);
+    request.open('POST', folder+'/includes/login/logout.php', true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
     request.onreadystatechange = function () {
         if(request.readyState === 4 && request.status === 200){
@@ -110,6 +118,15 @@ function logout(){
     }
     request.send();
 }
+function checkToken(){
+    let request = new XMLHttpRequest();
+    request.open('GET',folder+'/includes/login/checktoken.php');
+    request.onload = function (){
+        loadProfile()
+    }
+    request.send();
+}
+
 /*
 function checkUser(type){
     let value;
@@ -124,7 +141,7 @@ function checkUser(type){
 */
 function loadProfile(){
     let request = new XMLHttpRequest();
-    request.open('GET','/game.exe/page/profile.php');
+    request.open('GET',folder+'/page/profile.php');
     request.onload = function (){
         if(request.response != ''){
             profileContent.innerHTML = request.response;
@@ -133,4 +150,4 @@ function loadProfile(){
     request.send();
 }
 //onload function
-loadProfile();
+checkToken();

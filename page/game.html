@@ -1,47 +1,5 @@
 
     <a href="index.php">назад</a>
-
-<!--
-    <button onclick="newGameConfirm()">Новая игра</button>
-    <button id="btnEndTurn" onclick="endTurn()">Закончить ход</button>
-    <button onclick="Save()">Сохранить</button>
-    <button onclick="Load()">Загрузить</button>
-    <div class="gridGameField">
-    </div>
-    <div id="panelBtns">
-        <button id="btnCancel" onclick="cancel()" style="display: none">Отмена</button>
-        <button id="btnBuildTownhall" onclick="build('townhall')" style="display: none">Построить Townhall</button>
-        <button id="btnBuildTower" onclick="build('tower')" style="display: none">Построить Tower</button>
-        <button id="btnBuyT1" onclick="buyUnit('t1')" style="display: none">Нанять T1</button>
-        <button id="btnBuyT2" onclick="buyUnit('t2')" style="display: none">Нанять T2</button>
-        <button id="btnBuyT3" onclick="buyUnit('t3')" style="display: none">Нанять T3</button>
-        <button id="btnBuyWarchief" onclick="buyUnit('warchief')" style="display: none">Нанять Warchief</button>
-        <button id="btnSurgeryHeal" onclick="heal('surgery')" style="display: none">Лечение</button>
-    </div>
-    <div id="panelInfo">
-        <ul id="list_player">
-            <li id="li_PlayerName"></li>
-            <li id="li_PlayerGold"></li>
-            <li id="li_PlayerLevel"></li>
-            <li id="li_PlayerExp"></li>
-            <li id="li_limit_workers"></li>
-            <li id="li_limit_army"></li>
-            <li id="li_limit_warchiefs"></li>
-            <li id="li_limit_townhalls"></li>
-            <li id="li_limit_towers"></li>
-        </ul>
-        <ul id="list_cell">
-            <li id="li_goldCell"></li>
-            <li id="li_nameUnit"></li>
-            <li id="li_descriptionUnit"></li>
-            <li id="li_ownerUnit"></li>
-            <li id="li_hpUnit"></li>
-            <li id="li_attackUnit"></li>
-            <li id="li_moveUnit"></li>
-        </ul>
-    </div>
--->
-
 <main>
     <div id="room-block">
         <div class="room-header">
@@ -57,47 +15,68 @@
 </main>
 
     <div class="dialog-block">
-        <div class="dialog-form">
+        <div class="dialog-create">
             <h4>Введите параметры новой игры</h4>
             <!-- <form name="formNewGame" action=""> -->
                 <label>Название игры</label>
-                <input id="inputGameName" type="text" name="gameName">
+                <input id="inputGameName" type="text" name="gameName" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
                 <label>Выберите мод игры</label>
                 <select id="selectGameMode" name="gameMode"> 
                     <option selected value="classic">Classic</option> 
-                    <option value="fast">Fast</option> 
+                    <!-- <option value="fast">Fast</option>  -->
                     <option value="nomad">Nomad</option> 
                 </select>
-                <label>Выберите тип игры</label>
-                <select id="selectGameType" name="gameType"> 
+                <br>
+                <label>Тип игры - </label>
+                <label id="gameType">Classic</label>
+                <!-- <select disabled id="selectGameType" name="gameType"> 
                     <option selected value="domination">domination</option> 
                     <option value="hunt">-!-hunt</option> 
                     <option value="collect">-!-collect</option> 
-                </select>
+                </select> -->
+                <br>
+                <p><input id="classicWinCheck" type="checkbox" name="classicWin" value="classic" checked disabled> - classic win available</p>
+
                 <br>
                 <label>Выберите карту</label>
                 <select id="selectGameMap" name="gameMap" onchange="selectMapType(this.value)"> 
-                    <option value="2lr">(2)Last Refuge</option>
-                    <option value="2gm">(2)Golden Mountains</option>
-                    <option value="2lm">(2)Lonely Mountain</option>
-                    <!-- <option value="2mc">(2)Meeting Cave</option> -->
-                    <option value="2or">(2)One Road</option>
-                    <option value="2wp">(2)Windy Peaks</option>
-                    <option value="4s">(4)Socotra</option>
-                    <option value="4lt">(4)Lost Temple</option>
-                    <option value="4cg">(4)Centour Grove</option>
-                    <option value="6gw">(6)Gnoll Wood</option>
-                    <option value="6gn">(6)Gold Nothing</option>
-                    <option value="6rnd">-!-Random</option>
+                    <option value="20lr">(2)Last Refuge</option>
+                    <option value="20ds">(2)Dragon Storm</option>
+                    <!-- <option value="20gm">(2)Golden Mountains</option>
+                    <option value="20lm">(2)Lonely Mountain</option>
+                    <option value="20mc">(2)Meeting Cave</option>
+                    <option value="20or">(2)One Road</option>
+                    <option value="20wp">(2)Windy Peaks</option>
+                    <option value="20n">(2)Nostalgia</option>
+                    <option value="20td">(2)Two Dungeons</option>
+                    <option value="20og">(2)Ogres Gate</option> -->
+                    <option value="40s">(4)Socotra</option>
+                    <option value="40lt">(4)Lost Temple</option>
+                    <!-- <option value="40cg">(4)Centour Grove</option>
+                    <option value="40of">(4)Old Fortress</option> -->
+                    <option value="60gw">(6)Gnoll Wood</option>
+                    <option value="60bg">(6)Battleground</option>
+                    <option value="60gn">(6)Gold Nothing</option>
+                    <option value="40rnd">(4)Random generation</option>
                 </select>
+                <br>
                 
                 <label>Выберите количество игроков</label>
-                <input name="gamePlayers" id="inputRangePlayers" type="range" min="2" max="2" step="1" value="2" onchange="document.getElementById('countRangeDisplay').textContent=this.value"> 
+                <input name="gamePlayers" id="inputRangePlayers" type="range" min="2" max="6" step="1" value="2" onchange="document.getElementById('countRangeDisplay').textContent=this.value"> 
                 <label id="countRangeDisplay"></label>
+                <br>
+                <p><input id="selectLocalGame" type="checkbox" name="gameLocal" value="check"> Создать комнату локально?</p>
                 <br>
                 <button onclick="createRoom()">Начать</button>
                 <button onclick="dialogCreateRoom()">Закрыть</button>
             <!-- </form> -->
+        </div>
+        <div class="dialog-end">
+            <h3>Игра закончена!</h3>
+            <div id="gameStatistic">
+
+            </div>
+            <button onclick="dialogEndGame()">Закрыть</button>
         </div>
     </div>
     <script src="js/rooms.js"></script>

@@ -5,6 +5,9 @@
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
 }
+body{
+    padding: 5px;
+}
 .pointer{
     cursor: pointer;
 }
@@ -35,7 +38,7 @@
     list-style-type: none;
 }
 #list_player{
-    width: 150px;
+    min-width: 150px;
 }
 #panelBtns{
     min-height: 25px;
@@ -69,7 +72,8 @@
     pointer-events: auto;
 }
 
-.dialog-form{
+.dialog-create{
+    display: none;
     width: 100%;
     max-width: 300px;
     margin: 10% auto;
@@ -77,6 +81,31 @@
     background: #fff;
     border-radius: 3px;
 }
+.dialog-end{
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 350px;
+    margin: 10% auto;
+    padding: 2%;
+    background: #fff;
+    border-radius: 3px;
+}
+#gameStatistic{
+    max-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    overflow-y: scroll;
+    font-size: 20px;
+
+
+}
+
+
+
+
 /*
 .gfCell:nth-child(-n+8):nth-child(odd){background-color: rgb(53, 140, 63);}
 .gfCell:nth-child(n+9):nth-child(-n+16):nth-child(even){background-color: rgb(53, 140, 63);}
@@ -90,9 +119,9 @@
 /* ------------------------Profile Styles------------------------ */
 #profile-button{
     width: 50px;
-    height: 50px;
-    background-color:blue;
-    margin: 10px 10px 0 0;
+    height: 20px;
+    background-color:rgb(131, 131, 255);
+    margin: 3px 3px 0 0;
     position: fixed;
     z-index: 5;
     right: 0;
@@ -103,9 +132,9 @@
     height: 500px;
     margin: 15px;
     border-radius:10px;
-    background-color:green;
+    background-color:rgb(86, 137, 179);
     position: fixed;
-    z-index: 6;
+    z-index: 7;
     right: 0;
     top: 0;
     display: none;
@@ -131,6 +160,72 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+/* ------------------------Chat Styles------------------------ */
+#chat-button{
+    width: 50px;
+    height: 20px;
+    background-color:rgb(224, 255, 131);
+    margin: 3px 3px 0 0;
+    position: fixed;
+    z-index: 5;
+    right: 0;
+    bottom: 0;
+}
+#chat-block{
+    width: 350px;
+    height: 400px;
+    margin: 15px;
+    border-radius:10px;
+    padding: 10px;
+    background-color:rgb(180, 195, 117);
+    position: fixed;
+    z-index: 6;
+    right: 0;
+    bottom: 0;
+    display: none;
+    
+}
+.chat-header{
+    padding: 5px 10px;
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+    border-bottom: 2px solid black;
+    max-height: 40px;
+}
+.chat-header h4{
+    font-size: 25px;
+}
+.chat-close{
+    font-size: 20px;
+}
+#chat-content{
+    max-height: 300px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    overflow-y: scroll;
+}
+#chat-input{
+    display: flex;
+    margin-top: 10px;
+    flex-direction: row;
+    justify-content: space-between;
+}
+#chat-input input{
+    width: 250px;
+    height:20px;
+}
+#chat-input button{
+    width: 50px;
+    height:20px;
+    text-align: center;
+}
+.chat-message{
+    background-color:rgb(254, 255, 235);
+    margin:4px;
 }
 /* ------------------------GAME & ROOMS STYLES------------------------*/
 #room-block{
@@ -203,6 +298,11 @@
     background-color:yellow;
 }
 #game-btns{
+    margin: 8px 0;
+    width: 416px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     min-height: 25px;
     margin: 5px,0;
 }
@@ -225,6 +325,45 @@
 #game-info li{
     list-style-type: none;
 }
+.green-text{
+    color: rgb(49, 199, 49);
+}
+.red-text{
+    color: rgb(199, 49, 49);
+}
+
+
+/* ------------------------Menu styles------------------------ */
+.menu{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items:center;
+    margin:0 auto;
+}
+.menu h1{
+    font-family: cursive;
+    font-size: 30px;
+    margin: 10px;
+}
+.menu h4{
+    font-family: cursive;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+.menu a{
+    text-decoration: none;
+    text-align: center;
+    width:150px;
+    height: 25px;
+    margin: 5px 0;
+    padding: 2px 0;
+    border: 1px solid black;
+    background-color:rgb(215, 236, 255);
+
+    
+}
+
 
 /* ------------------------other pages STYLES------------------------ */
 
@@ -232,4 +371,39 @@
     font-size: 20px;
     text-align: center;
     margin: 10px auto;
+}
+
+
+/* ------------------------INFO PAGES Styles------------------------ */
+.factions-header{
+    font-size: 20px;
+    text-align: center;
+    margin: 0 0 10px 0;
+}
+.faction-block{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    width: 430px;
+    margin: 0 0 40px 0;
+    padding: 0 10px;
+}
+
+
+.info-table {
+	width: 100%;
+	margin-bottom: 20px;
+	border: 1px solid #dddddd;
+	border-collapse: collapse; 
+}
+.info-table th {
+	font-weight: bold;
+	padding: 5px;
+	background: #efefef;
+	border: 1px solid #dddddd;
+}
+.info-table td {
+	border: 1px solid #dddddd;
+	padding: 5px;
 }

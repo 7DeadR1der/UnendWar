@@ -1,0 +1,17 @@
+<div id="chat-button" class="pointer" onclick="toggle_chat()">
+    Chat
+</div>
+<div id="chat-block">
+    <div class="chat-header">
+        <h4>Chat</h4>
+        <div class="chat-close pointer" onclick="toggle_chat()">X</div>
+    </div>
+    <div id="chat-content">
+        
+    </div>
+    <div id="chat-input">
+        <input type="text" name="textMessage" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+<script src="js/chat.js"></script>

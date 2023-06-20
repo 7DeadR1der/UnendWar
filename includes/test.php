@@ -1,7 +1,19 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
         include_once("game/classes.php");
+        var_dump($_SESSION['user']);
 
+        echo $_SESSION["user"]["login"];
+
+
+
+        if(empty($_GET['test'])){
+                echo '1111111111111111111111111111111';
+        }else{
+                echo '2222222222222222222222222222222';
+        }
         // $array = [1,2,3,4];
         // foreach ($array as $e) {
         //         if(isset($e) && $e!=false){

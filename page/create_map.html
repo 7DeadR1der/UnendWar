@@ -1,0 +1,46 @@
+<div id="game-field"></div>
+<script>
+    
+    const colorPlayers = ['#bababa', '#fc9393', '#60c0ff', '#ffae58', '#f190ff', '#54fd7a', '#e3f054'];
+    const colorLands = ['#b1c37b','#b1c37b','#b1c37b','#b1c37b'];
+    for(let i=0;i<8;i++){
+        for(let j=0;j<8;j++){
+            let cellAdd = document.createElement('img');
+            cellAdd.className = 'gfCell';
+            cellAdd.id = `${i}-${j}`;
+            cellAdd.src = '';
+            document.getElementById('game-field').appendChild(cellAdd);
+
+        }
+    }
+    function loadF(json){
+        
+    for(let i=0;i<8;i++){
+        for(let j=0;j<8;j++){
+                let titleText = "";
+                if(json.gameField[i][j].resCount>0)
+                    document.getElementById(`${i}-${j}`).title =`Золото = ${json.gameField[i][j].resCount},`;
+                if(json.gameField[i][j].contains != false){
+                    document.getElementById(`${i}-${j}`).style.backgroundColor = colorPlayers[json.gameField[i][j].contains.owner];
+                    if(json.gameField[i][j].contains.owner == 0){
+                        document.getElementById(`${i}-${j}`).style.backgroundColor = colorLands[json.gameLand];
+                    }
+                    document.getElementById(`${i}-${j}`).setAttribute('src',json.gameField[i][j].contains.image);
+                }else{
+                    if(json.gameField[i][j].obstacle != 0){
+                        document.getElementById(`${i}-${j}`).setAttribute('src',"img/obstacle/"+json.gameLand+json.gameField[i][j].obstacle+".png");
+                        document.getElementById(`${i}-${j}`).style.backgroundColor = colorLands[json.gameLand];
+                        //titleText = 'Горы, непроходимая клетка';
+                    }else{
+                        document.getElementById(`${i}-${j}`).setAttribute('src',"img/null.png");
+                        if (json.gameField[i][j].resCount > 0){
+                            document.getElementById(`${i}-${j}`).setAttribute('src',"img/goldOre.png");
+                        }
+                        document.getElementById(`${i}-${j}`).style.backgroundColor = colorLands[json.gameLand];
+                    }
+                }
+                document.getElementById(`${i}-${j}`).style.border = '';
+        }
+    }
+    }
+</script>

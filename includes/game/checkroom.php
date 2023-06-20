@@ -1,5 +1,7 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
     session_start();
+}
     require_once '../connect.php';
     $idRoom = $_SESSION['user']['active_room'];
     $query = mysqli_query($connect, "SELECT `last_mod` FROM `rooms` WHERE `id_room` = '$idRoom'");

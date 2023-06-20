@@ -1,0 +1,495 @@
+<a href="index.php">назад</a>
+<h1 class="factions-header">Фракции</h1>
+
+<!-- ----------------------KINGDOM---------------------- -->
+
+<div class="faction-block"> 
+    <h3 class="factions-header">Королевство</h3> 
+    <p>Королевство - фракция людей. Основные силы Королевства это крестьяне и легкая кавалерия, элитные войска фракции это тяжелобронированные рыцари которые становятся щитом Королевства. Лорд - лидер фракции силен и мобилен, что на поле боя делает его чрезвычайно опасным противником</p> 
+    <div class="faction-unit-block"> 
+        <img src="img/units/KingdomT1.png"> 
+        <h6>Peasant</h6> 
+        <p>Обычный житель, готовый в случае опасности встать на защиту Королевства. Способен собирать ресурсы и строить здания</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Unit</li> 
+            <li>Class = T1</li> 
+            <li>Health points = 1</li> 
+            <li>Attack = 1</li> 
+            <li>Move point = 1</li> 
+            <li>range = 1</li> 
+            <li>price = 0</li> 
+            <li>ability = worker</li> 
+        </ul> 
+    </div>
+    <div class="faction-unit-block"> 
+        <img src="img/units/KingdomT2.png"> 
+        <h6>Scout</h6> 
+        <p>Разведчик Королевства. Быстро передвигается засчет своего коня.</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Unit</li> 
+            <li>Class = T2</li> 
+            <li>Health points = 1</li> 
+            <li>Attack = 1</li> 
+            <li>Move point = 2</li> 
+            <li>range = 1</li> 
+            <li>price = 1</li> 
+            <li>ability = not</li> 
+        </ul> 
+    </div> 
+    <div class="faction-unit-block"> 
+        <img src="img/units/KingdomT3.png"> 
+        <h6>Knight</h6> 
+        <p>Основная армия Королевства. Благодаря своему обмундированию способен пережить не одну атаку.</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Unit</li> 
+            <li>Class = T3</li> 
+            <li>Health points = 3</li> 
+            <li>Attack = 1</li> 
+            <li>Move point = 1</li> 
+            <li>range = 1</li> 
+            <li>price = 2</li> 
+            <li>ability = not</li> 
+        </ul> 
+    </div> 
+    <div class="faction-unit-block"> 
+        <img src="img/units/KingdomWarchief.png"> 
+        <h6>Lord</h6> 
+        <p>Лидер Королевства. Очень силен. Обладает способностью "Кавалерийский удар", 
+            удар после движения наносит х1.5 урон. Для его найма требуется 2 башни</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Unit</li>
+            <li>Class = Warchief</li>
+            <li>Health points = 4</li>
+            <li>Attack = 1</li>
+            <li>Move point = 2</li>
+            <li>range = 1</li>
+            <li>price = 5</li>
+            <li>ability = cavalryStrike</li>
+            <li>require = 2 towers</li>
+        </ul> 
+    </div> 
+    <div class="faction-unit-block"> 
+        <img src="img/units/KingdomTownhall.png"> 
+        <h6>Townhall</h6> 
+        <p>Крепкая крепость Королевства. Можно нанимать Крестьян и Всадников.</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Building</li> 
+            <li>Class = Townhall</li> 
+            <li>Health points = 5</li> 
+            <li>Attack = 0</li> 
+            <li>Move point = 0</li> 
+            <li>range = 1</li> 
+            <li>price = 4</li> 
+            <li>ability = hire</li> 
+        </ul> 
+    </div> 
+    <div class="faction-unit-block"> 
+        <img src="img/units/KingdomTower.png"> 
+        <h6>Tower</h6> 
+        <p>Оборонительное здание Королевства. Способно обстреливать врагов на расстоянии. В башне можно нанимать Рыцарей и Лорда</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Building</li> 
+            <li>Class = Tower</li> 
+            <li>Health points = 3</li> 
+            <li>Attack = 1</li> 
+            <li>Move point = 0</li> 
+            <li>range = 2</li> 
+            <li>price = 3</li> 
+            <li>ability = hire</li> 
+        </ul> 
+    </div>
+</div>
+
+
+<!-- ----------------------MERCS---------------------- -->
+
+<div class="faction-block"> 
+    <h3 class="factions-header">Наемники</h3> 
+    <p>Наемники - фракция в большей части состоящая их бандитов и дезертиров армии Королевства. Основная их деятельность грабеж, убийства и работорговля. Так же их можно купить в качестве наемной армии. Благодаря своим кузнецам они могут улучшать броню своих воинов, что делает их более опасными противниками.</p> 
+    <div class="faction-unit-block"> 
+        <img src="img/units/SeaMercsT1.png"> 
+        <h6>Slave</h6> 
+        <p>Рабочая сила наемников, добытая в набегах на деревни, используются для добычи ресурсов и постройки зданий</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Unit</li> 
+            <li>Class = T1</li> 
+            <li>Health points = 1</li> 
+            <li>Attack = 1</li> 
+            <li>Move point = 1</li> 
+            <li>range = 1</li> 
+            <li>price = 0</li> 
+            <li>ability = worker</li> 
+        </ul> 
+    </div>
+    <div class="faction-unit-block"> 
+        <img src="img/units/SeaMercsT2.png"> 
+        <h6>Raider</h6> 
+        <p>Налетчики обычные бандиты которые хотят легких денег.</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Unit</li> 
+            <li>Class = T2</li> 
+            <li>Health points = 1</li> 
+            <li>Attack = 1</li> 
+            <li>Move point = 2</li> 
+            <li>range = 1</li> 
+            <li>price = 1</li> 
+            <li>ability = not</li> 
+        </ul> 
+    </div> 
+    <div class="faction-unit-block"> 
+        <img src="img/units/SeaMercsT3.png"> 
+        <h6>Merc</h6> 
+        <p>Основная армия наёмников, именно их часто используют в междуусобных войнах, засчет их умений. </p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Unit</li> 
+            <li>Class = T3</li> 
+            <li>Health points = 3</li> 
+            <li>Attack = 1</li> 
+            <li>Move point = 1</li> 
+            <li>range = 1</li> 
+            <li>price = 2</li> 
+            <li>ability = not</li> 
+        </ul> 
+    </div> 
+    <div class="faction-unit-block"> 
+        <img src="img/units/SeaMercsWarchief.png"> 
+        <h6>Slaver</h6> 
+        <p>Лидер Наемников, который смог обьединить разобщеные банды и построить на костях рабов фракцию. Силен и повидал много битв, засчет чего в невероятно опасен в бою.</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Unit</li>
+            <li>Class = Warchief</li>
+            <li>Health points = 4</li>
+            <li>Attack = 1</li>
+            <li>Move point = 2</li>
+            <li>range = 1</li>
+            <li>price = 5</li>
+            <li>ability = cavalryStrike</li>
+            <li>require = 2 towers</li>
+        </ul> 
+    </div> 
+    <div class="faction-unit-block"> 
+        <img src="img/units/SeaMercsTownhall.png"> 
+        <h6>Forge</h6> 
+        <p>Основная сила наемников находится в кузнице и ее кузнецах. Кузнецы наемников могут улучшать броню воинов, но не бесплатно. Можно нанимать рабов и налетчиков</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Building</li> 
+            <li>Class = Townhall</li> 
+            <li>Health points = 5</li> 
+            <li>Attack = 0</li> 
+            <li>Move point = 0</li> 
+            <li>range = 1</li> 
+            <li>price = 4</li> 
+            <li>ability = hire</li> 
+        </ul> 
+    </div> 
+    <div class="faction-unit-block"> 
+        <img src="img/units/SeaMercsTower.png"> 
+        <h6>Outpost</h6> 
+        <p>Оборонительное здание наемников. можно нанимать наемников и работорговца.</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Building</li> 
+            <li>Class = Tower</li> 
+            <li>Health points = 3</li> 
+            <li>Attack = 1</li> 
+            <li>Move point = 0</li> 
+            <li>range = 2</li> 
+            <li>price = 3</li> 
+            <li>ability = hire</li> 
+        </ul> 
+    </div>
+</div>
+
+<!-- ----------------------UNDEAD---------------------- -->
+
+<div class="faction-block"> 
+    <h4 class="factions-header">Нежить</h4> 
+    <p>Нежить - фракция мертвых, возглавляемая сильным некромантом. основные силы Нежити это скелеты и зомби, "мясо" которому нет конца. призраки мощные воины в рядах нежити, способные в правом смысле забирать </p> 
+    <div class="faction-unit-block"> 
+        <img src="img/units/UndeadT1.png"> 
+        <h6>Skeleton</h6> 
+        <p>Рядовая единица в армии нежити, используются для добычи ресурсов и постройки зданий</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Unit</li> 
+            <li>Class = T1</li> 
+            <li>Health points = 1</li> 
+            <li>Attack = 1</li> 
+            <li>Move point = 1</li> 
+            <li>range = 1</li> 
+            <li>price = 0</li> 
+            <li>ability = worker</li> 
+        </ul> 
+    </div>
+    <div class="faction-unit-block"> 
+        <img src="img/units/UndeadT2.png"> 
+        <h6>Zombie</h6> 
+        <p>более "живучий" боец по сравнению с скелетом, неплохо сражаются в ближнем бою</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Unit</li> 
+            <li>Class = T2</li> 
+            <li>Health points = 2</li> 
+            <li>Attack = 1</li> 
+            <li>Move point = 1</li> 
+            <li>range = 1</li> 
+            <li>price = 1</li> 
+            <li>ability = not</li> 
+        </ul> 
+    </div> 
+    <div class="faction-unit-block"> 
+        <img src="img/units/UndeadT3.png"> 
+        <h6>Ghost</h6> 
+        <p>Являются элитными войсками нежити, быстро передвигаются и способны вытягиват силы их своих жертв, что делает их крайне опасными противниками</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Unit</li> 
+            <li>Class = T3</li> 
+            <li>Health points = 2</li> 
+            <li>Attack = 1</li> 
+            <li>Move point = 2</li> 
+            <li>range = 1</li> 
+            <li>price = 3</li> 
+            <li>ability = vampir</li> 
+        </ul> 
+    </div> 
+    <div class="faction-unit-block"> 
+        <img src="img/units/UndeadWarchief.png"> 
+        <h6>Lich</h6> 
+        <p>Лидер Нежити, именно он возглавляет бесчисленное множество мертвых созданий, 
+            спсобен овладеть умениями для создания скелетов прямо на поле боя</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Unit</li>
+            <li>Class = Warchief</li>
+            <li>Health points = 2</li>
+            <li>Attack = 1</li>
+            <li>Move point = 1</li>
+            <li>range = 1</li>
+            <li>price = 2</li>
+            <li>ability = not</li>
+            <li>require = not</li>
+        </ul> 
+    </div> 
+    <div class="faction-unit-block"> 
+        <img src="img/units/UndeadTownhall.png"> 
+        <h6>Necropolis</h6> 
+        <p>Цитадель некромантии, именно в ней создается все новые и новые скелеты и зомби</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Building</li> 
+            <li>Class = Townhall</li> 
+            <li>Health points = 5</li> 
+            <li>Attack = 0</li> 
+            <li>Move point = 0</li> 
+            <li>range = 0</li> 
+            <li>price = 4</li> 
+            <li>ability = hire</li> 
+        </ul> 
+    </div> 
+    <div class="faction-unit-block"> 
+        <img src="img/units/UndeadTower.png"> 
+        <h6>Spirit tower</h6> 
+        <p>Оборонительное сооружение нежити, способно создавать Призраков и Лича</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Building</li> 
+            <li>Class = Tower</li> 
+            <li>Health points = 3</li> 
+            <li>Attack = 1</li> 
+            <li>Move point = 0</li> 
+            <li>range = 2</li> 
+            <li>price = 3</li> 
+            <li>ability = hire</li> 
+        </ul> 
+    </div>
+</div>
+
+<!-- ----------------------ORCS---------------------- -->
+
+<div class="faction-block"> 
+    <h3 class="factions-header">Orcs</h3> 
+    <p>Орки - народ воинов и войны. крайне разобщеный народ, объединающийся в кланы под предводитесльтвом сильнейшего орка. За века не прекращающихся войн, они стали синонимами слову война. Крайне опасный народ, единственная их слабость это их разобщенность.</p> 
+    <div class="faction-unit-block"> 
+        <img src="img/units/OrcsT1.png"> 
+        <h6>Goblin</h6> 
+        <p>Гоблины - рабочая сила орков. Именно они занимаются строительством и добычей ресурсов</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Unit</li> 
+            <li>Class = T1</li> 
+            <li>Health points = 1</li> 
+            <li>Attack = 1</li> 
+            <li>Move point = 1</li> 
+            <li>range = 1</li> 
+            <li>price = 0</li> 
+            <li>ability = worker</li> 
+        </ul> 
+    </div>
+    <div class="faction-unit-block"> 
+        <img src="img/units/OrcsT2.png"> 
+        <h6>Orc</h6> 
+        <p>Орки - безжалостные воины отличающиеся особой жестокостью</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Unit</li> 
+            <li>Class = T2</li> 
+            <li>Health points = 1</li> 
+            <li>Attack = 1</li> 
+            <li>Move point = 2</li> 
+            <li>range = 1</li> 
+            <li>price = 1</li> 
+            <li>ability = not</li> 
+        </ul> 
+    </div> 
+    <div class="faction-unit-block"> 
+        <img src="img/units/OrcsT3.png"> 
+        <h6>Onager</h6> 
+        <p>Онагр - инженерный прорыв орков, позволяющий быстро уничтожить линию обороны противников, крайне эффективен против зданий.</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Unit</li> 
+            <li>Class = T3</li> 
+            <li>Health points = 3</li> 
+            <li>Attack = 1</li> 
+            <li>Move point = 1</li> 
+            <li>range = 1</li> 
+            <li>price = 2</li> 
+            <li>ability = not</li> 
+        </ul> 
+    </div> 
+    <div class="faction-unit-block"> 
+        <img src="img/units/OrcsWarchief.png"> 
+        <h6>Warchief</h6> 
+        <p>Вождь - самый сильный орк, которого провозгласили главой клана. опасный противник</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Unit</li>
+            <li>Class = Warchief</li>
+            <li>Health points = 4</li>
+            <li>Attack = 1</li>
+            <li>Move point = 2</li>
+            <li>range = 1</li>
+            <li>price = 5</li>
+            <li>ability = cavalryStrike</li>
+            <li>require = 2 towers</li>
+        </ul> 
+    </div> 
+    <div class="faction-unit-block"> 
+        <img src="img/units/OrcsTownhall.png"> 
+        <h6>War House</h6> 
+        <p>Главное здание орков.</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Building</li> 
+            <li>Class = Townhall</li> 
+            <li>Health points = 5</li> 
+            <li>Attack = 0</li> 
+            <li>Move point = 0</li> 
+            <li>range = 1</li> 
+            <li>price = 4</li> 
+            <li>ability = hire</li> 
+        </ul> 
+    </div> 
+    <div class="faction-unit-block"> 
+        <img src="img/units/OrcsTower.png"> 
+        <h6>Watch tower</h6> 
+        <p>Оборонительное сооружение орков. орки не слишком заморачиваются с прочностью построек, так как понимают что все разрушаемо.</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Building</li> 
+            <li>Class = Tower</li> 
+            <li>Health points = 3</li> 
+            <li>Attack = 1</li> 
+            <li>Move point = 0</li> 
+            <li>range = 2</li> 
+            <li>price = 3</li> 
+            <li>ability = hire</li> 
+        </ul> 
+    </div>
+</div>
+
+
+<!-- ----------------------Neutrals---------------------- -->
+
+<div class="faction-block"> 
+    <h3 class="factions-header">Нейтральные существа и Объекты</h3> 
+    <p>Нейтральные существа и Объекты, не принадлежат никому, но в случае опасности будут атаковать не званных гостей</p> 
+    <div class="faction-unit-block"> 
+        <img src="img/units/NeutralT1.png"> 
+        <h6>Chest</h6> 
+        <p>Сундук с золотом, при "открытии" дает игроку 5 ед. золота</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Building</li> 
+            <li>Class = T1</li> 
+            <li>Health points = 2</li> 
+            <li>Attack = 0</li> 
+            <li>Move point = 0</li> 
+            <li>range = 0</li> 
+            <li>price = 0</li> 
+            <li>ability = treasure meleeOnly</li> 
+        </ul> 
+    </div>
+    <div class="faction-unit-block"> 
+        <img src="img/units/NeutralT2.png"> 
+        <h6>Wolf</h6> 
+        <p>Волк, атакует каждого кто подойдет слишком близко</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Unit</li> 
+            <li>Class = T2</li> 
+            <li>Health points = 2</li> 
+            <li>Attack = 1</li> 
+            <li>Move point = 1</li> 
+            <li>range = 1</li> 
+            <li>price = 1</li> 
+            <li>ability = not</li> 
+        </ul> 
+    </div> 
+    <div class="faction-unit-block"> 
+        <img src="img/units/NeutralT3.png"> 
+        <h6>Ogre</h6> 
+        <p>Огр, опасный противник, любят перекусить свеже-побежденными врагами</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Unit</li> 
+            <li>Class = T3</li> 
+            <li>Health points = 4</li> 
+            <li>Attack = 1</li> 
+            <li>Move point = 1</li> 
+            <li>range = 1</li> 
+            <li>price = 4</li> 
+            <li>ability = cannibal</li> 
+        </ul> 
+    </div> 
+    <div class="faction-unit-block"> 
+        <img src="img/units/NeutralWarchief.png"> 
+        <h6>Dragon</h6> 
+        <p>Дракон, крайне сильное существо, без подготовки не стоит на него нападать</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Unit</li>
+            <li>Class = Warchief</li>
+            <li>Health points = 7</li>
+            <li>Attack = 2</li>
+            <li>Move point = 2</li>
+            <li>range = 1</li>
+            <li>price = 10</li>
+            <li>ability = regeneration</li>
+        </ul> 
+    </div> 
+    <div class="faction-unit-block"> 
+        <img src="img/units/NeutralTownhall.png"> 
+        <h6>Fort Ogres</h6> 
+        <p>Крепкая крепость Огров, обычно сюда Огры складывают накопленное золото и держут пленников</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Building</li> 
+            <li>Class = Townhall</li> 
+            <li>Health points = 6</li> 
+            <li>Attack = 1</li> 
+            <li>Move point = 0</li> 
+            <li>range = 1</li> 
+            <li>price = 8</li> 
+            <li>ability = prison</li> 
+        </ul> 
+    </div> 
+    <div class="faction-unit-block"> 
+        <img src="img/units/NeutralTower.png"> 
+        <h6>Bandit Outpost</h6> 
+        <p>Аванпост Бандитов, Дезертиры сбежавшие из армии организовали шайку и устроили небольшой аванпост, чаще всего распологаются на золотых жилах</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Building</li> 
+            <li>Class = Tower</li> 
+            <li>Health points = 3</li> 
+            <li>Attack = 1</li> 
+            <li>Move point = 0</li> 
+            <li>range = 1</li> 
+            <li>price = 3</li> 
+            <li>ability = not</li> 
+        </ul> 
+    </div>
+</div>

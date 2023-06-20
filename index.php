@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require_once 'includes/connect.php';
 
 if (isset($_GET['page'])) {
@@ -9,6 +11,7 @@ if (isset($_GET['page'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="js/const.js"></script>
     <?php 
         include("template/head.html");
     ?>
@@ -21,6 +24,9 @@ if (isset($_GET['page'])) {
     <?php
         if($page == 'profile' && !isset($_SESSION['user'])){
             include("page/login.html");
+        }
+        else if($page == 'game' && !isset($_SESSION['user'])){
+            include("page/main.html");
         }
         else if($page != ''){
             if(($page == 'login' || $page == 'reg') && isset($_SESSION['user'])){
@@ -35,7 +41,7 @@ if (isset($_GET['page'])) {
 
 
     <div id="profile-button" class="pointer" onclick="toggle_profile()">
-        
+        Profile
     </div>
     <div id="profile-block">
         <div class="profile-header">
@@ -46,6 +52,11 @@ if (isset($_GET['page'])) {
             
         </div>
     </div>
-<script src="js/profile.js"></script>
+    <?php
+        if(isset($_SESSION['user'])){
+            include("template/chat.html");
+        }
+    ?>
+    <script src="js/profile.js"></script>
 </body>
 </html>

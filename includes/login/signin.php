@@ -1,5 +1,7 @@
 <?php
-        session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
         require_once '../connect.php';
     if(isset($_POST['login']) && isset($_POST['password'])){
         $login = $_POST['login'];
@@ -16,6 +18,12 @@
                     "count_wins"=>$user['count_wins'],
                     "count_games"=>$user['count_games']
                 ];
+                if($_POST['remember']==1){
+                    //.$_SERVER["REMOTE_ADDR"]
+                    $string = sha1($login.time().rand(1000,9999));
+                    mysqli_query($connect, "INSERT INTO `session_tokens` (`login`, `token`) VALUES ('$login', '$string')");
+                    setcookie('token',$string,time()+(3600*24*14));
+                }
                 //setcookie('login','asdasd',0,'/');
                 echo "success";
             }else{
