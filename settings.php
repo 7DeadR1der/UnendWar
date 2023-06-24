@@ -1,19 +1,31 @@
-
-<script scr="js/const.js"></script>
-
 <?php
+//session_start();
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-if(!$_SESSION['user']){
-    header('Location: ', '');
+require_once 'includes/connect.php';
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <?php 
+        include("template/head.html");
+    ?>
+    <script src="js/const.js"></script>
+</head>
+<body>
+<?php
+    echo '<a href="index.php">назад</a>';
+    //var_dump($_SESSION);
+if(!isset($_SESSION['user'])){
+    echo "dieeee";
+    //header('Location: ', 'index.php?page=authors');
     die();
 }else{
-    include("template/head.html");
     echo 
-    '<a href="index.php">назад</a>
-    <div>
+    '<div>
         <div>
             <h2>Settings</h2>
         </div>
@@ -46,12 +58,15 @@ if(!$_SESSION['user']){
             </div>
             <br>
             <button onclick="saveProfile()">Сохранить профиль</button>
+            <br>
             
         </div>
     </div>';
 }
 //<h4>Настройки игры</h4>
 //<p>Coming soon</p>
+//<button onclick="clearSession()">Завершить все сессии учетной записи</button>
 ?>
-<script src="js/const.js"></script>
 <script src="js/settings.js"></script>
+</body>
+</html>

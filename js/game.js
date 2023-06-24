@@ -3,7 +3,7 @@
 //player colors
 //red blue orange purple green yellow
 const colorPlayers = ['#bababa', '#fc9393', '#60c0ff', '#ffae58', '#f190ff', '#54fd7a', '#e3f054'];
-const colorLands = ['#b1c37b','#f0fafa','#efc279','#b1c37b'];
+const colorLands = ['#b1c37b','#f0fafa','#e8d479','#b1c37b'];
 //colors cursors?
 const colorCursor = ['2px solid white','2px solid blue', '2px solid red','2px solid #00ff00','2px solid #30d5c8'];
 let thisPlayer;

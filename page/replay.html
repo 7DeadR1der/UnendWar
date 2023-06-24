@@ -1,53 +1,69 @@
 <a href="index.php">назад</a>
-<div>
-    <input name="idRoom" type="text" placeholder="Номер игры">
-    <button onclick="loadReplay(document.querySelector(`input[name='idRoom']`).value)">Просмотреть игру</button>
-</div>
-<div id="game-field">
-
-</div>
-<div id="game-btns">
-    <button onclick="transit('home')">В начало</button>
-    <button onclick="transit('-')">Назад</button>
-    <input name="timeLine" type="range" min="0" max="1" onchange="transit(this.value)">
-    <!-- <button></button> -->
-    <button onclick="transit('+')">Вперед</button>
-    <button onclick="transit('end')">В конец</button>
-</div>
-<div id="game-info">
-    <ul id="list_player">
-        <li id="li_PlayerName"></li>
-        <li id="li_PlayerGold"></li>
-        <li id="li_PlayerLevel"></li>
-        <li id="li_PlayerExp"></li>
-        <li id="li_PlayerScore"></li>
-        <li id="li_goldUp"></li>
-        <li id="li_goldDown"></li>
-        <li id="li_warchiefUp"></li>
-        <li id="li_warchiefDown"></li>
-        <li id="li_unitUp"></li>
-        <li id="li_unitDown"></li>
-        <li id="li_buildUp"></li>
-        <li id="li_buildDown"></li>
-        <!-- <li id="li_limit_workers"></li>
-        <li id="li_limit_army"></li>
-        <li id="li_limit_warchiefs"></li>
-        <li id="li_limit_townhalls"></li>
-        <li id="li_limit_towers"></li> -->
-    </ul>
-    <ul>
-        <li id="li_goldCell"></li>
-        <li id="li_nameUnit"></li>
-        <li id="li_ownerUnit"></li>
-        <li id="li_hpUnit"></li>
-        <li id="li_attackUnit"></li>
-        <li id="li_moveUnit"></li>
-        <li id="li_rangeUnit"></li>
-        <li id="li_abilityUnit"></li>
-        <li id="li_canActionUnit"></li>
-    </ul>
+<div id="replay">
+    <!-- <div>
+        <input name="idRoom" type="text" placeholder="Номер игры">
+        <button onclick="loadReplay(document.querySelector(`input[name='idRoom']`).value)">Просмотреть игру</button>
+    </div> -->
+    <div id="game-field">
+    
     </div>
-<div>
+    <div id="game-btns">
+        <button onclick="transit('home')">В начало</button>
+        <button onclick="transit('-')">Назад</button>
+        <input name="timeLine" type="range" min="0" max="1" onchange="transit(this.value)">
+        <!-- <button></button> -->
+        <button onclick="transit('+')">Вперед</button>
+        <button onclick="transit('end')">В конец</button>
+    </div>
+    <div id="game-info">
+        <ul id="list_player">
+            <li id="li_PlayerName"></li>
+            <li id="li_PlayerGold"></li>
+            <li id="li_PlayerLevel"></li>
+            <li id="li_PlayerExp"></li>
+            <li id="li_PlayerScore"></li>
+            <li id="li_goldUp"></li>
+            <li id="li_goldDown"></li>
+            <li id="li_warchiefUp"></li>
+            <li id="li_warchiefDown"></li>
+            <li id="li_unitUp"></li>
+            <li id="li_unitDown"></li>
+            <li id="li_buildUp"></li>
+            <li id="li_buildDown"></li>
+            <!-- <li id="li_limit_workers"></li>
+            <li id="li_limit_army"></li>
+            <li id="li_limit_warchiefs"></li>
+            <li id="li_limit_townhalls"></li>
+            <li id="li_limit_towers"></li> -->
+        </ul>
+        <ul>
+            <li id="li_goldCell"></li>
+            <li id="li_nameUnit"></li>
+            <li id="li_ownerUnit"></li>
+            <li id="li_hpUnit"></li>
+            <li id="li_attackUnit"></li>
+            <li id="li_moveUnit"></li>
+            <li id="li_rangeUnit"></li>
+            <li id="li_abilityUnit"></li>
+            <li id="li_canActionUnit"></li>
+        </ul>
+        </div>
+</div>
 
+<div id="history">
+    <table class="info-table">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Название</th>
+                <th>Карта</th>
+                <th>Локальная игра</th>
+                <th>Кнопка</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
 </div>
 <script src="js/replay.js"></script>

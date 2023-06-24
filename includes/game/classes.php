@@ -177,7 +177,7 @@ class SeaMercs {
         $this->t1 = ['unit','t1','Slave',1,1,1,1,0,['worker'],'img/units/SeaMercsT1.png','',''];
         $this->t2 = ['unit','t2','Raider',1,1,2,1,1,['pillage'],"img/units/SeaMercsT2.png",'',''];
         $this->t3 = ['unit','t3','Merc',2,1,1,1,1,['pillage'],"img/units/SeaMercsT3.png",'',''];
-        $this->warchief = ['unit','warchief','Slaver',4,1,1,1,4,['veteran'],"img/units/SeaMercsWarchief.png",'','2t'];
+        $this->warchief = ['unit','warchief','Berserk',4,1,1,1,4,['veteran'],"img/units/SeaMercsWarchief.png",'','2t'];
         $this->townhall = ['building','townhall','Forge',5,0,0,0,4,['hire','smith'],'img/units/SeaMercsTownhall.png','t1-t2',''];
         $this->tower = ['building','tower','Outpost',3,1,0,2,3,['hire'],"img/units/SeaMercsTower.png",'t3-warchief',''];
     }

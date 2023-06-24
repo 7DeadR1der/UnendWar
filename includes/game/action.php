@@ -190,10 +190,14 @@ if (session_status() === PHP_SESSION_NONE) {
                                                 $json->gameField[$fi][$fj]->contains->canAction = false;
                                                 setGold($player,'-',$unit[7]);
                                                 //$json->gamePlayers[$player]->gold-=$unit[7];
-                                                if($json->gameField[$si][$sj]->contains->class == "warchief"){
-                                                    scoring($player,$json->gameField[$si][$sj]->contains->price,"warchief","Up",1);
+                                                if($json->gameField[$si][$sj]->contains->type == "unit"){
+                                                    if($json->gameField[$si][$sj]->contains->class == "warchief"){
+                                                        scoring($player,$json->gameField[$si][$sj]->contains->price,"warchief","Up",1);
+                                                    }else{
+                                                        scoring($player,$json->gameField[$si][$sj]->contains->price,"unit","Up",1);
+                                                    }
                                                 }else{
-                                                    scoring($player,$json->gameField[$si][$sj]->contains->price,"unit","Up",1);
+                                                    scoring($player,$json->gameField[$si][$sj]->contains->price,"build","Up",1);
                                                 }
                                             }
                                         }

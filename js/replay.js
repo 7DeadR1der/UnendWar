@@ -1,9 +1,14 @@
 "use strict"
+let historyBlock = document.getElementById("history");
+let replayBlock = document.getElementById("replay");
+replayBlock.style.display = "none";
 let replayJson;
 let replayStatistic;
 let replayTurn = 0;
 const colorPlayers = ['#bababa', '#fc9393', '#60c0ff', '#ffae58', '#f190ff', '#54fd7a', '#e3f054'];
-const colorLands = ['#b1c37b','#f0fafa','#efc279','#b1c37b'];
+
+const colorLands = ['#b1c37b','#f0fafa','#e8d479','#b1c37b'];
+//const colorLands = ['#b1c37b','#f0fafa','#efc279','#b1c37b'];
 for(let i=0;i<8;i++){
     for(let j=0;j<8;j++){
         let cellAdd = document.createElement('img');
@@ -19,6 +24,8 @@ for(let i=0;i<8;i++){
 
 function loadReplay(id){
     if(!isNaN(id)){
+        historyBlock.style.display = "none";
+        replayBlock.style.display = "inline";
         let xhr = new XMLHttpRequest();
         xhr.open('GET', folder+'/includes/game/replay.php?id='+id);
         xhr.onload = function(){
@@ -26,6 +33,8 @@ function loadReplay(id){
             replayJson = JSON.parse(res[0]);
             replayStatistic = JSON.parse(res[1]);
             document.querySelector(`input[name='timeLine']`).max = replayJson.length-1;
+
+            gameSettings.land = replayStatistic.gameLand;
             //console.log(replayJson);
             display();
         };
@@ -247,3 +256,36 @@ const gameSettings = {
         {name:"Scavengers", description:"T2 при убийстве восстанавливают себе здоровье"},// и Warchief
     ]
 };
+
+function loadHistory(){
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', folder+'/includes/game/replay.php?id=0');
+        xhr.onload = function(){
+            let res = JSON.parse(xhr.response);
+            let table = historyBlock.getElementsByTagName("table")[0];
+            let tbody = table.getElementsByTagName("tbody")[0];
+            //let tbody = document.getElementById("history").getElementsByTagName("table").getElementsByTagName("tbody");
+            for(let i=0;i<res.length;i++){
+                let row = tbody.insertRow(i);
+                let cellId = row.insertCell(0);
+                cellId.innerHTML = res[i]['id_room'];
+                let cellName = row.insertCell(1);
+                cellName.innerHTML = res[i]['name'];
+                let cellMap = row.insertCell(2);
+                cellMap.innerHTML = res[i]['game_map'];
+                let cellLocal = row.insertCell(3);   
+                if(res[i]['local'] == 1){
+                    cellLocal.innerHTML = 'Да';
+                }else{
+                    cellLocal.innerHTML = 'Нет';
+                }       
+                let cellBtn = row.insertCell(4);
+                cellBtn.innerHTML = '<button onclick="loadReplay('+res[i]["id_room"]+')">Просмотр</button>'
+            }
+            //console.log(replayJson);
+            //display();
+        };
+        xhr.send();
+}
+
+loadHistory();

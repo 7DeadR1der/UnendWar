@@ -2,18 +2,22 @@
 //map name 21lr - 1 цифра макс кол-во игроков, 2 цифра режим игры который может играться 0-классик 1-охота 2-сбор
 
 function mapMaker($field, $map, $count, $type, $mode, $players){
+    global $game;
     $startPositions = [];
     $rndArrUnit = [];
     switch ($map){
         case '20lr':
-            $field[7][0]->resCount = 14;
-            $field[0][7]->resCount = 14;
-            $field[0][3]->resCount = 10;
-            $field[2][0]->resCount = 10;
-            $field[2][0]->contains = new Unit($players[0]->faction->tower,0,true);
-            $field[7][4]->resCount = 10;
-            $field[5][7]->resCount = 10;
-            $field[5][7]->contains = new Unit($players[0]->faction->tower,0,true);
+            $game['gameLand'] = 0;
+            $field[7][0]->resCount = 16;
+            $field[0][7]->resCount = 16;
+            $field[0][3]->resCount = 12;
+            $field[0][3]->contains = new Unit($players[0]->faction->t2,0,true);
+            $field[2][0]->resCount = 12;
+            $field[2][0]->contains = new Unit($players[0]->faction->t3,0,true);
+            $field[7][4]->resCount = 12;
+            $field[7][4]->contains = new Unit($players[0]->faction->t2,0,true);
+            $field[5][7]->resCount = 12;
+            $field[5][7]->contains = new Unit($players[0]->faction->t3,0,true);
             $field[0][0]->obstacle = 1;
             $field[0][1]->obstacle = 2;
             $field[1][0]->obstacle = 1;
@@ -28,6 +32,7 @@ function mapMaker($field, $map, $count, $type, $mode, $players){
             array_push($startPositions,$field[1][6]);
             break;
         case '20ds':
+            $game['gameLand'] = 1;
             $field[0][0]->contains = new Unit($players[0]->faction->warchief,0,true);
             $field[0][1]->obstacle = 1;
             $field[0][7]->resCount = 20;
@@ -254,11 +259,12 @@ function mapMaker($field, $map, $count, $type, $mode, $players){
             array_push($startPositions,$field[6][7]);
             break;*/
         case '40s':
-            foreach($field[0] as $cell){
-                $cell->obstacle = 1;
-            }
-            foreach($field[7] as $cell){
-                $cell->obstacle = 1;
+            $game['gameLand'] = 2;
+            foreach($field as $row){
+                foreach($row as $cell){
+                    if($cell->row == 0 ||$cell->column == 0 ||$cell->row == 7 ||$cell->column == 7)
+                    $cell->obstacle = mt_rand(1,2);
+                }
             }
             $field[1][3]->resCount = 12;
             $field[3][6]->resCount = 12;
@@ -268,28 +274,17 @@ function mapMaker($field, $map, $count, $type, $mode, $players){
             $field[3][4]->resCount = 6;
             $field[4][3]->resCount = 6;
             $field[4][4]->resCount = 6;
-            $field[1][0]->obstacle = 1;
-            $field[1][1]->obstacle = 2;
-            $field[2][0]->obstacle = 1;
-            $field[3][0]->obstacle = 1;
-            $field[4][0]->obstacle = 1;
-            $field[5][0]->obstacle = 1;
-            $field[6][0]->obstacle = 1;
-            $field[6][1]->obstacle = 2;
-            $field[1][6]->obstacle = 2;
-            $field[1][7]->obstacle = 1;
-            $field[2][7]->obstacle = 1;
-            $field[3][7]->obstacle = 1;
-            $field[4][7]->obstacle = 1;
-            $field[5][7]->obstacle = 1;
-            $field[6][7]->obstacle = 1;
-            $field[6][6]->obstacle = 2;
+            $field[1][1]->obstacle = 1;
+            $field[6][1]->obstacle = 1;
+            $field[1][6]->obstacle = 1;
+            $field[6][6]->obstacle = 1;
             array_push($startPositions,$field[1][5]);
             array_push($startPositions,$field[2][1]);
             array_push($startPositions,$field[6][2]);
             array_push($startPositions,$field[5][6]);
             break;
         case '40lt': //hunt
+            $game['gameLand'] = 0;
             array_push($rndArrUnit,$field[3][3]);
             array_push($rndArrUnit,$field[3][4]);
             array_push($rndArrUnit,$field[4][3]);
@@ -365,19 +360,21 @@ function mapMaker($field, $map, $count, $type, $mode, $players){
             array_push($startPositions,$field[6][6]);
             break;*/
         case '60gn':
+            $game['gameLand'] = 2;
             foreach($field as $row){
                 foreach($row as $cell){
                     $cell->resCount =3;
                 }
             }
-            array_push($startPositions,$field[0][0]);
+            array_push($startPositions,$field[1][0]);
             array_push($startPositions,$field[0][4]);
             array_push($startPositions,$field[2][7]);
             array_push($startPositions,$field[5][0]);
             array_push($startPositions,$field[7][3]);
-            array_push($startPositions,$field[7][7]);
+            array_push($startPositions,$field[6][7]);
             break;
         case '60gw':
+            $game['gameLand'] = 0;
             $field[0][3]->resCount = 20;
             $field[0][7]->resCount = 20;
             $field[1][0]->resCount = 20;
@@ -408,6 +405,7 @@ function mapMaker($field, $map, $count, $type, $mode, $players){
 
             break;
         case '60bg':
+            $game['gameLand'] = 1;
             $field[0][0]->resCount = 20;
             $field[0][3]->obstacle = 2;
             $field[0][4]->resCount = 20;
