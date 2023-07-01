@@ -199,6 +199,10 @@ function pressCell(i,j){
         document.getElementById('li_goldDown').textContent = `Золота потрачено = ${thisPlayer.statistic.goldDown}`;
         document.getElementById('li_warchiefUp').textContent = `Вождей нанято = ${thisPlayer.statistic.warchiefUp}`;
         document.getElementById('li_warchiefDown').textContent = `Вождей убито = ${thisPlayer.statistic.warchiefDown}`;
+        if(typeof(thisPlayer.statistic.workerUp) != undefined && thisPlayer.statistic.workerUp !== null){
+            document.getElementById('li_workerUp').textContent = `Рабочих нанято = ${thisPlayer.statistic.workerUp}`;
+            document.getElementById('li_workerDown').textContent = `Рабочих убито = ${thisPlayer.statistic.workerDown}`;
+        }
         document.getElementById('li_unitUp').textContent = `Юнитов нанято = ${thisPlayer.statistic.unitUp}`;
         document.getElementById('li_unitDown').textContent = `Юнитов убито = ${thisPlayer.statistic.unitDown}`;
         document.getElementById('li_buildUp').textContent = `Зданий построено = ${thisPlayer.statistic.buildUp}`;
@@ -222,6 +226,8 @@ function pressCell(i,j){
         document.getElementById('li_PlayerExp').textContent = ``;
         document.getElementById('li_goldUp').textContent = ``;
         document.getElementById('li_goldDown').textContent = ``;
+        document.getElementById('li_workerUp').textContent = ``;
+        document.getElementById('li_workerDown').textContent = ``;
         document.getElementById('li_warchiefUp').textContent = ``;
         document.getElementById('li_warchiefDown').textContent = ``;
         document.getElementById('li_unitUp').textContent = ``;

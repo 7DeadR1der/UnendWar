@@ -42,77 +42,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     }
                 }
             }
-            for($i=0;$i<count($json->gameField);$i++){
-                for($j=0;$j<count($json->gameField[$i]);$j++){
-                    $cell = $json->gameField[$i][$j];
-                    //print_r($cell);
-                    if($cell->contains != false){
-                        if(isset($json->gamePlayers[$cell->contains->owner]) && $json->gamePlayers[$cell->contains->owner]->live!=false){
-                            $json->gamePlayers[$cell->contains->owner]->counts++;
-                            if($cell->contains->owner == $json->gameTurn){
-                                if($cell->resCount && in_array('worker',$cell->contains->ability)){
-                                    $cell->resCount--;
-                                    setGold($cell->contains->owner,'+',1);
-                                }
-                                $cell->contains->canMove = true;
-                                $cell->contains->canAction = true;
-                            }
-                        };
-                        /*if($newRound==true && $cell->resCount && in_array('worker',$cell->contains->ability)){
-                            $cell->resCount--;
-                            $json->gamePlayers[$cell->contains->owner]->gold+=1;
-                        }*/
-                        if($newRound==true && $cell->contains->owner == 0){
-                            if(in_array('regeneration',$cell->contains->ability) && $cell->contains->hp < $cell->contains->hpMax){
-                                $cell->contains->hp +=1;
-                            }
-                            echo "1ok";
-                            if($cell->contains->attack>0){
-                                echo "2ok";
-                                $arrUnits=[];
-                                if(isset($json->gameField[$i+1][$j]) && $json->gameField[$i+1][$j]->contains != false && $json->gameField[$i+1][$j]->contains->owner != 0)
-                                    {array_push($arrUnits,$json->gameField[$i+1][$j]);echo "0ok";}
-                                if(isset($json->gameField[$i][$j+1]) && $json->gameField[$i][$j+1]->contains != false && $json->gameField[$i][$j+1]->contains->owner != 0)
-                                    {array_push($arrUnits,$json->gameField[$i][$j+1]);echo "0ok";}
-                                if(isset($json->gameField[$i-1][$j]) && $json->gameField[$i-1][$j]->contains != false && $json->gameField[$i-1][$j]->contains->owner != 0)
-                                    {array_push($arrUnits,$json->gameField[$i-1][$j]);echo "0ok";}
-                                if(isset($json->gameField[$i][$j-1]) && $json->gameField[$i][$j-1]->contains != false && $json->gameField[$i][$j-1]->contains->owner != 0)
-                                    {array_push($arrUnits,$json->gameField[$i][$j-1]);echo "0ok";}
-                                if(count($arrUnits)>0){echo "3ok";
-                                    $n = mt_rand(0,count($arrUnits)-1);
-                                    
-                                    //$rndUnit = array_rand($arrUnits,1);
-                                    //var_dump($arrUnits[$n]);
-                                    //var_dump($rndUnit);
-                                    $k=$arrUnits[$n]->row;
-                                    $m=$arrUnits[$n]->column;
-                                    $atk = $cell->contains->attack;
-                                    if(in_array('armor',$json->gameField[$k][$m]->contains->ability)){
-                                        $atk -= 1;
-                                        $search = array_search('armor',$json->gameField[$k][$m]->contains->ability);
-                                        if($search !== false){
-                                            array_splice($json->gameField[$k][$m]->contains->ability,$search,1);
-                                        }
-                                    }
-                                    if(in_array('veteran',$json->gameField[$k][$m]->contains->ability)){
-                                        $chanceArray=[0,0,0,1,1,1,1,1,1,1];
-                                        $s= array_rand($chanceArray);
-                                        if($chanceArray[$s] == 0){
-                                            $atk = 0;
-                                        }
-                                    }
-                                    if($json->gameField[$k][$m]->contains->hp-$atk<=0){
-                                        $json->gameField[$k][$m]->contains = false;echo "5ok";
-                                    }else{echo "6ok";
-                                        $json->gameField[$k][$m]->contains->hp -= $atk;
-                                    }
-                                    
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            updateField();
             for($i=1;$i<count($json->gamePlayers);$i++){
                 if(isset($json->gamePlayers[$i]) && $json->gamePlayers[$i]->live!=false){
                     if($json->gamePlayers[$i]->counts==0){
@@ -123,6 +53,15 @@ if (session_status() === PHP_SESSION_NONE) {
                         $num+=1;
                     }
                 }
+            }
+            while($json->gamePlayers[$json->gameTurn]->live==false){
+                if($json->gameTurn>=count($json->gamePlayers)){
+                    $json->gameTurn=0;
+                    //code for bot and etc
+                    $newRound=true;
+                }
+                $json->gameTurn++;
+                updateField();
             }
             $ts = time();
             //check Victory
@@ -167,4 +106,92 @@ if (session_status() === PHP_SESSION_NONE) {
             echo "success";
         }
     }
+
+function updateField(){
+    global $json;
+    global $newRound;
+    for($i=0;$i<count($json->gameField);$i++){
+        for($j=0;$j<count($json->gameField[$i]);$j++){
+            $cell = $json->gameField[$i][$j];
+            //print_r($cell);
+            if($cell->contains != false){
+                if(isset($json->gamePlayers[$cell->contains->owner]) && $json->gamePlayers[$cell->contains->owner]->live!=false){
+                    $json->gamePlayers[$cell->contains->owner]->counts++;
+                    if($cell->contains->owner == $json->gameTurn){
+                        if($cell->resCount && in_array('worker',$cell->contains->ability)){
+                            $cell->resCount--;
+                            setGold($cell->contains->owner,'+',1);
+                        }
+                        $cell->contains->canMove = true;
+                        $cell->contains->canAction = true;
+                    }
+                };
+                /*if($newRound==true && $cell->resCount && in_array('worker',$cell->contains->ability)){
+                    $cell->resCount--;
+                    $json->gamePlayers[$cell->contains->owner]->gold+=1;
+                }*/
+                if($newRound==true && $cell->contains->owner == 0){
+                    if(in_array('regeneration',$cell->contains->ability) && $cell->contains->hp < $cell->contains->hpMax){
+                        $cell->contains->hp +=1;
+                    }
+                    echo "1ok";
+                    if($cell->contains->attack>0){
+                        echo "2ok";
+                        $arrUnits=[];
+                        if(isset($json->gameField[$i+1][$j]) && $json->gameField[$i+1][$j]->contains != false && $json->gameField[$i+1][$j]->contains->owner != 0)
+                            {array_push($arrUnits,$json->gameField[$i+1][$j]);echo "0ok";}
+                        if(isset($json->gameField[$i][$j+1]) && $json->gameField[$i][$j+1]->contains != false && $json->gameField[$i][$j+1]->contains->owner != 0)
+                            {array_push($arrUnits,$json->gameField[$i][$j+1]);echo "0ok";}
+                        if(isset($json->gameField[$i-1][$j]) && $json->gameField[$i-1][$j]->contains != false && $json->gameField[$i-1][$j]->contains->owner != 0)
+                            {array_push($arrUnits,$json->gameField[$i-1][$j]);echo "0ok";}
+                        if(isset($json->gameField[$i][$j-1]) && $json->gameField[$i][$j-1]->contains != false && $json->gameField[$i][$j-1]->contains->owner != 0)
+                            {array_push($arrUnits,$json->gameField[$i][$j-1]);echo "0ok";}
+                        if(count($arrUnits)>0){echo "3ok";
+                            $n = mt_rand(0,count($arrUnits)-1);{
+                            
+                            //$rndUnit = array_rand($arrUnits,1);
+                            //var_dump($arrUnits[$n]);
+                            //var_dump($rndUnit);
+                            $k=$arrUnits[$n]->row;
+                            $m=$arrUnits[$n]->column;
+                            $atk = $cell->contains->attack;
+                            if(in_array('evasion',$json->gameField[$k][$m]->contains->ability)){
+                                $atk = 0;
+                                $search = array_search('evasion',$json->gameField[$k][$m]->contains->ability);
+                                if($search !== false){
+                                    array_splice($json->gameField[$k][$m]->contains->ability,$search,1);
+                                }
+                            }
+                            if($atk>0 && in_array('armor',$json->gameField[$k][$m]->contains->ability)){
+                                $atk -= 1;
+                                $search = array_search('armor',$json->gameField[$k][$m]->contains->ability);
+                                if($search !== false){
+                                    array_splice($json->gameField->contains->ability,$search,1);
+                                }
+                            }
+                            if($atk>0 && in_array('veteran',$json->gameField[$k][$m]->contains->ability)){
+                                if($json->gameField[$k][$m]->contains->canAction == true){
+                                    $atk -= 1;
+                                    $json->gameField[$k][$m]->contains->canAction = false;
+                                }
+                                /*$chanceArray=[0,0,0,1,1,1,1,1,1,1];
+                                $s= array_rand($chanceArray);
+                                if($chanceArray[$s] == 0){
+                                    $atk = 0;
+                                }*/
+                            }
+                            }
+                            if($json->gameField[$k][$m]->contains->hp-$atk<=0){
+                                $json->gameField[$k][$m]->contains = false;echo "5ok";
+                            }else{echo "6ok";
+                                $json->gameField[$k][$m]->contains->hp -= $atk;
+                            }
+                            
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 ?>

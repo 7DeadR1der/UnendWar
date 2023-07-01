@@ -26,8 +26,13 @@ function pressCell(i,j){
         if(gameField[i][j].contains.owner == thisPlayer.owner){
             if((gameField[i][j].contains.canMove == true && gameField[i][j].contains.movePoint!=0) || gameField[i][j].contains.canAction == true){
                 lockAllCells();
-                if(gameField[i][j].contains.canMove == true)
-                    unlockCells(gameField[i][j].contains.movePoint, i, j, 'move');
+                if(gameField[i][j].contains.canMove == true){
+                    let speed = gameField[i][j].contains.movePoint;
+                    if(gameField[i][j].contains.ability.includes('rush',0)){
+                        speed += 1;
+                    }
+                    unlockCells(speed, i, j, 'move');
+                }
                     
                 if(gameField[i][j].contains.canAction == true)
                     unlockCells(gameField[i][j].contains.range, i, j, 'atk');
@@ -403,15 +408,17 @@ function unlockCells(count,i,j,type){
             break;
         case"heal":
             if(gameField[i][j].contains.ability.includes('surgery',0)){
-                if(gameField[i][j].contains.hpMax>gameField[i][j].contains.hp){
-                    document.getElementById('btnSurgeryHeal').style.display = 'inline';
-                }
-                arrayCells.forEach(cell => {
-                    if(cell.contains!=false&&cell.contains.type!='building'&&cell.contains.owner==thisPlayer.owner&&cell.contains.hpMax>cell.contains.hp){
-                        cell.availability=true;
-                        document.getElementById(`${cell.row}-${cell.column}`).style.border = colorCursor[3];
+                if(gameField[i][j].contains.canAction == true){
+                    if(gameField[i][j].contains.hpMax>gameField[i][j].contains.hp){
+                        document.getElementById('btnSurgeryHeal').style.display = 'inline';
                     }
-                });
+                    arrayCells.forEach(cell => {
+                        if(cell.contains!=false&&cell.contains.type!='building'&&cell.contains.owner==thisPlayer.owner&&cell.contains.hpMax>cell.contains.hp){
+                            cell.availability=true;
+                            document.getElementById(`${cell.row}-${cell.column}`).style.border = colorCursor[3];
+                        }
+                    });
+                }
             }
             break;
         case"hire":
@@ -663,6 +670,15 @@ function loadField(json){
                         document.getElementById('li_limit_warchiefs').textContent = `Вожди - ${thisPlayer.count_warchiefs}/${gameSettings.limit_warchiefs}`;
                         document.getElementById('li_limit_townhalls').textContent = `Ратуши - ${thisPlayer.count_townhalls}/${gameSettings.limit_townhalls}`;
                         document.getElementById('li_limit_towers').textContent = `Башни - ${thisPlayer.count_towers}/${gameSettings.limit_towers}`;    
+                    
+                        //name btn
+                        document.getElementById('btnBuyT1').textContent = 'Нанять ' + thisPlayer.faction.t1[2];
+                        document.getElementById('btnBuyT2').textContent = 'Нанять ' + thisPlayer.faction.t2[2];
+                        document.getElementById('btnBuyT3').textContent = 'Нанять ' + thisPlayer.faction.t3[2];
+                        document.getElementById('btnBuyWarchief').textContent = 'Нанять ' + thisPlayer.faction.warchief[2];
+                        document.getElementById('btnBuildTownhall').textContent = 'Построить ' + thisPlayer.faction.townhall[2];
+                        document.getElementById('btnBuildTower').textContent = 'Построить ' + thisPlayer.faction.tower[2];
+                    
                     }
                     document.getElementById(`${i}-${j}`).setAttribute('src',json.gameField[i][j].contains.image);
                     titleText += `${json.gameField[i][j].contains.name} - hp = ${json.gameField[i][j].contains.hp}/${json.gameField[i][j].contains.hpMax}, atk = ${json.gameField[i][j].contains.attack}, move = ${json.gameField[i][j].contains.movePoint}`;
@@ -729,7 +745,7 @@ const gamestring = '<div id="game-header">'+
     '<li id="li_limit_townhalls"></li>'+
     '<li id="li_limit_towers"></li>'+
 '</ul>'+
-'<ul>'+
+'<ul id="list_unit">'+
     '<li id="li_goldCell"></li>'+
     '<li id="li_nameUnit"></li>'+
     '<li id="li_ownerUnit"></li>'+

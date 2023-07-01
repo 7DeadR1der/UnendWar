@@ -4,9 +4,7 @@
         <input name="idRoom" type="text" placeholder="Номер игры">
         <button onclick="loadReplay(document.querySelector(`input[name='idRoom']`).value)">Просмотреть игру</button>
     </div> -->
-    <div id="game-field">
-    
-    </div>
+    <div id="game-field"></div>
     <div id="game-btns">
         <button onclick="transit('home')">В начало</button>
         <button onclick="transit('-')">Назад</button>
@@ -26,6 +24,8 @@
             <li id="li_goldDown"></li>
             <li id="li_warchiefUp"></li>
             <li id="li_warchiefDown"></li>
+            <li id="li_workerUp"></li>
+            <li id="li_workerDown"></li>
             <li id="li_unitUp"></li>
             <li id="li_unitDown"></li>
             <li id="li_buildUp"></li>
@@ -36,7 +36,7 @@
             <li id="li_limit_townhalls"></li>
             <li id="li_limit_towers"></li> -->
         </ul>
-        <ul>
+        <ul id="list_unit">
             <li id="li_goldCell"></li>
             <li id="li_nameUnit"></li>
             <li id="li_ownerUnit"></li>

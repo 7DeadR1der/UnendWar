@@ -95,6 +95,10 @@ function loadGame(num){
                     ine += '<li>Золота потрачено - '+array[i]['statistic']['goldDown']+'</li>';
                     ine += '<li>Вождей создано - '+array[i]['statistic']['warchiefUp']+'</li>';
                     ine += '<li>Вождей убито - '+array[i]['statistic']['warchiefDown']+'</li>';
+                    if(typeof(array[i]['statistic']['workerUp'] != undefined && array[i]['statistic']['workerUp'] !== null)){
+                        ine += '<li>Рабочих создано - '+array[i]['statistic']['workerUp']+'</li>';
+                        ine += '<li>Рабочих убито - '+array[i]['statistic']['workerDown']+'</li>';
+                    }
                     ine += '<li>Юнитов создано - '+array[i]['statistic']['unitUp']+'</li>';
                     ine += '<li>Юнитов убито - '+array[i]['statistic']['unitDown']+'</li>';
                     ine += '<li>Зданий построено - '+array[i]['statistic']['buildUp']+'</li>';

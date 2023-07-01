@@ -51,8 +51,97 @@ function scoring($owner,$scorePoints=0,$type=false,$set=false,$number=false){
     $json->gamePlayers[$owner]->statistic->score += $scorePoints;
 }
 
+function spawn(array $unit, int $owner, bool $payable = true, bool $action = false, bool $limit = true){
+    global $gameSettings;
+    global $json;
+        if($limit == true){
+            $count=countCalc($json->gameField,$unit[1],$owner);
+            //$checkLimit = ($limit == true) ? false : true;
+            $checkLimit = false;
+            switch($unit[1]){
+                case't1':
+                    if($count<$gameSettings["limit_workers"]){
+                        $checkLimit = true;
+                    }
+                    break;
+                case 't2':
+                    if($count<$gameSettings["limit_army"]){
+                        $checkLimit = true;
+                    }
+                    break;
+                case 't3':
+                    if($count<$gameSettings["limit_army"]){
+                        $checkLimit = true;
+                    }
+                    break;
+                case 'warchief':
+                    if($count<$gameSettings["limit_warchiefs"]){
+                        if($unit[11]=='2t'){
+                            $countTowers=countCalc($json->gameField,'tower',$owner);
+                            if($countTowers>=2){
+                                $checkLimit = true;
+                            }//else alert('Для Вождя нужно 2 башни');
+                        }else {
+                            $checkLimit = true;
+                        }
+                    }
+                    break;
+                case 'townhall':
+                    if($count<$gameSettings["limit_townhalls"]){
+                        $checkLimit=true;
+                    }
+                    break;
+                case 'tower':
+                    if($count<$gameSettings["limit_towers"]){
+                        $checkLimit=true;
+                    }
+                    break;
+                default:
+                    //alert('ошибка в выборе юнита');
+                    break;
+            }
+        }else{
+            $checkLimit=true;
+        }
+        if($checkLimit==true){
+            if($payable == false || $json->gamePlayers[$owner]->gold>=$unit[7]){
+                if($payable == true){
+                    setGold($owner,'-',$unit[7]);
+                }
+                //$json->gamePlayers[$player]->gold-=$unit[7];
+                if($unit[0] == "unit"){
+                    if($unit[1] == "warchief"){
+                        scoring($owner,$unit[7],"warchief","Up",1);
+                    }else if($unit[1] == "t1"){
+                        scoring($owner,$unit[7],"worker","Up",1);
+                    }else{
+                        scoring($owner,$unit[7],"unit","Up",1);
+                    }
+                }else{
+                    scoring($owner,$unit[7],"build","Up",1);
+                }
+                return new Unit($unit,$owner,$action);
+            }
+        }else{
+            return false;
+        }
+}
 
-
+function countCalc($gf,$class,$owner){
+    $num=0;
+    for($i=0;$i<8;$i++){
+        for($j=0;$j<8;$j++){
+            if($gf[$i][$j]->contains!=false){
+                if($gf[$i][$j]->contains->owner==$owner){
+                    if($gf[$i][$j]->contains->class==$class){
+                        $num+=1;
+                    }
+                }
+            }
+        }
+    }
+    return $num;
+}
 
 class Player{
         public $name,$owner,$live,$gold,$counts,$level,$exp,$skills,$faction,$statistic,
@@ -71,6 +160,8 @@ class Player{
                 $this->statistic->score=0;
                 $this->statistic->goldUp=0;
                 $this->statistic->goldDown=0;
+                $this->statistic->workerUp=0;
+                $this->statistic->workerDown=0;
                 $this->statistic->unitUp=0;
                 $this->statistic->unitDown=0;
                 $this->statistic->buildUp=0;
@@ -175,9 +266,9 @@ class SeaMercs {
 //(0)type-(1)class-(2)name-(3)hp-(4)attack-(5)movePoint-(6)range-(7)price-(8)ability-(9)image-(10)outgoing-(11)require
         $this->name = "SeaMercs";
         $this->t1 = ['unit','t1','Slave',1,1,1,1,0,['worker'],'img/units/SeaMercsT1.png','',''];
-        $this->t2 = ['unit','t2','Raider',1,1,2,1,1,['pillage'],"img/units/SeaMercsT2.png",'',''];
+        $this->t2 = ['unit','t2','Raider',1,1,2,1,1,[],"img/units/SeaMercsT2.png",'',''];
         $this->t3 = ['unit','t3','Merc',2,1,1,1,1,['pillage'],"img/units/SeaMercsT3.png",'',''];
-        $this->warchief = ['unit','warchief','Berserk',4,1,1,1,4,['veteran'],"img/units/SeaMercsWarchief.png",'','2t'];
+        $this->warchief = ['unit','warchief','Berserk',3,1,1,1,4,['veteran'],"img/units/SeaMercsWarchief.png",'','2t'];
         $this->townhall = ['building','townhall','Forge',5,0,0,0,4,['hire','smith'],'img/units/SeaMercsTownhall.png','t1-t2',''];
         $this->tower = ['building','tower','Outpost',3,1,0,2,3,['hire'],"img/units/SeaMercsTower.png",'t3-warchief',''];
     }

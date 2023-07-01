@@ -38,7 +38,10 @@ body{
     list-style-type: none;
 }
 #list_player{
-    min-width: 150px;
+    width: 172px;
+}
+#list_unit{
+    max-width: 250px;
 }
 #panelBtns{
     min-height: 25px;

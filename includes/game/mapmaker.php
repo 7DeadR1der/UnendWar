@@ -2,21 +2,21 @@
 //map name 21lr - 1 цифра макс кол-во игроков, 2 цифра режим игры который может играться 0-классик 1-охота 2-сбор
 
 function mapMaker($field, $map, $count, $type, $mode, $players){
-    global $game;
+    global $json;
     $startPositions = [];
     $rndArrUnit = [];
     switch ($map){
         case '20lr':
-            $game['gameLand'] = 0;
-            $field[7][0]->resCount = 16;
-            $field[0][7]->resCount = 16;
-            $field[0][3]->resCount = 12;
+            $json->gameLand = 0;
+            $field[7][0]->resCount = 12;
+            $field[0][7]->resCount = 12;
+            $field[0][3]->resCount = 9;
             $field[0][3]->contains = new Unit($players[0]->faction->t2,0,true);
-            $field[2][0]->resCount = 12;
+            $field[2][0]->resCount = 9;
             $field[2][0]->contains = new Unit($players[0]->faction->t3,0,true);
-            $field[7][4]->resCount = 12;
+            $field[7][4]->resCount = 9;
             $field[7][4]->contains = new Unit($players[0]->faction->t2,0,true);
-            $field[5][7]->resCount = 12;
+            $field[5][7]->resCount = 9;
             $field[5][7]->contains = new Unit($players[0]->faction->t3,0,true);
             $field[0][0]->obstacle = 1;
             $field[0][1]->obstacle = 2;
@@ -32,21 +32,21 @@ function mapMaker($field, $map, $count, $type, $mode, $players){
             array_push($startPositions,$field[1][6]);
             break;
         case '20ds':
-            $game['gameLand'] = 1;
+            $json->gameLand = 1;
             $field[0][0]->contains = new Unit($players[0]->faction->warchief,0,true);
             $field[0][1]->obstacle = 1;
-            $field[0][7]->resCount = 20;
-            $field[1][3]->resCount = 15;
-            $field[1][3]->contains = new Unit($players[0]->faction->tower,0,true);
+            $field[0][7]->resCount = 12;
+            $field[1][2]->resCount = 9;
+            $field[1][2]->contains = new Unit($players[0]->faction->tower,0,true);
             $field[3][0]->obstacle = 2;
-            $field[3][7]->resCount = 15;
+            $field[3][7]->resCount = 9;
             $field[3][7]->contains = new Unit($players[0]->faction->t2,0,true);
-            $field[4][0]->resCount = 15;
+            $field[4][0]->resCount = 9;
             $field[4][0]->contains = new Unit($players[0]->faction->t2,0,true);
             $field[4][7]->obstacle = 2;
-            $field[6][4]->resCount = 15;
-            $field[6][4]->contains = new Unit($players[0]->faction->tower,0,true);
-            $field[7][0]->resCount = 20;
+            $field[6][5]->resCount = 9;
+            $field[6][5]->contains = new Unit($players[0]->faction->tower,0,true);
+            $field[7][0]->resCount = 12;
             $field[7][6]->obstacle = 1;
             $field[7][7]->contains = new Unit($players[0]->faction->warchief,0,true);
             array_push($startPositions,$field[6][1]);
@@ -259,32 +259,36 @@ function mapMaker($field, $map, $count, $type, $mode, $players){
             array_push($startPositions,$field[6][7]);
             break;*/
         case '40s':
-            $game['gameLand'] = 2;
+            $json->gameLand = 2;
             foreach($field as $row){
                 foreach($row as $cell){
                     if($cell->row == 0 ||$cell->column == 0 ||$cell->row == 7 ||$cell->column == 7)
-                    $cell->obstacle = mt_rand(1,2);
+                    $cell->obstacle = 1;//mt_rand(1,2);
                 }
             }
-            $field[1][3]->resCount = 12;
-            $field[3][6]->resCount = 12;
-            $field[6][4]->resCount = 12;
-            $field[4][1]->resCount = 12;
+            $field[1][3]->resCount = 15;
+            $field[3][6]->resCount = 15;
+            $field[6][4]->resCount = 15;
+            $field[4][1]->resCount = 15;
             $field[3][3]->resCount = 6;
             $field[3][4]->resCount = 6;
             $field[4][3]->resCount = 6;
             $field[4][4]->resCount = 6;
-            $field[1][1]->obstacle = 1;
-            $field[6][1]->obstacle = 1;
-            $field[1][6]->obstacle = 1;
-            $field[6][6]->obstacle = 1;
-            array_push($startPositions,$field[1][5]);
-            array_push($startPositions,$field[2][1]);
-            array_push($startPositions,$field[6][2]);
-            array_push($startPositions,$field[5][6]);
+            //$field[1][1]->obstacle = 1;
+            //$field[6][1]->obstacle = 1;
+            //$field[1][6]->obstacle = 1;
+            //$field[6][6]->obstacle = 1;
+            // array_push($startPositions,$field[1][5]);
+            // array_push($startPositions,$field[2][1]);
+            // array_push($startPositions,$field[6][2]);
+            // array_push($startPositions,$field[5][6]);
+            array_push($startPositions,$field[1][1]);
+            array_push($startPositions,$field[6][1]);
+            array_push($startPositions,$field[1][6]);
+            array_push($startPositions,$field[6][6]);
             break;
-        case '40lt': //hunt
-            $game['gameLand'] = 0;
+        /*case '40lt': //hunt
+            $json->gameLand = 0;
             array_push($rndArrUnit,$field[3][3]);
             array_push($rndArrUnit,$field[3][4]);
             array_push($rndArrUnit,$field[4][3]);
@@ -306,6 +310,29 @@ function mapMaker($field, $map, $count, $type, $mode, $players){
             array_push($startPositions,$field[2][7]);
             array_push($startPositions,$field[7][5]);
             array_push($startPositions,$field[5][0]);
+            break;*/
+        case '40cf': //hunt
+            $json->gameLand = 0;
+            $field[0][0]->resCount = 9;
+            $field[0][0]->contains = new Unit($players[0]->faction->tower,0,true);
+            $field[0][7]->resCount = 9;
+            $field[0][7]->contains = new Unit($players[0]->faction->tower,0,true);
+            $field[7][0]->resCount = 9;
+            $field[7][0]->contains = new Unit($players[0]->faction->tower,0,true);
+            $field[7][7]->resCount = 9;
+            $field[7][7]->contains = new Unit($players[0]->faction->tower,0,true);
+            $field[0][5]->resCount = 12;
+            $field[2][0]->resCount = 12;
+            $field[5][7]->resCount = 12;
+            $field[7][2]->resCount = 12;
+            $field[0][6]->obstacle = 1;
+            $field[1][0]->obstacle = 1;
+            $field[6][7]->obstacle = 1;
+            $field[7][1]->obstacle = 1;
+            array_push($startPositions,$field[0][4]);
+            array_push($startPositions,$field[4][7]);
+            array_push($startPositions,$field[7][3]);
+            array_push($startPositions,$field[3][0]);
             break;
         /*case '40cg':
             $field[0][0]->resCount = 20;
@@ -360,7 +387,7 @@ function mapMaker($field, $map, $count, $type, $mode, $players){
             array_push($startPositions,$field[6][6]);
             break;*/
         case '60gn':
-            $game['gameLand'] = 2;
+            $json->gameLand = 2;
             foreach($field as $row){
                 foreach($row as $cell){
                     $cell->resCount =3;
@@ -374,16 +401,16 @@ function mapMaker($field, $map, $count, $type, $mode, $players){
             array_push($startPositions,$field[6][7]);
             break;
         case '60gw':
-            $game['gameLand'] = 0;
-            $field[0][3]->resCount = 20;
-            $field[0][7]->resCount = 20;
-            $field[1][0]->resCount = 20;
-            $field[2][5]->resCount = 10;
-            $field[3][2]->resCount = 10;
-            $field[5][4]->resCount = 10;
-            $field[7][0]->resCount = 20;
-            $field[6][7]->resCount = 20;
-            $field[7][4]->resCount = 20;
+            $json->gameLand = 0;
+            $field[0][3]->resCount = 21;
+            $field[0][7]->resCount = 21;
+            $field[1][0]->resCount = 21;
+            $field[2][5]->resCount = 9;
+            $field[3][2]->resCount = 9;
+            $field[5][4]->resCount = 9;
+            $field[7][0]->resCount = 21;
+            $field[6][7]->resCount = 21;
+            $field[7][4]->resCount = 21;
             $field[0][0]->obstacle = 2;
             $field[0][1]->obstacle = 2;
             $field[0][5]->obstacle = 2;
@@ -405,7 +432,31 @@ function mapMaker($field, $map, $count, $type, $mode, $players){
 
             break;
         case '60bg':
-            $game['gameLand'] = 1;
+            $json->gameLand = 1;
+            $field[0][0]->resCount = 21;
+            $field[0][3]->obstacle = 2;
+            $field[0][6]->resCount = 21;
+            $field[0][7]->obstacle = 2;
+            $field[1][7]->obstacle = 2;
+            $field[2][0]->obstacle = 2;
+            $field[3][7]->resCount = 21;
+            $field[4][0]->resCount = 21;
+            $field[5][7]->obstacle = 2;
+            $field[6][0]->obstacle = 2;
+            $field[7][0]->obstacle = 2;
+            $field[7][1]->resCount = 21;
+            $field[7][4]->obstacle = 2;
+            $field[7][7]->resCount = 21;
+            $field[3][4]->contains = new Unit($players[0]->faction->townhall,0,true);
+            $field[4][3]->contains = new Unit($players[0]->faction->townhall,0,true);
+            array_push($startPositions,$field[0][1]);
+            array_push($startPositions,$field[0][5]);
+            array_push($startPositions,$field[3][0]);
+            array_push($startPositions,$field[4][7]);
+            array_push($startPositions,$field[7][2]);
+            array_push($startPositions,$field[7][6]);
+
+            /*
             $field[0][0]->resCount = 20;
             $field[0][3]->obstacle = 2;
             $field[0][4]->resCount = 20;
@@ -430,8 +481,55 @@ function mapMaker($field, $map, $count, $type, $mode, $players){
             array_push($startPositions,$field[5][7]);
             array_push($startPositions,$field[6][0]);
             array_push($startPositions,$field[7][5]);
+            */
             break;
+        case '60on':
+            $json->gameLand = 2;
+            foreach($field as $row){
+                foreach($row as $cell){
+                    $cell->contains = new Unit($players[0]->faction->t1,0,true);
+                }
+            }
 
+            $field[2][3]->resCount = 12;
+            $field[2][3]->contains = new Unit($players[0]->faction->tower,0,true);
+            $field[3][5]->resCount = 12;
+            $field[3][5]->contains = new Unit($players[0]->faction->tower,0,true);
+            $field[4][2]->resCount = 12;
+            $field[4][2]->contains = new Unit($players[0]->faction->tower,0,true);
+            $field[5][4]->resCount = 12;
+            $field[5][4]->contains = new Unit($players[0]->faction->tower,0,true);
+            $field[3][3]->contains = new Unit($players[0]->faction->townhall,0,true);
+            $field[3][4]->contains = new Unit($players[0]->faction->townhall,0,true);
+            $field[4][3]->contains = new Unit($players[0]->faction->townhall,0,true);
+            $field[4][4]->contains = new Unit($players[0]->faction->townhall,0,true);
+
+            $field[0][0]->contains = false;
+            $field[1][1]->contains = false;
+            $field[2][0]->contains = false;
+            $field[0][3]->contains = false;
+            $field[0][5]->contains = false;
+            $field[1][4]->contains = false;
+            $field[1][7]->contains = false;
+            $field[2][6]->contains = false;
+            $field[3][7]->contains = false;
+            $field[5][7]->contains = false;
+            $field[6][6]->contains = false;
+            $field[7][7]->contains = false;
+            $field[7][2]->contains = false;
+            $field[6][3]->contains = false;
+            $field[7][4]->contains = false;
+            $field[4][0]->contains = false;
+            $field[5][1]->contains = false;
+            $field[6][0]->contains = false;
+            array_push($startPositions,$field[1][0]);
+            array_push($startPositions,$field[0][4]);
+            array_push($startPositions,$field[2][7]);
+            array_push($startPositions,$field[5][0]);
+            array_push($startPositions,$field[7][3]);
+            array_push($startPositions,$field[6][7]);
+
+            break;
         case '40rnd':
             $zones = [];
             //выбор шаблона
@@ -846,17 +944,22 @@ function playerMaker($mode,$startPositions,$count,$players){
             $startPositions[$k]->resCount = 0;
             switch($mode){
                 case 'classic':
-                    $startPositions[$k]->contains = new Unit($players[$i+1]->faction->townhall,$i+1,true);
+                    //$startPositions[$k]->contains = new Unit($players[$i+1]->faction->townhall,$i+1,true);
+                    $startPositions[$k]->contains = spawn($players[$i+1]->faction->townhall,$i+1,false,true,false);
                     break;
                 case 'fast':
-                    $startPositions[$k]->contains = new Unit($players[$i+1]->faction->townhall,$i+1,true);
+                    //$startPositions[$k]->contains = new Unit($players[$i+1]->faction->townhall,$i+1,true);
+                    $startPositions[$k]->contains = spawn($players[$i+1]->faction->townhall,$i+1,false,true,false);
+                    $players[$i+1]->gold += 12;
                     break;
                 case 'nomad':
-                    $startPositions[$k]->contains = new Unit($players[$i+1]->faction->t1,$i+1,true);
-                    $players[$i+1]->gold +=4;
+                    //$startPositions[$k]->contains = new Unit($players[$i+1]->faction->t1,$i+1,true);
+                    $startPositions[$k]->contains = spawn($players[$i+1]->faction->t1,$i+1,false,true,false);
+                    $players[$i+1]->gold +=$players[$i+1]->faction->townhall[7];
                     break;
                 default:
-                    $startPositions[$k]->contains = new Unit($players[$i+1]->faction->townhall,$i+1,true);
+                    //$startPositions[$k]->contains = new Unit($players[$i+1]->faction->townhall,$i+1,true);
+                    $startPositions[$k]->contains = spawn($players[$i+1]->faction->townhall,$i+1,false,true,false);
                     break;
             
             }

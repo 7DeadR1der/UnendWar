@@ -30,12 +30,21 @@ if (session_status() === PHP_SESSION_NONE) {
                     case'':
                         if($json->gameField[$si][$sj]->contains == false){
                             //move
-                            if($json->gameField[$fi][$fj]->contains->canMove==true && abs(($fi-$si)+($fj-$sj))<=$json->gameField[$fi][$fj]->contains->movePoint){
+                            $speed = $json->gameField[$fi][$fj]->contains->movePoint;
+                            if(in_array('rush',$json->gameField[$fi][$fj]->contains->ability)){
+                                $speed += 1;
+                                $search = array_search('rush',$json->gameField[$fi][$fj]->contains->ability);
+                                if($search !== false){
+                                    array_splice($json->gameField[$fi][$fj]->contains->ability,$search,1);
+                                }
+                            }
+                            if($json->gameField[$fi][$fj]->contains->canMove==true && abs(($fi-$si)+($fj-$sj))<=$speed){
                                 $json->gameField[$si][$sj]->contains=$json->gameField[$fi][$fj]->contains;
                                 $json->gameField[$si][$sj]->contains->canMove=false;
                                 $json->gameField[$fi][$fj]->contains=false;
                             }
                         }else if($json->gameField[$si][$sj]->contains->owner!=$json->gameField[$fi][$fj]->contains->owner){
+                            //attack
                             if($json->gameField[$fi][$fj]->contains->canAction==true && abs(($fi-$si)+($fj-$sj))<=$json->gameField[$fi][$fj]->contains->range
                             && (!in_array('meleeOnly',$json->gameField[$si][$sj]->contains->ability)||(in_array('meleeOnly',$json->gameField[$si][$sj]->contains->ability) && abs(($fi-$si)+($fj-$sj))==1))){
                                 $atkUnit=$json->gameField[$fi][$fj]->contains;
@@ -55,19 +64,30 @@ if (session_status() === PHP_SESSION_NONE) {
                                         array_splice($json->gameField[$fi][$fj]->contains->ability,$search,1);
                                     }
                                 }
-                                if(in_array('armor',$json->gameField[$si][$sj]->contains->ability)){
+                                if(in_array('evasion',$json->gameField[$si][$sj]->contains->ability)){
+                                    $atk = 0;
+                                    $search = array_search('evasion',$json->gameField[$si][$sj]->contains->ability);
+                                    if($search !== false){
+                                        array_splice($json->gameField[$si][$sj]->contains->ability,$search,1);
+                                    }
+                                }
+                                if($atk>0 && in_array('armor',$json->gameField[$si][$sj]->contains->ability)){
                                     $atk -= 1;
                                     $search = array_search('armor',$json->gameField[$si][$sj]->contains->ability);
                                     if($search !== false){
                                         array_splice($json->gameField[$si][$sj]->contains->ability,$search,1);
                                     }
                                 }
-                                if(in_array('veteran',$json->gameField[$si][$sj]->contains->ability)){
-                                    $chanceArray=[0,0,0,1,1,1,1,1,1,1];
+                                if($atk>0 && in_array('veteran',$json->gameField[$si][$sj]->contains->ability)){
+                                    if($json->gameField[$si][$sj]->contains->canAction == true){
+                                        $atk -= 1;
+                                        $json->gameField[$si][$sj]->contains->canAction = false;
+                                    }
+                                    /*$chanceArray=[0,0,0,1,1,1,1,1,1,1];
                                     $s= array_rand($chanceArray);
                                     if($chanceArray[$s] == 0){
                                         $atk = 0;
-                                    }
+                                    }*/
                                 }
 
                                 if($atk>0){
@@ -104,35 +124,30 @@ if (session_status() === PHP_SESSION_NONE) {
                     case'build':
                         if(in_array('worker',$json->gameField[$fi][$fj]->contains->ability)){
                             if($json->gameField[$fi][$fj]->contains->canAction==true){
-                                $count=countCalc($json->gameField,$param,$player);
-                                $building;
-                                $checkLimit=false;
                                 switch($param){
                                     case'townhall':
-                                        if($count<$gameSettings["limit_townhalls"]){
-                                            $checkLimit=true;
                                             $building=$json->gamePlayers[$player]->faction->townhall;
-                                        }
                                         break;
                                     case'tower':
-                                        if($count<$gameSettings["limit_towers"]){
-                                            $checkLimit=true;
                                             $building=$json->gamePlayers[$player]->faction->tower;
-                                        }
                                         break;
                                     default:
                                         echo 'error';
                                         break;
                                 }
                                 if($json->gameField[$fi][$fj]->resCount<=0){
-                                    if($checkLimit==true){
+                                    $spawn = spawn($building,$player);
+                                    if($spawn != false){
+                                        $json->gameField[$fi][$fj]->contains = $spawn;
+                                    }
+                                    /*if($checkLimit==true){
                                         if($json->gamePlayers[$player]->gold>=$building[7]){
                                             //$json->gamePlayers[$player]->gold-=$building[7];
                                             setGold($player,'-',$building[7]);
                                             $json->gameField[$fi][$fj]->contains = new Unit($building,$player,false);
                                             scoring($player,$json->gameField[$fi][$fj]->contains->price,"build","Up",1);
                                         }//else nothing gold
-                                    }//else nothing limit
+                                    }*///else nothing limit
                                 }//else goldore 
                             }
                         }
@@ -144,47 +159,30 @@ if (session_status() === PHP_SESSION_NONE) {
                                 if($json->gameField[$fi][$fj]->contains->canAction==true && abs(($fi-$si)+($fj-$sj))<=1){
                                     $cell=$json->gameField[$si][$sj];
                                     if($cell->contains==false&&$cell->obstacle==0){
-                                        $count=countCalc($json->gameField,$param,$player);
                                         $unit;
-                                        $checkLimit = false;
                                         switch($param){
                                             case't1':
-                                                if($count<$gameSettings["limit_workers"]){
-                                                    $checkLimit = true;
-                                                    $unit = $json->gamePlayers[$player]->faction->t1;
-                                                }
+                                                $unit = $json->gamePlayers[$player]->faction->t1;
                                                 break;
                                             case 't2':
-                                                if($count<$gameSettings["limit_army"]){
-                                                    $checkLimit = true;
-                                                    $unit = $json->gamePlayers[$player]->faction->t2;
-                                                }
+                                                $unit = $json->gamePlayers[$player]->faction->t2;
                                                 break;
                                             case 't3':
-                                                if($count<$gameSettings["limit_army"]){
-                                                    $checkLimit = true;
-                                                    $unit = $json->gamePlayers[$player]->faction->t3;
-                                                }
+                                                $unit = $json->gamePlayers[$player]->faction->t3;
                                                 break;
                                             case 'warchief':
-                                                if($count<$gameSettings["limit_warchiefs"]){
-                                                    if($unit = $json->gamePlayers[$player]->faction->warchief[11]=='2t'){
-                                                        $countTowers=countCalc($json->gameField,'tower',$player);
-                                                        if($countTowers>=2){
-                                                            $checkLimit = true;
-                                                            $unit = $json->gamePlayers[$player]->faction->warchief;
-                                                        }//else alert('Для Вождя нужно 2 башни');
-                                                    }else {
-                                                        $checkLimit = true;
-                                                        $unit = $json->gamePlayers[$player]->faction->warchief;
-                                                    }
-                                                }
+                                                $unit = $json->gamePlayers[$player]->faction->warchief;
                                                 break;
                                             default:
                                                 //alert('ошибка в выборе юнита');
                                                 break;
                                         }
-                                        if($checkLimit==true){
+                                        $spawn = spawn($unit,$player);
+                                        if($spawn != false){
+                                            $cell->contains = $spawn;
+                                            $json->gameField[$fi][$fj]->contains->canAction = false;
+                                        }
+                                        /*if($checkLimit==true){
                                             if($json->gamePlayers[$player]->gold>=$unit[7]){
                                                 $json->gameField[$si][$sj]->contains = new Unit($unit,$player,false);
                                                 $json->gameField[$fi][$fj]->contains->canAction = false;
@@ -193,6 +191,8 @@ if (session_status() === PHP_SESSION_NONE) {
                                                 if($json->gameField[$si][$sj]->contains->type == "unit"){
                                                     if($json->gameField[$si][$sj]->contains->class == "warchief"){
                                                         scoring($player,$json->gameField[$si][$sj]->contains->price,"warchief","Up",1);
+                                                    }else if($json->gameField[$si][$sj]->contains->class == "t1"){
+                                                        scoring($player,$json->gameField[$si][$sj]->contains->price,"worker","Up",1);
                                                     }else{
                                                         scoring($player,$json->gameField[$si][$sj]->contains->price,"unit","Up",1);
                                                     }
@@ -200,7 +200,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                                     scoring($player,$json->gameField[$si][$sj]->contains->price,"build","Up",1);
                                                 }
                                             }
-                                        }
+                                        }*/
                                     }
                                 }
                             }
@@ -249,10 +249,16 @@ if (session_status() === PHP_SESSION_NONE) {
                                                 if(isset($arrayCells[$n])){
                                                     $ti = $arrayCells[$n]->row;
                                                     $tj = $arrayCells[$n]->column;
-                                                    $json->gameField[$ti][$tj]->contains = new Unit($unit,$player,false);
-                                                    scoring($player,$json->gameField[$ti][$tj]->contains->price,"unit","Up",1);
-                                                    $json->gameField[$fi][$fj]->contains->canAction =false;
-                                                    array_splice($arrayCells,$n,1);
+                                                    $spawn = spawn($unit,$player,false);
+                                                    if($spawn != false){
+                                                        $json->gameField[$ti][$tj]->contains = $spawn;
+                                                        $json->gameField[$fi][$fj]->contains->canAction =false;
+                                                        array_splice($arrayCells,$n,1);
+                                                    }
+                                                    //$json->gameField[$ti][$tj]->contains = spawn($unit,$player,false);//new Unit($unit,$player,false);
+                                                    //scoring($player,$json->gameField[$si][$sj]->contains->price,"worker","Up",1);
+                                                    
+                                                    
                                                 }
                                             }
                                         }
@@ -320,21 +326,6 @@ if (session_status() === PHP_SESSION_NONE) {
         }
 
     }
-    function countCalc($gf,$class,$owner){
-        $num=0;
-        for($i=0;$i<8;$i++){
-            for($j=0;$j<8;$j++){
-                if($gf[$i][$j]->contains!=false){
-                    if($gf[$i][$j]->contains->owner==$owner){
-                        if($gf[$i][$j]->contains->class==$class){
-                            $num+=1;
-                        }
-                    }
-                }
-            }
-        }
-        return $num;
-    }
 
 
     function kill(int $fi,int $fj,int $si,int $sj){
@@ -346,7 +337,10 @@ if (session_status() === PHP_SESSION_NONE) {
             case "unit":
                 if($json->gameField[$si][$sj]->contains->class == "warchief"){
                     scoring($player,$json->gameField[$si][$sj]->contains->price,"warchief","Down",1);
-                }else{
+                }else if($json->gameField[$si][$sj]->contains->class == "t1"){
+                    scoring($player,$json->gameField[$si][$sj]->contains->price,"worker","Down",1);
+                }
+                else{
                     scoring($player,$json->gameField[$si][$sj]->contains->price,"unit","Down",1);
                 }
                 break;
@@ -358,15 +352,29 @@ if (session_status() === PHP_SESSION_NONE) {
         }
         $killUnit = true;
         
+        if(in_array('veteran',$json->gameField[$fi][$fj]->contains->ability)&&$json->gameField[$si][$sj]->contains->type == 'unit'){
+            if(!in_array('evasion',$json->gameField[$fi][$fj]->contains->ability)){
+                array_push($json->gameField[$fi][$fj]->contains->ability,'evasion');
+            }
+            if(!in_array('rush',$json->gameField[$fi][$fj]->contains->ability)){
+                array_push($json->gameField[$fi][$fj]->contains->ability,'rush');
+            }
+        }
+
         if(in_array('pillage',$json->gameField[$fi][$fj]->contains->ability) && $json->gameField[$si][$sj]->contains->type == 'building'){
             setGold($player,'+',1);
         }
         if(in_array('infect',$json->gameField[$fi][$fj]->contains->ability)&& $json->gameField[$si][$sj]->contains->type == 'unit'){
-            $count=countCalc($json->gameField,'t1',$player);
-            if($count<$gameSettings["limit_workers"]){
-                $json->gameField[$si][$sj]->contains = new Unit ($json->gamePlayers[$player]->faction->t1,$player,false);
+            $spawn = spawn($json->gamePlayers[$player]->faction->t1,$player,false);
+            if($spawn != false){
+                $json->gameField[$si][$sj]->contains = $spawn;
                 $killUnit = false;
             }
+            /*$count=countCalc($json->gameField,'t1',$player);
+            if($count<$gameSettings["limit_workers"]){
+                $json->gameField[$si][$sj]->contains = spawn($json->gamePlayers[$player]->faction->t1,$player,false);//new Unit ($json->gamePlayers[$player]->faction->t1,$player,false);
+                $killUnit = false;
+            }*/
         }
         if(in_array('cannibal',$json->gameField[$fi][$fj]->contains->ability)&&$json->gameField[$fi][$fj]->contains->hp<$json->gameField[$fi][$fj]->contains->hpMax&&$json->gameField[$si][$sj]->contains->type != 'building'){
             $json->gameField[$fi][$fj]->contains->hp+=1;
@@ -386,13 +394,20 @@ if (session_status() === PHP_SESSION_NONE) {
             switch($arrayChance[$rnd]){
                 case 'T':
                     $rndPl = array_rand($json->gamePlayers);
-                    $count=countCalc($json->gameField,'t3',$player);
+                    $spawn = spawn($json->gamePlayers[$rndPl]->faction->t3,$player,false);
+                    if($spawn != false){
+                        $json->gameField[$si][$sj]->contains = $spawn;
+                        setGold($player,'+',$goldValue - $spawn->price);
+                        $killUnit = false;
+                    }
+                    /*$count=countCalc($json->gameField,'t3',$player);
                     if($count<$gameSettings["limit_army"]){
                         $json->gameField[$si][$sj]->contains = new Unit ($json->gamePlayers[$rndPl]->faction->t3,$player,false);
                         setGold($player,'+',$goldValue - $json->gamePlayers[$player]->faction->t3[7]);
                         //$json->gamePlayers[$player]->gold += $goldValue - $json->gamePlayers[$player]->faction->t3[7];
                         $killUnit = false;
-                    }else{
+                    }*/
+                    else{
                         setGold($player,'+',$goldValue);
                     }
                     break;
@@ -412,10 +427,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
     }
 
-    function spawn(array $unit, int $owner, bool $payable = true, bool $action = false, bool $checkLimit = true){
-        global $gameSettings;
-        global $json;
-
-        return new Unit($unit,$owner,$action);
-    }
+    //$unit = $json->gamePlayers[$owner]->faction->t2;
+    //$json->gameField[i][j]->contains = spawn($unit,$owner,true,false,true);
+    
 ?>

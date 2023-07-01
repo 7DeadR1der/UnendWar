@@ -10,7 +10,7 @@
         
     </div>
     <div id="chat-input">
-        <input type="text" name="textMessage" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
+        <input type="text" name="textMessage" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" onkeyup="enterBtn(event);">
         <button onclick="sendMessage()">Send</button>
     </div>
 </div>

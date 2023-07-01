@@ -10,6 +10,7 @@ if (session_status() === PHP_SESSION_NONE) {
     if(mysqli_num_rows($query)>0 ){
         $room = mysqli_fetch_assoc($query);
         if($room['count_players']>1 || $room['local']==1){
+
             $game = [
                 "gameTurn" => 1,
                 "gameLand" => mt_rand(0,2),
@@ -19,6 +20,7 @@ if (session_status() === PHP_SESSION_NONE) {
                 "gameField" => [],
                 //"gameStatistic" => []
             ];
+
             if($room["classic_win_check"]==1){
                 $game["gameVictoryCond"]["classicWin"] = true;
             }
@@ -147,15 +149,16 @@ if (session_status() === PHP_SESSION_NONE) {
                 }
                 $count_players = count($game['gamePlayers'])-1;
             }
-            $gameMap = mapMaker($game["gameField"],$room['game_map'],$count_players,$room['game_type'],$room['game_mode'],$game['gamePlayers']);
+            $json = json_decode(json_encode($game));
+            $gameMap = mapMaker($json->gameField,$room['game_map'],$count_players,$room['game_type'],$room['game_mode'],$json->gamePlayers);
             $ts = time();
             $arr = [];
-            $arr["field"] = $game['gameField'];
-            $arr["stats"] = $game['gamePlayers'];
+            $arr["field"] = $json->gameField;
+            $arr["stats"] = $json->gamePlayers;
             $array = [];
             array_push($array,$arr);
             $startJson = json_encode($array);
-            $jsonData = json_encode($game);
+            $jsonData = json_encode($json);
             $updateRoom = mysqli_query($connect, "UPDATE `rooms` SET `game_state` = 1, `game_json` = '$jsonData', `game_field_json` = '$startJson' ,`last_mod` = '$ts'  WHERE `id_room` = '$idRoom'");
             echo "success";
         }else{

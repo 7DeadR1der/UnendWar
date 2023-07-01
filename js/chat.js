@@ -10,6 +10,13 @@ function toggle_chat(){
         chatBlock.style.display = "none";
     }
 }
+function enterBtn(btn){
+    if(btn.code === "Enter"){
+        if(chatBlock.style.display != 'none'){
+            sendMessage();
+        }
+    }
+}
 
 function loadChat(){
     let xhr = new XMLHttpRequest();
@@ -38,16 +45,20 @@ function checkChat(){
 }
 
 function sendMessage(){
-    let xhr = new XMLHttpRequest();
-    let msg = document.querySelector('input[name="textMessage"]').value;
-    xhr.open('POST',folder+'/includes/chat/sendmsg.php',true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-    xhr.onload = function(){
-        loadChat();
-        //alert(xhr.response);
-        document.querySelector('input[name="textMessage"]').value = '';
+    if(chatBlock.style.display != 'none'){
+        let msg = document.querySelector('input[name="textMessage"]').value;
+        if(msg != '' && msg != ' '){
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST',folder+'/includes/chat/sendmsg.php',true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+            xhr.onload = function(){
+                loadChat();
+                //alert(xhr.response);
+                document.querySelector('input[name="textMessage"]').value = '';
+            }
+            xhr.send('msg='+ encodeURIComponent(msg));
+        }
     }
-    xhr.send('msg='+ encodeURIComponent(msg));
 }
 loadChat();
 checkChat();

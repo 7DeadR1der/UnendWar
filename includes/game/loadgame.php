@@ -8,15 +8,15 @@ if (session_status() === PHP_SESSION_NONE) {
     }else {
         $id = $_GET['id'];
     }
-    $query = mysqli_query($connect,"SELECT `id_room`,`name`,`game_map`,`game_mode`,`game_type`,`id_creator`,`count_players`,`max_players`,`players_id`,`players_color`,`players_faction`,`game_state`,`game_json`,`local`,`last_mod` FROM `rooms` WHERE `id_room` = '$id'");
+    $query = mysqli_query($connect,"SELECT `id_room`,`name`,`game_map`,`game_mode`,`game_type`,`id_creator`,`count_players`,`max_players`,`players_id`,`game_state`,`game_json`,`local`,`last_mod` FROM `rooms` WHERE `id_room` = '$id'");
     if(mysqli_num_rows($query)>0){
         $game = mysqli_fetch_assoc($query);
         setcookie("lm",$game['last_mod']);
         //if(isset($_COOKIE['lm']))
+        $array = json_decode($game['players_id'],true);
         
         if($game['game_state']==0){ //load game room
             $kd='';$sm='';$ud=''; $orc=''; $rnd=''; 
-            $array = json_decode($game['players_id'],true);
             echo "<h4>".$game['name']." ".$game['id_room']."</h4>
             <p>Карта - ".$game['game_map']."</p>
             <p>Старт игры - ".$game['game_mode']."</p>
@@ -100,7 +100,7 @@ if (session_status() === PHP_SESSION_NONE) {
             $json = json_decode($game['game_json']);
             $flag = false;
             
-            while(!isset($json->gamePlayers[$json->gameTurn]) || $json->gamePlayers[$json->gameTurn]->live==false){
+            while(!isset($json->gamePlayers[$json->gameTurn]) || $json->gamePlayers[$json->gameTurn]->live==false || checkPlayerInRoom()){
                 if($json->gameTurn>=count($json->gamePlayers)){
                     $json->gameTurn=0;
                     //code for bot and etc
@@ -145,9 +145,13 @@ if (session_status() === PHP_SESSION_NONE) {
                     $i = $cell->row;
                     $j = $cell->column;
                     $array = [];
+                    $speed = $cell->contains->movePoint;
+                        if(in_array('rush',$cell->contains->ability)){
+                            $speed += 1;
+                        }
                     $count = 0;
-                    if($cell->contains->movePoint>=$cell->contains->range){
-                        $count = $cell->contains->movePoint;
+                    if($speed>=$cell->contains->range){
+                        $count = $speed;
                     }else{
                         $count = $cell->contains->range;
                     }if($count == 0){
@@ -202,5 +206,22 @@ if (session_status() === PHP_SESSION_NONE) {
 
 
         return $json;
+    }
+
+    function checkPlayerInRoom(){
+        global $flag;
+        global $array;
+        global $json;
+        if($json->local == 0){
+            foreach ($array as $key => $value) {
+                if($value["name"] == $json->gamePlayers[$json->gameTurn]->name){
+                    return false;
+                }
+            }
+            $json->gamePlayers[$json->gameTurn]->live = false;
+            return true;
+        }else{
+            return false;
+        }
     }
 ?>
