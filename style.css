@@ -278,6 +278,7 @@ body{
 }
 #game-field{
     width: 422px;
+    /* width: 438px; */
     padding: 3px;
     background-color: gray;
     display: flex;
@@ -288,17 +289,41 @@ body{
     width: 50px;
     height: 50px;
     margin: 1px;
+    /*padding: 1px;*/
+    position: relative;
     background-color: #aacd95;
     border: 1px solid black;
 }
 .gfCell:focus{
-    border: 1px solid green;
+    border: 2px solid green;
 }
 .gfCell:hover{
-    border: 1px solid yellow;
+    border: 2px solid yellow;
 }
 .goldCell{
     background-color:yellow;
+}
+.gfCell img{
+    /* margin: 1px; */
+    /*width: 50px;
+    height: 50px;*/
+    max-width: 100%;
+    max-height: 100%;
+    /*display: block;*/
+    /*z-index: 0;*/
+    /*top:0;
+    left: 0;
+    position: absolute;*/
+}
+.anim-filter{
+    /*width: 50px;
+    height: 50px;*/
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    position: absolute;
 }
 #game-btns{
     margin: 8px 0;

@@ -4,8 +4,8 @@
 //red blue orange purple green yellow
 const colorPlayers = ['#bababa', '#fc9393', '#60c0ff', '#ffae58', '#f190ff', '#54fd7a', '#e3f054'];
 const colorLands = ['#b1c37b','#f0fafa','#e8d479','#b1c37b'];
-//colors cursors?
-const colorCursor = ['2px solid white','2px solid blue', '2px solid red','2px solid #00ff00','2px solid #30d5c8'];
+//colors cursors? 
+const colorCursor = ['2px solid white','2px solid blue', '2px solid red','2px solid #00ff00','2px solid #19ffff'];
 let thisPlayer;
 let players = [];
 let gameTurn;
@@ -150,6 +150,7 @@ function pressCell(i,j){
 function spell(type){
     switch(type){
         case"surgery":
+        
             xhrAction(cashCell.i,cashCell.j,'heal','','','');
             break;
         case"darkArmy":
@@ -385,6 +386,7 @@ function unlockCells(count,i,j,type){
             }
         }
     }
+    document.getElementById(`${i}-${j}`).style.border = colorCursor[0];
     switch(type){
         case"move":
             arrayCells.forEach(cell => {
@@ -409,7 +411,7 @@ function unlockCells(count,i,j,type){
         case"heal":
             if(gameField[i][j].contains.ability.includes('surgery',0)){
                 if(gameField[i][j].contains.canAction == true){
-                    if(gameField[i][j].contains.hpMax>gameField[i][j].contains.hp){
+                    if(Math.ceil(gameField[i][j].contains.hpMax/2) > gameField[i][j].contains.hp){
                         document.getElementById('btnSurgeryHeal').style.display = 'inline';
                     }
                     arrayCells.forEach(cell => {
@@ -480,13 +482,27 @@ function loadGameFile(json){
         //console.log(json);
         for(let i=0;i<8;i++){
             for(let j=0;j<8;j++){
+                /*
                 let cellAdd = document.createElement('img');
                 cellAdd.className = 'gfCell';
                 cellAdd.id = `${i}-${j}`;
                 cellAdd.src = '';
                 cellAdd.onclick = function (){pressCell(i,j)};
                 document.getElementById('game-field').appendChild(cellAdd);
-    
+                */
+
+                let cellAdd = document.createElement('div');
+                cellAdd.className = 'gfCell';
+                cellAdd.id = `${i}-${j}`;
+                cellAdd.onclick = function (){pressCell(i,j)};
+                let anim = document.createElement('span');
+                anim.className = 'anim-filter';
+                let img = document.createElement('img');
+                cellAdd.appendChild(anim);
+                cellAdd.appendChild(img);
+
+                document.getElementById('game-field').appendChild(cellAdd);
+
             }
         }
     }
@@ -556,7 +572,8 @@ function getLogin(json){
 }
 
 function loadField(json){
-    document.getElementById('game-header-player').textContent = json.gamePlayers[json.gameTurn].name;
+    document.getElementById('game-header-player').textContent = json.gamePlayers[json.gameTurn].name + " (" + json.gamePlayers[json.gameTurn].statistic.score + ")";
+    document.getElementById('game-header-player').title = "Игрок - "+json.gamePlayers[json.gameTurn].name+", Очки - "+json.gamePlayers[json.gameTurn].statistic.score+", Позиция - "+json.gamePlayers[json.gameTurn].owner;
     document.getElementById('game-header-player').style.backgroundColor = colorPlayers[json.gameTurn];
     gameField = json.gameField;
     for(let i=0;i<json.gamePlayers.length;i++){
@@ -576,21 +593,25 @@ function loadField(json){
     }
     for(let i=0;i<8;i++){
         for(let j=0;j<8;j++){
+            let container = document.getElementById(`${i}-${j}`);
             if(gameField[i][j].view == true){
                 let titleText = "";
                 if(json.gameField[i][j].resCount>0)titleText=`Золото = ${json.gameField[i][j].resCount},`;
                 if(json.gameField[i][j].contains != false){
-                    document.getElementById(`${i}-${j}`).style.backgroundColor = colorPlayers[json.gameField[i][j].contains.owner];
+                    container.getElementsByTagName('img')[0].style.backgroundColor = colorPlayers[json.gameField[i][j].contains.owner];
                     if(json.gameField[i][j].contains.owner == 0){
-                        document.getElementById(`${i}-${j}`).style.backgroundColor = colorLands[gameSettings.land];
+                        container.getElementsByTagName('img')[0].style.backgroundColor = colorLands[gameSettings.land];
                     }
                     
                     if(json.gameField[i][j].contains.canAction == false && 
                     (json.gameField[i][j].contains.canMove == false || json.gameField[i][j].contains.movePoint == 0)){
-                        document.getElementById(`${i}-${j}`).style.filter = 'brightness(70%)';
+                        container.getElementsByTagName('img')[0].style.filter = 'brightness(70%)';
                     }else{
-                        document.getElementById(`${i}-${j}`).style.filter = 'brightness(100%)';
+                        container.getElementsByTagName('img')[0].style.filter = 'brightness(100%)';
                     }
+                    
+                    container.getElementsByTagName('img')[0].setAttribute('src',json.gameField[i][j].contains.image);
+                    titleText += `${json.gameField[i][j].contains.name} - hp = ${json.gameField[i][j].contains.hp}/${json.gameField[i][j].contains.hpMax}, atk = ${json.gameField[i][j].contains.attack}, move = ${json.gameField[i][j].contains.movePoint}`;
                     
                     if(json.gamePlayers[json.gameField[i][j].contains.owner].live != false){
                         switch(json.gameField[i][j].contains.class){
@@ -680,34 +701,125 @@ function loadField(json){
                         document.getElementById('btnBuildTower').textContent = 'Построить ' + thisPlayer.faction.tower[2];
                     
                     }
-                    document.getElementById(`${i}-${j}`).setAttribute('src',json.gameField[i][j].contains.image);
-                    titleText += `${json.gameField[i][j].contains.name} - hp = ${json.gameField[i][j].contains.hp}/${json.gameField[i][j].contains.hpMax}, atk = ${json.gameField[i][j].contains.attack}, move = ${json.gameField[i][j].contains.movePoint}`;
-                    
                 }else{
-                    document.getElementById(`${i}-${j}`).style.filter = 'brightness(100%)';
-                    document.getElementById(`${i}-${j}`).style.backgroundColor = colorLands[gameSettings.land];
+                    container.getElementsByTagName('img')[0].style.filter = 'brightness(100%)';
+                    container.getElementsByTagName('img')[0].style.backgroundColor = colorLands[gameSettings.land];
                     if(json.gameField[i][j].obstacle != 0){
-                        document.getElementById(`${i}-${j}`).setAttribute('src',"img/obstacle/"+gameSettings.land+json.gameField[i][j].obstacle+".png");
+                        container.getElementsByTagName('img')[0].setAttribute('src',"img/obstacle/"+gameSettings.land+json.gameField[i][j].obstacle+".png");
                         titleText = 'Непроходимая клетка';
                     }else{
-                        document.getElementById(`${i}-${j}`).setAttribute('src',"img/null.png");
+                        container.getElementsByTagName('img')[0].setAttribute('src',"img/null.png");
                         if (json.gameField[i][j].resCount > 0){
-                            document.getElementById(`${i}-${j}`).setAttribute('src',"img/goldOre.png");
+                            container.getElementsByTagName('img')[0].setAttribute('src',"img/goldOre.png");
                         }
                     }
                 }
-                document.getElementById(`${i}-${j}`).title = titleText;
-                document.getElementById(`${i}-${j}`).style.border = '';
+                container.title = titleText;
+                container.style.border = '';
             }
             else{
-                document.getElementById(`${i}-${j}`).style.backgroundColor = '#000000';
-                document.getElementById(`${i}-${j}`).setAttribute('src',"img/null.png");
-                document.getElementById(`${i}-${j}`).title = 'Туман войны';
-                document.getElementById(`${i}-${j}`).style.border = '';
+                container.getElementsByTagName('img')[0].style.backgroundColor = '#000000';
+                container.getElementsByTagName('img')[0].setAttribute('src',"img/null.png");
+                container.title = 'Туман войны';
+                container.style.border = '';
             }
         }
     }
     cancel();
+    //checkAnimation(json);
+}
+
+function checkAnimation(json){
+    let colorAnimation =  {
+        "white" : "rgba(255, 255, 255,",
+        "red" : "rgba(200, 0, 0,",
+        "green" : "rgba(0, 255, 0,",
+        "blue" : "rgba(0, 0, 255,",
+        "black" : "rgba(1, 1, 1,",
+        "darkPurple" : "rgba(100, 0, 100,",
+        "darkGreen" : "rgba(0, 150, 0,",
+    };
+    let fi = json.animation[0];
+    let fj = json.animation[1];
+    let type = json.animation[2];
+    let si = json.animation[3];
+    let sj = json.animation[4];
+    let variant = json.animation[5];
+    let fContainer = undefined;
+    let sContainer = undefined;
+    if(json.gameField[fi][fj].view == true && document.getElementById(`${fi}-${fj}`) !== null){
+        fContainer = document.getElementById(`${fi}-${fj}`);
+    }
+    if(si != '' && sj != ''){
+        if(json.gameField[si][sj].view == true && document.getElementById(`${si}-${sj}`) !== null){
+            sContainer = document.getElementById(`${si}-${sj}`);
+        }
+    }
+    let value = [0.40,0.40,0.40,0.40,0.40,];
+    switch(type){
+        case 'move':
+            animation(fContainer,colorAnimation['white']);
+            animation(sContainer,colorAnimation['white']); 
+            break;
+        case 'attack':
+            animation(fContainer,colorAnimation['white']);
+            animation(sContainer,colorAnimation['red']);
+            break;
+        case 'heal':
+            if(variant == 'self'){
+                animation(fContainer,colorAnimation['green']);
+            }else if(variant == 'other'){
+                animation(fContainer,colorAnimation['white']);
+                animation(sContainer,colorAnimation['green']);
+            }
+            break;
+        case 'smith':
+            animation(fContainer,colorAnimation['white']);
+            animation(sContainer,colorAnimation['blue']);
+            break;
+        case 'darkArmy':
+            animation(fContainer,colorAnimation['darkPurple']);
+            break;
+        case 'darkStorm':
+            animation(fContainer,colorAnimation['darkPurple']);
+            let array = [undefined,undefined,undefined,undefined];
+            let n = Number(fi);
+            let m = Number(fj);
+            if(n+1<8) if(json.gameField[n+1][m].view == true && document.getElementById(`${n+1}-${n}`) !== null) 
+            array[0] = document.getElementById(`${n+1}-${m}`)
+            if(m+1<8) if(json.gameField[n][m+1].view == true && document.getElementById(`${n}-${m+1}`) !== null) 
+            array[1] = document.getElementById(`${n}-${m+1}`)
+            if(n-1>-1)if(json.gameField[n-1][m].view == true && document.getElementById(`${n-1}-${m}`) !== null) 
+            array[2] = document.getElementById(`${n-1}-${m}`)
+            if(m-1>-1)if(json.gameField[n][m-1].view == true && document.getElementById(`${n}-${m-1}`) !== null) 
+            array[3] = document.getElementById(`${n}-${m-1}`)
+            
+            for(let i=0;i<array.length;i++){
+                if(array[i]!=undefined){
+                    animation(array[i],colorAnimation['black']);
+                }
+            }
+            break;
+        default:
+            break;
+    }
+
+
+}
+function animation(container,color){
+    let value = 0.40;
+    if(container != undefined){
+        let anime = setInterval(function () { 
+            value = value - 0.05; 
+            container.getElementsByClassName('anim-filter')[0].style.backgroundColor = color + value + ")";//белый почти все 
+            if(value < 0.01){
+                console.log('end');
+                clearInterval(anime);
+            }
+        }, 100); 
+        //setTimeout(() => clearInterval(anime) ,5000);
+    } 
+
 }
 
 

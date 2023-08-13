@@ -1,6 +1,6 @@
 <?php 
 
-    require_once '../connect.php';
+    require_once '../general.php';
     $rooms = mysqli_query($connect,'SELECT `id_room`,`name`,`game_map`,`game_type`,`game_mode`,`count_players`,`max_players` FROM `rooms` WHERE `count_players` < `max_players` AND `game_state` = 0 AND `local` = 0 ORDER BY `id_room` DESC');
     if(mysqli_num_rows($rooms)>0){
         //$listRooms = mysqli_fetch_array($rooms);

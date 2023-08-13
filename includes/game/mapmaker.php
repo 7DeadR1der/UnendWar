@@ -52,6 +52,29 @@ function mapMaker($field, $map, $count, $type, $mode, $players){
             array_push($startPositions,$field[6][1]);
             array_push($startPositions,$field[1][6]);
             break;
+        case '20wp':
+            $json->gameLand = 2;
+            $field[0][0]->contains = new Unit($players[0]->faction->t1,0,true);
+            $field[0][1]->contains = new Unit($players[0]->faction->t2,0,true);
+            $field[0][5]->resCount = 12;
+            $field[0][6]->obstacle = 2;
+            $field[0][7]->contains = new Unit($players[0]->faction->t1,0,true);
+            $field[1][0]->obstacle = 1;
+            $field[1][7]->contains = new Unit($players[0]->faction->t2,0,true);
+            $field[3][0]->resCount = 9;
+            $field[3][0]->contains = new Unit($players[0]->faction->tower,0,true);
+            $field[4][7]->resCount = 9; 
+            $field[4][7]->contains = new Unit($players[0]->faction->tower,0,true);
+            $field[6][0]->contains = new Unit($players[0]->faction->t2,0,true);
+            $field[6][7]->obstacle = 2;
+            $field[7][0]->contains = new Unit($players[0]->faction->t1,0,true);
+            $field[7][1]->obstacle = 1;
+            $field[7][2]->resCount = 12;
+            $field[7][6]->contains = new Unit($players[0]->faction->t2,0,true);
+            $field[7][7]->contains = new Unit($players[0]->faction->t1,0,true);
+            array_push($startPositions,$field[1][4]);
+            array_push($startPositions,$field[6][3]);
+            break;
         /*case '20gm':
             $field[0][2]->resCount = 15;
             $field[4][0]->resCount = 15;
@@ -405,7 +428,7 @@ function mapMaker($field, $map, $count, $type, $mode, $players){
             $field[0][3]->resCount = 21;
             $field[0][7]->resCount = 21;
             $field[1][0]->resCount = 21;
-            $field[2][5]->resCount = 9;
+            $field[2][5]->resCount = 9; 
             $field[3][2]->resCount = 9;
             $field[5][4]->resCount = 9;
             $field[7][0]->resCount = 21;

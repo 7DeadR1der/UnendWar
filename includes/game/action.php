@@ -2,7 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-    require_once '../connect.php';
+    require_once '../general.php';
     $login = $_SESSION['user']['login'];
     $idRoom = $_SESSION['user']['active_room'];
     $player;
@@ -25,6 +25,8 @@ if (session_status() === PHP_SESSION_NONE) {
             $si=$_GET['si'];
             $sj=$_GET['sj'];
             $param=$_GET['param'];
+            $animType = '';
+            $animVariant = '';
             if($json->gameField[$fi][$fj]->contains!=false && $json->gameField[$fi][$fj]->contains->owner==$json->gameTurn){
                 switch($btn){
                     case'':
@@ -42,6 +44,9 @@ if (session_status() === PHP_SESSION_NONE) {
                                 $json->gameField[$si][$sj]->contains=$json->gameField[$fi][$fj]->contains;
                                 $json->gameField[$si][$sj]->contains->canMove=false;
                                 $json->gameField[$fi][$fj]->contains=false;
+                                $animType = 'move';
+                                $animVariant = '';
+
                             }
                         }else if($json->gameField[$si][$sj]->contains->owner!=$json->gameField[$fi][$fj]->contains->owner){
                             //attack
@@ -71,13 +76,6 @@ if (session_status() === PHP_SESSION_NONE) {
                                         array_splice($json->gameField[$si][$sj]->contains->ability,$search,1);
                                     }
                                 }
-                                if($atk>0 && in_array('armor',$json->gameField[$si][$sj]->contains->ability)){
-                                    $atk -= 1;
-                                    $search = array_search('armor',$json->gameField[$si][$sj]->contains->ability);
-                                    if($search !== false){
-                                        array_splice($json->gameField[$si][$sj]->contains->ability,$search,1);
-                                    }
-                                }
                                 if($atk>0 && in_array('veteran',$json->gameField[$si][$sj]->contains->ability)){
                                     if($json->gameField[$si][$sj]->contains->canAction == true){
                                         $atk -= 1;
@@ -88,6 +86,13 @@ if (session_status() === PHP_SESSION_NONE) {
                                     if($chanceArray[$s] == 0){
                                         $atk = 0;
                                     }*/
+                                }
+                                if($atk>0 && in_array('armor',$json->gameField[$si][$sj]->contains->ability)){
+                                    $atk -= 1;
+                                    $search = array_search('armor',$json->gameField[$si][$sj]->contains->ability);
+                                    if($search !== false){
+                                        array_splice($json->gameField[$si][$sj]->contains->ability,$search,1);
+                                    }
                                 }
 
                                 if($atk>0){
@@ -103,14 +108,23 @@ if (session_status() === PHP_SESSION_NONE) {
                                     kill($fi,$fj,$si,$sj);
                                 }
                                 $json->gameField[$fi][$fj]->contains->canAction=false;
+                                $animType = 'attack';
+                                $animVariant = '';
                             }
                         }else if($json->gameField[$si][$sj]->contains->owner==$json->gameField[$fi][$fj]->contains->owner){
                             //heal
                             if(in_array('surgery',$json->gameField[$fi][$fj]->contains->ability)){
-                                if($json->gameField[$fi][$fj]->contains->canAction==true&&$json->gameField[$si][$sj]->contains->hpMax>$json->gameField[$si][$sj]->contains->hp
-                                && abs(($fi-$si)+($fj-$sj))<=1 && $json->gameField[$si][$sj]->contains->type == 'unit'){
-                                    $json->gameField[$si][$sj]->contains->hp+=1;
+                                if($json->gameField[$fi][$fj]->contains->canAction==true &&
+                                $json->gameField[$si][$sj]->contains->hpMax > $json->gameField[$si][$sj]->contains->hp
+                                && abs(($fi-$si)+($fj-$sj))<=1 && $json->gameField[$si][$sj]->contains->type == 'unit' 
+                                /*&& ($json->gameField[$si][$sj]->contains->hp < ceil($json->gameField[$si][$sj]->contains->hpMax/2) &&
+                                $json->gameField[$si][$sj]->contains->hp < 3 ||  $json->gameField[$si][$sj]->contains->hp == 1)*/
+
+                                ){
+                                    $json->gameField[$si][$sj]->contains->hp += 1;
                                     $json->gameField[$fi][$fj]->contains->canAction = false;
+                                    $animType = 'heal';
+                                    $animVariant = 'other';
                                 }
                             }else if(in_array('sacrifice',$json->gameField[$fi][$fj]->contains->ability)){
                                 if($json->gameField[$fi][$fj]->contains->canAction==true&&$json->gameField[$si][$sj]->contains->hpMax>$json->gameField[$si][$sj]->contains->hp
@@ -139,6 +153,8 @@ if (session_status() === PHP_SESSION_NONE) {
                                     $spawn = spawn($building,$player);
                                     if($spawn != false){
                                         $json->gameField[$fi][$fj]->contains = $spawn;
+                                        $animType = '';
+                                        $animVariant = '';
                                     }
                                     /*if($checkLimit==true){
                                         if($json->gamePlayers[$player]->gold>=$building[7]){
@@ -181,6 +197,8 @@ if (session_status() === PHP_SESSION_NONE) {
                                         if($spawn != false){
                                             $cell->contains = $spawn;
                                             $json->gameField[$fi][$fj]->contains->canAction = false;
+                                            $animType = '';
+                                            $animVariant = '';
                                         }
                                         /*if($checkLimit==true){
                                             if($json->gamePlayers[$player]->gold>=$unit[7]){
@@ -210,9 +228,15 @@ if (session_status() === PHP_SESSION_NONE) {
                     case'heal':
                         if(in_array('surgery',$json->gameField[$fi][$fj]->contains->ability)){
                             if($json->gameField[$fi][$fj]->contains->canAction==true){
-                                if($json->gameField[$fi][$fj]->contains->hp<$json->gameField[$fi][$fj]->contains->hpMax){
+                                if(/*(*/$json->gameField[$fi][$fj]->contains->hp < ceil($json->gameField[$fi][$fj]->contains->hpMax/2)/* &&
+                                    $json->gameField[$fi][$fj]->contains->hp<3) || 
+                                    ($json->gameField[$fi][$fj]->contains->hp==1 && 
+                                    $json->gameField[$fi][$fj]->contains->hp<$json->gameField[$fi][$fj]->contains->hpMax)*/
+                                ){
                                     $json->gameField[$fi][$fj]->contains->canAction =false;
                                     $json->gameField[$fi][$fj]->contains->hp+=1;
+                                    $animType = 'heal';
+                                    $animVariant = 'self';
                                 }
                             }
                         }
@@ -234,7 +258,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                     
                                     if(count($arrayCells)>0){
                                         $count=0;
-                                        $unit = $json->gamePlayers[$player]->faction->t1;
+                                        $unit = GAME_OBJ["skeleton"];
                                         $count=countCalc($json->gameField,'townhall',$player);
                                         /*if(in_array('Undead I',$json->gamePlayers[$player]->skills)){
                                             $count=countCalc($json->gameField,'townhall',$player);
@@ -254,6 +278,8 @@ if (session_status() === PHP_SESSION_NONE) {
                                                         $json->gameField[$ti][$tj]->contains = $spawn;
                                                         $json->gameField[$fi][$fj]->contains->canAction =false;
                                                         array_splice($arrayCells,$n,1);
+                                                        $animType = 'darkArmy';
+                                                        $animVariant = '';
                                                     }
                                                     //$json->gameField[$ti][$tj]->contains = spawn($unit,$player,false);//new Unit($unit,$player,false);
                                                     //scoring($player,$json->gameField[$si][$sj]->contains->price,"worker","Up",1);
@@ -270,7 +296,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     case'darkStorm':
                         if(in_array('darkStorm',$json->gameField[$fi][$fj]->contains->ability)){
                             if($json->gameField[$fi][$fj]->contains->canAction==true && $json->gameField[$fi][$fj]->contains->canMove==true){
-                                
+                                $hp = 0;
                                 $arrayCells = [];
                                 $json->gameField[$fi][$fj]->contains->canAction=false;
                                 $json->gameField[$fi][$fj]->contains->canMove=false;
@@ -284,7 +310,11 @@ if (session_status() === PHP_SESSION_NONE) {
                                     array_push($arrayCells,$json->gameField[$fi][$fj-1]);
                                 for($i=0;$i<count($arrayCells);$i++){
                                     if($arrayCells[$i]->contains->type == 'unit' && $json->gameField[$fi][$fj]->contains->hp < $json->gameField[$fi][$fj]->contains->hpMax){
-                                        $json->gameField[$fi][$fj]->contains->hp += 1;
+                                        if($arrayCells[$i]->contains->owner == $player){
+                                            $hp += 0.5;
+                                        }else{
+                                            $hp += 1;
+                                        }
                                     }
                                     if($arrayCells[$i]->contains->hp>1){
                                         $arrayCells[$i]->contains->hp -= 1;
@@ -293,6 +323,15 @@ if (session_status() === PHP_SESSION_NONE) {
                                     };
 
                                 }
+                                $hp = floor($hp);
+                                if($json->gameField[$fi][$fj]->contains->hp + $hp <= $json->gameField[$fi][$fj]->contains->hpMax){
+                                    $json->gameField[$fi][$fj]->contains->hp += $hp;
+                                }else{
+                                    $json->gameField[$fi][$fj]->contains->hp = $json->gameField[$fi][$fj]->contains->hpMax;
+                                }
+                                $animType = 'darkStorm';
+                                $animVariant = '';
+
                             }
                         };
                         break;
@@ -305,6 +344,8 @@ if (session_status() === PHP_SESSION_NONE) {
                                 setGold($player,'-',1);
                                 //$json->gamePlayers[$player]->scoring($player,1);
                                 array_push($json->gameField[$si][$sj]->contains->ability,'armor');
+                                $animType = 'smith';
+                                $animVariant = '';
                             }
                         }
                         break;
@@ -317,7 +358,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     default:
                         break;
                 }
-                
+                $json->animation = [$fi,$fj,$animType,$si,$sj,$animVariant];
                 $ts = time();
                 $jsonData = json_encode($json);
                 $updateRoom = mysqli_query($connect, "UPDATE `rooms` SET `game_json` = '$jsonData' ,`last_mod` = '$ts'  WHERE `id_room` = '$idRoom'");
@@ -331,12 +372,14 @@ if (session_status() === PHP_SESSION_NONE) {
     function kill(int $fi,int $fj,int $si,int $sj){
         global $gameSettings;
         global $json;
-        global $player;
-
+        //global $player;
+        $player = $json->gameField[$fi][$fj]->contains->owner;
+        $exp = 1;
         switch($json->gameField[$si][$sj]->contains->type){
             case "unit":
                 if($json->gameField[$si][$sj]->contains->class == "warchief"){
                     scoring($player,$json->gameField[$si][$sj]->contains->price,"warchief","Down",1);
+                    $exp += $json->gamePlayers[$json->gameField[$si][$sj]->contains->owner]->level + 1;
                 }else if($json->gameField[$si][$sj]->contains->class == "t1"){
                     scoring($player,$json->gameField[$si][$sj]->contains->price,"worker","Down",1);
                 }
@@ -352,7 +395,7 @@ if (session_status() === PHP_SESSION_NONE) {
         }
         $killUnit = true;
         
-        if(in_array('veteran',$json->gameField[$fi][$fj]->contains->ability)&&$json->gameField[$si][$sj]->contains->type == 'unit'){
+        if(in_array('bloodAxe',$json->gameField[$fi][$fj]->contains->ability)&&$json->gameField[$si][$sj]->contains->type == 'unit'){
             if(!in_array('evasion',$json->gameField[$fi][$fj]->contains->ability)){
                 array_push($json->gameField[$fi][$fj]->contains->ability,'evasion');
             }
@@ -365,7 +408,8 @@ if (session_status() === PHP_SESSION_NONE) {
             setGold($player,'+',1);
         }
         if(in_array('infect',$json->gameField[$fi][$fj]->contains->ability)&& $json->gameField[$si][$sj]->contains->type == 'unit'){
-            $spawn = spawn($json->gamePlayers[$player]->faction->t1,$player,false);
+            
+            $spawn = spawn(GAME_OBJ["skeleton"],$player,false);
             if($spawn != false){
                 $json->gameField[$si][$sj]->contains = $spawn;
                 $killUnit = false;
@@ -382,15 +426,26 @@ if (session_status() === PHP_SESSION_NONE) {
         if(in_array('treasure',$json->gameField[$si][$sj]->contains->ability)){
             setGold($player,'+',3);
         }
+        if(in_array('scavenger',$json->gameField[$fi][$fj]->contains->ability)){
+            if($json->gameField[$si][$sj]->contains->class == "warchief"){
+                if($json->gameField[$fi][$fj]->contains->hpMax - $json->gamePlayers[$json->gameField[$fi][$fj]->contains->owner]->faction->warchief[3] < 1){
+                    $json->gameField[$fi][$fj]->contains->hpMax+=1;
+                }
+                if($json->gameField[$fi][$fj]->contains->hpMax > $json->gameField[$fi][$fj]->contains->hp){
+                    $json->gameField[$fi][$fj]->contains->hp+=1;
+                }
+                
+            }
+        }
         if(in_array('monster',$json->gameField[$si][$sj]->contains->ability)){
             $json->gameField[$fi][$fj]->contains->hpMax+=1;
             $json->gameField[$fi][$fj]->contains->hp+=1;
-            $json->gamePlayers[$player]->exp += 4;
+            $exp += 3;
         }
         if(in_array('prison',$json->gameField[$si][$sj]->contains->ability)){
             $arrayChance = ['T','T','T','T','G','G','G','G','G','G'];
             $rnd =array_rand($arrayChance);
-            $goldValue = 8;
+            $goldValue = 5;
             switch($arrayChance[$rnd]){
                 case 'T':
                     $rndPl = array_rand($json->gamePlayers);
@@ -420,7 +475,7 @@ if (session_status() === PHP_SESSION_NONE) {
             }
             
         }
-        $json->gamePlayers[$player]->exp+=1;
+        $json->gamePlayers[$player]->exp+=$exp;
         if($killUnit == true){
             $json->gameField[$si][$sj]->contains=false;
         }

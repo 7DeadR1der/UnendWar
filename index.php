@@ -2,7 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-require_once 'includes/connect.php';
+require_once 'includes/general.php';
 
 if (isset($_GET['page'])) {
     $page=$_GET['page']; // Имя страницы

@@ -1,5 +1,5 @@
 <?php
-require_once '../connect.php';
+require_once '../general.php';
 $first = true;
 $chat_query = mysqli_query($connect,'SELECT * FROM `chat_general` ORDER BY `id_msg`');
 $last_msg_query = mysqli_query($connect,'SELECT `id_msg` FROM `chat_general` ORDER BY `id_msg` DESC LIMIT 1');

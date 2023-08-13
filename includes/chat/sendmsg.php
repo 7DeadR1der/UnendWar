@@ -2,7 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-require_once '../connect.php';
+require_once '../general.php';
 
 if(isset($_POST['msg']) && isset($_SESSION['user']['login'])){
     $login = $_SESSION['user']['login'];

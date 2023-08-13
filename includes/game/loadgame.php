@@ -2,7 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-    require_once '../connect.php';
+    require_once '../general.php';
     if($_GET['id'] == 0){
         $id = $_SESSION['user']['active_room'];
     }else {
@@ -29,26 +29,26 @@ if (session_status() === PHP_SESSION_NONE) {
                     <option value='none'>None</option>
                     </select>
                     <select name='faction".$i."'>
-                    <option value='kingdom'>Kingdom</option>
-                    <option value='seamercs'>Seamercs</option>
-                    <option value='undead'>Undead</option>
-                    <option value='orcs'>Orcs</option>
-                    <option selected value='random'>Random</option>
+                    <option value='Kingdom'>Kingdom</option>
+                    <option value='SeaMercs'>Seamercs</option>
+                    <option value='Undead'>Undead</option>
+                    <option value='Orcs'>Orcs</option>
+                    <option selected value='Random'>Random</option>
                     </select></div>";
                     //<option value='seamercs'>Seamercs</option>
                 }else if(array_key_exists($i,$array)){
                     
                     switch ($array[$i]["faction"]){
-                        case 'kingdom':
+                        case 'Kingdom':
                             $kd = 'selected';
                             break;
-                        case 'seamercs':
+                        case 'Seamercs':
                             $sm = 'selected';
                             break;
-                        case 'undead':
+                        case 'Undead':
                             $ud = 'selected';
                             break;
-                        case 'orcs':
+                        case 'Orcs':
                             $orc = 'selected';
                             break;
                         default:
@@ -58,11 +58,11 @@ if (session_status() === PHP_SESSION_NONE) {
                     if($array[$i]["id"] == $_SESSION['user']['id']){
                         echo "<div>".$array[$i]["name"]." 
                         <select name='faction' onchange='changePlayer(this.value)'>
-                            <option ".$kd." value='kingdom'>Kingdom</option>
-                            <option ".$sm." value='seamercs'>Seamercs</option>
-                            <option ".$ud." value='undead'>Undead</option>
-                            <option ".$orc." value='orcs'>Orcs</option>
-                            <option ".$rnd." value='random'>Random</option>
+                            <option ".$kd." value='Kingdom'>Kingdom</option>
+                            <option ".$sm." value='SeaMercs'>Seamercs</option>
+                            <option ".$ud." value='Undead'>Undead</option>
+                            <option ".$orc." value='Orcs'>Orcs</option>
+                            <option ".$rnd." value='Random'>Random</option>
                         </select>
                         </div>";
                         //after insert into up code
@@ -74,11 +74,11 @@ if (session_status() === PHP_SESSION_NONE) {
                         //$getLoginUsers = mysqli_query($connect, "SELECT `login` FROM `users` where `id_user` = '$players[$i]'");
                         echo "<div>".$array[$i]["name"]." 
                         <select disabled name='faction'>
-                            <option ".$kd." value='kingdom'>Kingdom</option>
-                            <option ".$sm." value='seamercs'>Seamercs</option>
-                            <option ".$ud." value='undead'>Undead</option>
-                            <option ".$orc." value='orcs'>Orcs</option>
-                            <option ".$rnd." value='random'>Random</option>
+                            <option ".$kd." value='Kingdom'>Kingdom</option>
+                            <option ".$sm." value='SeaMercs'>Seamercs</option>
+                            <option ".$ud." value='Undead'>Undead</option>
+                            <option ".$orc." value='Orcs'>Orcs</option>
+                            <option ".$rnd." value='Random'>Random</option>
                         </select>
                         </div>";
 

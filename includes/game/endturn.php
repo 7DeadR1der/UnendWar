@@ -2,7 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-    require_once '../connect.php';
+    require_once '../general.php';
     $login = $_SESSION['user']['login'];
     $idRoom = $_SESSION['user']['active_room'];
     $query = mysqli_query($connect,"SELECT `game_json`, `last_mod`, `game_state`, `game_field_json` FROM `rooms` WHERE `id_room` = '$idRoom'");
@@ -78,17 +78,34 @@ if (session_status() === PHP_SESSION_NONE) {
                     if($json->local == 0){
                         $login = $json->gamePlayers[$owner]->name;
                         echo $login;
-                        $userQuery = mysqli_query($connect,"SELECT `login`, `count_wins` FROM `users` WHERE `login` = '$login'");
+                        $userQuery = mysqli_query($connect,"SELECT `login`, `count_wins`, `win_table` FROM `users` WHERE `login` = '$login'");
                         $user = mysqli_fetch_assoc($userQuery);
+                        $table = json_decode($user['win_table'],true);
+                        $factionName = $json->gamePlayers[$owner]->faction->name;
+                        if(!array_key_exists($factionName,$table)){
+                            $table[$factionName] = ["games" => 0, "wins" => 0];
+                        }
+                        $table[$factionName]["wins"] += 1;
+                        $table = json_encode($table);
+                        /*if($user['win_table'] === null){
+                            $user['win_table'] = [
+                                "Kingdom" => ["games" => 0, "wins" => 0],
+                                "SeaMercs" => ["games" => 0, "wins" => 0],
+                                "Undead" => ["games" => 0, "wins" => 0],
+                                "Orcs" => ["games" => 0, "wins" => 0],
+                                "Elves" => ["games" => 0, "wins" => 0],
+                            ];
+                        }*/
+
                         $json->gameVictoryCond->winner = $login;
                         //$json->gameStatistic[$owner]["winner"] = 1;
                         $count_wins = $user['count_wins']+1;
                         echo $count_wins;
                         //$updateUsers = mysqli_query($connect, "UPDATE `users` SET `active_room` = 0 WHERE `active_room` = '$idRoom'");
-                        $updateUser = mysqli_query($connect, "UPDATE `users` SET `count_wins` = '$count_wins' WHERE `login` = '$login'");
+                        $updateUser = mysqli_query($connect, "UPDATE `users` SET `count_wins` = '$count_wins', `win_table` = '$table' WHERE `login` = '$login'");
                         
                     }
-                    $updateRoom = mysqli_query($connect, "UPDATE `rooms` SET `game_state` = 2, `last_mod` = '$ts'  WHERE `id_room` = '$idRoom'");
+                    $updateRoom = mysqli_query($connect, "UPDATE `rooms` SET `game_state` = 2, `last_mod` = '$ts',`date_end_game`='$ts'  WHERE `id_room` = '$idRoom'");
 
 
                 }
@@ -124,6 +141,12 @@ function updateField(){
                         }
                         $cell->contains->canMove = true;
                         $cell->contains->canAction = true;
+                        if(in_array('evasion',$cell->contains->ability)){
+                            $search = array_search('evasion',$cell->contains->ability);
+                            if($search !== false){
+                                array_splice($cell->contains->ability,$search,1);
+                            }
+                        }
                     }
                 };
                 /*if($newRound==true && $cell->resCount && in_array('worker',$cell->contains->ability)){
@@ -166,7 +189,7 @@ function updateField(){
                                 $atk -= 1;
                                 $search = array_search('armor',$json->gameField[$k][$m]->contains->ability);
                                 if($search !== false){
-                                    array_splice($json->gameField->contains->ability,$search,1);
+                                    array_splice($json->gameField[$k][$m]->contains->ability,$search,1);
                                 }
                             }
                             if($atk>0 && in_array('veteran',$json->gameField[$k][$m]->contains->ability)){

@@ -2,7 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-        require_once '../connect.php';
+        require_once '../general.php';
     if($_SESSION['user']){
         $id = $_SESSION['user']['id'];
         if($_POST['oldPass'] != 0){

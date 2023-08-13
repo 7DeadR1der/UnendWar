@@ -13,8 +13,8 @@ $gameSettings = [
         ["name" => "Strength II", "require" => "Strength I", "description" => "Увеличивает здоровье Вождя на 2"],
         ["name" => "Pathfinder", "description" => "Увеличивает скорость Вождя на 1"],
         ["name" => "Surgery", "description" => "Позволяет вождю лечить себя или союзников"],
-        ["name" => "Estates I", "description" => "Единовременно дает 4 золота"],
-        ["name" => "Estates II", "require" => "Estates I", "description" => "Каждый ход дает 1 золото"],
+        ["name" => "Estates I", "description" => "Единовременно дает 5 золота"],
+        //["name" => "Estates II", "require" => "Estates I", "description" => "Каждый ход дает 1 золото"],
         ["name" => "Engineering", "description" => "Все здания получают +1 к прочности"]
     ],
     "undead_skills" => [
@@ -22,9 +22,10 @@ $gameSettings = [
         ["name" => "Undead II", "require" => "Undead I", "description" => "Увеличивает здоровье Лича на 1 ед., Лич получает способность 'darkStorm'"]
     ],
     "orcs_skills" => [
-        ["name" => "Scavengers", "description" => "T2 при убийстве восстанавливают себе здоровье"]  // и Warchief
+        ["name" => "Scavengers", "description" => "Warchief получает спсобность 'scavenger'"]  // и Warchief
     ]
 ];
+define("GAME_SETTINGS", $gameSettings);
 
 function setGold($owner, $type, $count){
     global $json;
@@ -104,9 +105,10 @@ function spawn(array $unit, int $owner, bool $payable = true, bool $action = fal
             $checkLimit=true;
         }
         if($checkLimit==true){
-            if($payable == false || $json->gamePlayers[$owner]->gold>=$unit[7]){
+            if($payable == false || ($json->gamePlayers[$owner]->gold>=$unit[7])){// && $json->gamePlayers[$owner]->food>=$unit[8]
                 if($payable == true){
                     setGold($owner,'-',$unit[7]);
+                    //setFood($owner,'-',$unit[9]);
                 }
                 //$json->gamePlayers[$player]->gold-=$unit[7];
                 if($unit[0] == "unit"){
@@ -145,7 +147,7 @@ function countCalc($gf,$class,$owner){
 
 class Player{
         public $name,$owner,$live,$gold,$counts,$level,$exp,$skills,$faction,$statistic,
-        $count_workers,$count_army,$count_warchiefs,$count_townhalls,$count_towers;
+        $count_workers,$count_army,$count_warchiefs,$count_townhalls,$count_towers,$count_afk,$bot;
 
         function __construct($name, $num, $faction)
         {
@@ -153,6 +155,7 @@ class Player{
             $this->owner = $num;
             $this->live = true;
             $this->gold = 0;
+            //$this->food = 0;
             $this->level = 0;
             $this->exp = 0;
             $this->skills = [];
@@ -160,6 +163,8 @@ class Player{
                 $this->statistic->score=0;
                 $this->statistic->goldUp=0;
                 $this->statistic->goldDown=0;
+                //$this->statistic->foodUp=0;
+                //$this->statistic->foodDown=0;
                 $this->statistic->workerUp=0;
                 $this->statistic->workerDown=0;
                 $this->statistic->unitUp=0;
@@ -175,25 +180,28 @@ class Player{
             $this->count_warchiefs = 0;
             $this->count_townhalls = 0;
             $this->count_towers = 0;
+            $this->count_afk = 0;
+
+            $this->bot = false;
             switch ($faction){
-                case "kingdom":
+                case "Kingdom":
                     $this->faction = new Kingdom();
                     $this->gold += 3;
                     $this->statistic->goldUp+=3;
                     break;
-                case "seamercs":
+                case "SeaMercs":
                     $this->faction = new SeaMercs();
                     break;
-                case "undead":
+                case "Undead":
                     $this->faction = new Undead();
                     break;
-                case "orcs":
+                case "Orcs":
                     $this->faction = new Orcs();
                     break;
-                case "elves":
+                case "Elves":
                     //$this->faction = new Elves();
                     break;
-                case "neutral":
+                case "Neutral":
                     $this->faction = new Neutral();
                     break;
                 default: //random
@@ -217,6 +225,7 @@ class Unit{
         $this->movePoint = $array[5];
         $this->range = $array[6];
         $this->price = $array[7];
+        //$this->food = $array[8];
         $this->ability = $array[8];
         $this->canMove = $action;
         $this->canAction = $action;
@@ -247,7 +256,7 @@ class Kingdom {
 
     function __construct()
     {
-        // (0)type-(1)class-(2)name-(3)hp-(4)attack-(5)movePoint-(6)range-(7)price-(8)ability-(9)image-(10)outgoing-(11)require
+        // (0)type-(1)class-(2)name-(3)hp-(4)attack-(5)movePoint-(6)range-(7)price-(8)foodprice-(9)ability-(10)image-(11)outgoing-(12)require
         $this->name = "Kingdom";
         $this->t1 = ['unit','t1','Peasant',1,1,1,1,0,['worker'],'img/units/KingdomT1.png','',''];
         $this->t2 = ['unit','t2','Scout',1,1,2,1,1,[],"img/units/KingdomT2.png",'',''];
@@ -263,12 +272,12 @@ class SeaMercs {
 
     function __construct()
     {
-//(0)type-(1)class-(2)name-(3)hp-(4)attack-(5)movePoint-(6)range-(7)price-(8)ability-(9)image-(10)outgoing-(11)require
+        // (0)type-(1)class-(2)name-(3)hp-(4)attack-(5)movePoint-(6)range-(7)price-(8)foodprice-(9)ability-(10)image-(11)outgoing-(12)require
         $this->name = "SeaMercs";
         $this->t1 = ['unit','t1','Slave',1,1,1,1,0,['worker'],'img/units/SeaMercsT1.png','',''];
         $this->t2 = ['unit','t2','Raider',1,1,2,1,1,[],"img/units/SeaMercsT2.png",'',''];
         $this->t3 = ['unit','t3','Merc',2,1,1,1,1,['pillage'],"img/units/SeaMercsT3.png",'',''];
-        $this->warchief = ['unit','warchief','Berserk',3,1,1,1,4,['veteran'],"img/units/SeaMercsWarchief.png",'','2t'];
+        $this->warchief = ['unit','warchief','Berserk',3,1,1,1,4,['bloodAxe'],"img/units/SeaMercsWarchief.png",'','2t'];
         $this->townhall = ['building','townhall','Forge',5,0,0,0,4,['hire','smith'],'img/units/SeaMercsTownhall.png','t1-t2',''];
         $this->tower = ['building','tower','Outpost',3,1,0,2,3,['hire'],"img/units/SeaMercsTower.png",'t3-warchief',''];
     }
@@ -280,7 +289,7 @@ class Undead {
     function __construct()
     {
         $this->name = "Undead";
-        $this->t1 = ['unit','t1','Skeleton',1,1,1,1,0,['worker'],'img/units/UndeadT1.png','',''];
+        $this->t1 = ['unit','t1','Cultist',1,1,1,1,0,['worker'],'img/units/UndeadT1.png','',''];
         $this->t2 = ['unit','t2','Zombie',2,1,1,1,1,[],"img/units/UndeadT2.png",'',''];
         $this->t3 = ['unit','t3','Ghost',2,1,2,1,3,['vampir'],"img/units/UndeadT3.png",'',''];
         $this->warchief = ['unit','warchief','Lich',2,1,1,1,3,['darkArmy'],"img/units/UndeadWarchief.png",'',''];
@@ -293,12 +302,12 @@ class Orcs {
     //not work
     function __construct()
     {
-        // (0)type-(1)class-(2)name-(3)hp-(4)attack-(5)movePoint-(6)range-(7)price-(8)ability-(9)image-(10)outgoing-(11)require
+        // (0)type-(1)class-(2)name-(3)hp-(4)attack-(5)movePoint-(6)range-(7)price-(8)foodprice-(9)ability-(10)image-(11)outgoing-(12)require
         $this->name = "Orcs";
         $this->t1 = ['unit','t1','Goblin',1,1,1,1,0,['worker'],'img/units/OrcsT1.png','',''];
         $this->t2 = ['unit','t2','Orc',2,1,1,1,1,[],"img/units/OrcsT2.png",'',''];
         $this->t3 = ['building','t3','Onager',1,1,1,2,4,['siegeDmg'],"img/units/OrcsT3.png",'',''];
-        $this->warchief = ['unit','warchief','Warchief',5,1,1,1,5,[],"img/units/OrcsWarchief.png",'','2t'];
+        $this->warchief = ['unit','warchief','War Boss',4,1,1,1,4,[],"img/units/OrcsWarchief.png",'','2t'];
         $this->townhall = ['building','townhall','War House',5,0,0,0,4,['hire'],'img/units/OrcsTownhall.png','t1-t3',''];
         $this->tower = ['building','tower','Watch tower',2,1,0,2,2,['hire'],"img/units/OrcsTower.png",'t2-warchief',''];
     }
@@ -308,7 +317,7 @@ class Neutral {
 
     function __construct()
     {
-        // (0)type-(1)class-(2)name-(3)hp-(4)attack-(5)movePoint-(6)range-(7)price-(8)ability-(9)image-(10)outgoing-(11)require
+        // (0)type-(1)class-(2)name-(3)hp-(4)attack-(5)movePoint-(6)range-(7)price-(8)foodprice-(9)ability-(10)image-(11)outgoing-(12)require
         $this->name = "Neutral";
         $this->t1 = ['building','t1','Chest',2,0,0,0,0,['treasure','meleeOnly'],'img/units/NeutralT1.png','',''];
         $this->t2 = ['unit','t2','Wolf',2,1,1,1,1,[],"img/units/NeutralT2.png",'',''];
@@ -318,4 +327,23 @@ class Neutral {
         $this->tower = ['building','tower','Bandit outpost',3,1,0,1,3,[],"img/units/NeutralTower.png",'',''];
     }
 }
+$gameObjs = [
+    // (0)type-(1)class-(2)name-(3)hp-(4)attack-(5)movePoint-(6)range-(7)price-(8)foodprice-(9)ability-(10)image-(11)outgoing-(12)require
+        
+    //Kingdom
+    "peasant" => ['unit','t1','Peasant',1,1,1,1,0,['worker'],'img/units/KingdomT1.png','',''],
+    "scout" => ['unit','t2','Scout',1,1,2,1,1,[],"img/units/KingdomT2.png",'',''],
+    "knight" => ['unit','t3','Knight',3,1,1,1,2,[],"img/units/KingdomT3.png",'',''],
+    "lord" => ['unit','warchief','Lord',4,1,2,1,5,['cavalryStrike'],"img/units/KingdomWarchief.png",'','2t'],
+    "townhall" => ['building','townhall','Townhall',5,0,0,0,4,['hire'],'img/units/KingdomTownhall.png','t1-t2',''],
+    "tower" => ['building','tower','Tower',3,1,0,2,3,['hire'],"img/units/KingdomTower.png",'t3-warchief',''],
+    //SeaMercs
+
+    //Undead
+    "skeleton" => ['unit','t1','Skeleton',1,1,1,1,0,[],'img/units/Undead/Skeleton.png','',''],
+    //Orcs
+    //Elves
+    //Neutral
+];
+define("GAME_OBJ",$gameObjs);
 ?>

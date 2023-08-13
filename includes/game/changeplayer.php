@@ -2,7 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-    require_once '../connect.php';
+    require_once '../general.php';
     $idRoom = $_SESSION['user']['active_room'];
     $idUser = $_SESSION['user']['id'];
     //$playerString = "";

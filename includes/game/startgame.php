@@ -2,7 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-    require_once '../connect.php';
+    require_once '../general.php';
     include_once("classes.php");
     include_once("mapmaker.php");
     $idRoom = $_SESSION['user']['active_room'];
@@ -18,8 +18,14 @@ if (session_status() === PHP_SESSION_NONE) {
                 "gameVictoryCond" => [],
                 "gamePlayers" => [],
                 "gameField" => [],
-                //"gameStatistic" => []
+                //"gameStatistic" => [],
+                "animation" => [],
+                "gameLevelSkills" => [],
+
             ];
+            $game["gameLevelSkills"]["owner"] = 0;
+            $game["gameLevelSkills"]["skills"] = [];
+
 
             if($room["classic_win_check"]==1){
                 $game["gameVictoryCond"]["classicWin"] = true;
@@ -49,7 +55,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     $game['gameField'][$i][$j] = new Cell($i,$j);
                 }
             };
-            $neutral = new Player(' ',0,'neutral');
+            $neutral = new Player(' ',0,'Neutral');
             // $game['gameStatistic'][0]=[
             //     "name" => 'Neutral',
             //     "owner"=>0,
@@ -68,8 +74,9 @@ if (session_status() === PHP_SESSION_NONE) {
             if($room['local'] == 0){
                 for ($k=1; $k<=$room['count_players']; $k++){
                     $id = $array[$k-1]["id"];
-                    $getLoginUsers = mysqli_query($connect,"SELECT `login`, `count_games` FROM `users` WHERE `id_user` = '$id'");
-                    $user = mysqli_fetch_row($getLoginUsers);
+                    $getLoginUsers = mysqli_query($connect,"SELECT `login`, `count_games`,`win_table` FROM `users` WHERE `id_user` = '$id'");
+                    $user = mysqli_fetch_assoc($getLoginUsers);
+                    
                     // $game['gameStatistic'][$k]=[
                     //     "name" => $user[0],
                     //     "owner"=>$k,
@@ -84,31 +91,38 @@ if (session_status() === PHP_SESSION_NONE) {
                     //     "expUp"=>0,
                     //     "skills"=>[]
                     // ];
-                    if($array[$k-1]["faction"]=="random"){
+                    if($array[$k-1]["faction"]=="Random"){
                         $num=mt_rand(1,4);//вместо 2 подставить количество фракций 
                         switch($num){
                             case 1:
-                                $array[$k-1]["faction"]="kingdom";
+                                $array[$k-1]["faction"]="Kingdom";
                                 break;
                             case 2:
-                                $array[$k-1]["faction"]="seamercs";
+                                $array[$k-1]["faction"]="SeaMercs";
                                 break;
                             case 3://потом сменить на 3
-                                $array[$k-1]["faction"]="undead";
+                                $array[$k-1]["faction"]="Undead";
                                 break;
                             case 4:
-                                $array[$k-1]["faction"]="orcs";
+                                $array[$k-1]["faction"]="Orcs";
                                 break;
                             case 5:
-                                $array[$k-1]["faction"]="elves";
+                                $array[$k-1]["faction"]="Elves";
                                 break;
                             default:
                                 break;
                         }
+                    } 
+                    $table = json_decode($user['win_table'],true);
+                    $factionName = $array[$k-1]["faction"];
+                    if(!array_key_exists($factionName,$table)){
+                        $table[$factionName] = ["games" => 0, "wins" => 0];
                     }
-                    $count_games = $user[1]+1;
-                    $updateUser = mysqli_query($connect, "UPDATE `users` SET `count_games` = '$count_games' WHERE `id_user` = '$id'");
-                    $game['gamePlayers'][$k] = new Player($user[0],$k,$array[$k-1]["faction"]);
+                    $table[$factionName]["games"] += 1;
+                    $table = json_encode($table);
+                    $count_games = $user['count_games']+1;
+                    $updateUser = mysqli_query($connect, "UPDATE `users` SET `count_games` = '$count_games', `win_table` = '$table' WHERE `id_user` = '$id'");
+                    $game['gamePlayers'][$k] = new Player($user['login'],$k,$array[$k-1]["faction"]);
                     //$game['gamePlayers'][$k]->faction->start($k);
                     $count_players = $room['count_players'];
                 };

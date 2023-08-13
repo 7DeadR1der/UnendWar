@@ -4,7 +4,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-require_once 'includes/connect.php';
+require_once 'includes/general.php';
 ?>
 
 <!DOCTYPE html>

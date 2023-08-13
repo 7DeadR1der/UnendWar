@@ -270,6 +270,7 @@ function loadHistory(){
             let res = JSON.parse(xhr.response);
             let table = historyBlock.getElementsByTagName("table")[0];
             let tbody = table.getElementsByTagName("tbody")[0];
+            console.log(res);
             //let tbody = document.getElementById("history").getElementsByTagName("table").getElementsByTagName("tbody");
             for(let i=0;i<res.length;i++){
                 let row = tbody.insertRow(i);
@@ -285,7 +286,13 @@ function loadHistory(){
                 }else{
                     cellLocal.innerHTML = 'Нет';
                 }       
-                let cellBtn = row.insertCell(4);
+                let cellDateCreate = row.insertCell(4);
+                cellDateCreate.innerHTML = res[i]['date_create'];
+                //cellDateCreate.innerHTML = new Date(res[i]['date_create']*1000);
+                let cellDateEnd = row.insertCell(5);
+                cellDateEnd.innerHTML = res[i]['date_end_game'];
+                //cellDateEnd.innerHTML = new Date(res[i]['date_end_game']*1000);
+                let cellBtn = row.insertCell(6);
                 cellBtn.innerHTML = '<button onclick="loadReplay('+res[i]["id_room"]+')">Просмотр</button>'
             }
             //console.log(replayJson);

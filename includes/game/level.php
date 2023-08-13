@@ -2,7 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-    require_once '../connect.php';
+    require_once '../general.php';
     include_once("classes.php");
     
     $login = $_SESSION['user']['login'];
@@ -96,7 +96,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                 break;
                             case "Estates I":
                                 array_push($json->gamePlayers[$owner]->skills,$choise);
-                                setGold($owner,'+',4);
+                                setGold($owner,'+',5);
                                 //$json->gamePlayers[$owner]->gold +=4;
                                 break;
                             case "Estates II":
@@ -133,13 +133,20 @@ if (session_status() === PHP_SESSION_NONE) {
                                     }
                                 }
                                 array_push($json->gamePlayers[$owner]->faction->warchief[8],'cannibal');*/
-                                $array = selectUnits('t2',$owner,$json->gameField);
+                                /*$array = selectUnits('t2',$owner,$json->gameField);
                                 if(count($array)>0){
                                     for($k=0;$k<count($array);$k++){
                                         array_push($array[$k]->ability,'cannibal');
                                     }
                                 }
-                                array_push($json->gamePlayers[$owner]->faction->t2[8],'cannibal');
+                                array_push($json->gamePlayers[$owner]->faction->t2[8],'cannibal');*/
+                                $array = selectUnits('warchief',$owner,$json->gameField);
+                                if(count($array)>0){
+                                    for($k=0;$k<count($array);$k++){
+                                        array_push($array[$k]->ability,'scavenger');
+                                    }
+                                }
+                                array_push($json->gamePlayers[$owner]->faction->warchief[8],'scavenger');
                                 break;
                             case "Undead I":
                                 array_push($json->gamePlayers[$owner]->skills,$choise);

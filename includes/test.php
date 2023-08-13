@@ -58,7 +58,7 @@ if (session_status() === PHP_SESSION_NONE) {
 /*
 
         session_start();
-        require_once 'connect.php';
+        require_once 'general.php';
         $gameCreator = 2;
         $query = mysqli_query($connect, "SELECT `id_room` FROM `rooms` WHERE (`id_creator` = '$gameCreator')
         ORDER BY `id_room` DESC LIMIT 1");

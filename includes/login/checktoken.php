@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 };
 if(!isset($_SESSION['user'])){
-    require_once '../connect.php';
+    require_once '../general.php';
     if(isset($_COOKIE["token"])){
         $token = $_COOKIE["token"];
         $query = mysqli_query($connect,"SELECT * FROM `session_tokens` WHERE `token` = '$token'");

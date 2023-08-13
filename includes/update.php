@@ -2,7 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-        require_once '../connect.php';
+        require_once '../general.php';
     $id = $_SESSION['user']['id'];
     $login = $_SESSION['user']['login'];
     $query = mysqli_query($connect, "SELECT * FROM `users` WHERE `id_user` = '$id' AND `login` = '$login'");
