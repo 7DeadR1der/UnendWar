@@ -725,6 +725,25 @@ function loadField(json){
             }
         }
     }
+    //score
+    let menuScore = document.getElementById('menu-score').getElementsByTagName('table')[0].getElementsByTagName('tbody')[0];
+    menuScore.innerHTML = '';
+    for(let i=0;i<json.gamePlayers.length-1;i++){
+        let k = i+1;
+        let row = menuScore.insertRow(i);
+        if(json.gamePlayers[k].live != false){
+            row.style.backgroundColor = colorPlayers[k];
+        }
+        let cellId = row.insertCell(0);
+        cellId.innerHTML = k;
+        let cellName = row.insertCell(1);
+        cellName.innerHTML = json.gamePlayers[k].name;
+        let cellScore = row.insertCell(2);
+        cellScore.innerHTML = json.gamePlayers[k].statistic.score;
+
+    }
+
+
     cancel();
     //checkAnimation(json);
 }
@@ -828,7 +847,7 @@ function animation(container,color){
 const gamestring = '<div id="game-header">'+
 '<button id="btnEndTurn" onclick="endTurn()">Закончить ход</button>'+
 '<h4 id="game-header-player"></h4>'+
-'<button id="btnExitGame" onclick="exitRoom()">Выйти из Игры</button>'+
+'<button id="btnDialogMenu" onclick="dialogMenu(1)">Меню</button>'+
 '</div>'+
 '<div id="game-field">   </div>'+
 '<div id="game-btns">'+
@@ -887,11 +906,11 @@ const gameSettings = {
         {name:'Strength II', description:'Увеличивает здоровье Вождя на 2'},
         {name:'Pathfinder', description:'Увеличивает скорость Вождя на 1'},
         {name:'Surgery', description:'Позволяет вождю лечить себя или союзников'},
-        {name:'Estates I', description:'Единовременно дает 4 золота'},
+        {name:'Estates I', description:'Единовременно дает 5 золота'},
         {name:'Estates II', description:'Каждый ход дает 1 золото'},
         {name:'Engineering', description:'Все здания получают +1 к прочности'},
         {name:'Undead I', description:'Увеличивает здоровье Лича на 1 ед., зомби получают спсобность "infect"'},
         {name:'Undead II', description:'Увеличивает здоровье Лича на 1 ед., Лич получает способность "darkStorm"'},
-        {name:"Scavengers", description:"T2 при убийстве восстанавливают себе здоровье"},// и Warchief
+        {name:"Scavengers", description:"Warchief получает спсобность 'scavenger'"},// и Warchief
     ]
 };

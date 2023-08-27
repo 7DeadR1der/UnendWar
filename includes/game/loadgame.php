@@ -42,7 +42,7 @@ if (session_status() === PHP_SESSION_NONE) {
                         case 'Kingdom':
                             $kd = 'selected';
                             break;
-                        case 'Seamercs':
+                        case 'SeaMercs':
                             $sm = 'selected';
                             break;
                         case 'Undead':

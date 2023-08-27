@@ -16,7 +16,8 @@ if (session_status() === PHP_SESSION_NONE) {
                     "email"=>$user['email'],
                     "active_room"=>$user['active_room'],
                     "count_wins"=>$user['count_wins'],
-                    "count_games"=>$user['count_games']
+                    "count_games"=>$user['count_games'],
+                    "win_table"=>json_decode($user['win_table'],true)
                 ];
                 if($_POST['remember']==1){
                     //.$_SERVER["REMOTE_ADDR"]

@@ -95,6 +95,19 @@ body{
     background: #fff;
     border-radius: 3px;
 }
+.dialog-menu{
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    min-height: 275px;
+    width: 100%;
+    max-width: 350px;
+    margin: 10% auto;
+    padding: 2%;
+    background: #fff;
+    border-radius: 3px;
+}
 #gameStatistic{
     max-height: 400px;
     display: flex;
@@ -124,7 +137,9 @@ body{
     width: 50px;
     height: 20px;
     background-color:rgb(131, 131, 255);
+    border-radius: 5px;
     margin: 3px 3px 0 0;
+    padding: 2px;
     position: fixed;
     z-index: 5;
     right: 0;
@@ -135,7 +150,8 @@ body{
     height: 500px;
     margin: 15px;
     border-radius:10px;
-    background-color:rgb(86, 137, 179);
+    /*background-color:rgb(86, 137, 179);*/
+    background-color:rgb(128, 169, 203);
     position: fixed;
     z-index: 7;
     right: 0;
@@ -163,6 +179,12 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+#profile-content div{
+    margin: 0 5px 12px 5px;
+}
+.profile-win-table{
+    padding: 0 10px;
 }
 /* ------------------------Chat Styles------------------------ */
 #chat-button{

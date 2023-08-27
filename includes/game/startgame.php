@@ -134,23 +134,23 @@ if (session_status() === PHP_SESSION_NONE) {
                     if(!empty($_GET[$str])){
                         $faction = $_GET[$str];
                         echo $_GET[$str];
-                        if($faction=="random"){
+                        if($faction=="Random"){
                             $num=mt_rand(1,3);
                             switch($num){
                                 case 1:
-                                    $faction="kingdom";
+                                    $faction="Kingdom";
                                     break;
                                 case 2:
-                                    $faction="seamercs";
+                                    $faction="SeaMercs";
                                     break;
                                 case 3://потом сменить на 3
-                                    $faction="undead";
+                                    $faction="Undead";
                                     break;
                                 case 4:
-                                    $faction="orcs";
+                                    $faction="Orcs";
                                     break;
                                 case 5:
-                                    $faction="elves";
+                                    $faction="Elves";
                                     break;
                                 default:
                                     break;

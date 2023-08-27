@@ -19,7 +19,15 @@ function dialogEndGame(a){
     }
 
 }
-
+function dialogMenu(a){
+    dialogBack(a);
+    let c = document.getElementsByClassName('dialog-menu')[0];
+    if(a == 1){
+        c.style.display = 'flex';
+    }else{
+        c.style.display = 'none';
+    }
+}
 function dialogBack(a){
     let dialog = document.getElementsByClassName('dialog-block')[0];
     if (a == 1){
@@ -172,6 +180,7 @@ function exitRoom(flag=false){
         xhr.open('GET',folder+'/includes/game/exitroom.php');
         xhr.onload = function(){
             checkUser('active_room');
+            dialogMenu(0)
         }
         xhr.send();
         document.getElementById('game-block').style.display = 'none';
