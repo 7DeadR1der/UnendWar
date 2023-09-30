@@ -568,7 +568,7 @@ function action(int $fi, int $fj, $btn, int $si, int $sj, $param){
                         if($fUnit->canAction==true && (abs($fi-$si)+abs($fj-$sj))<=1){
                             $cell=&$json->gameField[$si][$sj];
                             if($cell->contains==false&&$cell->obstacle==0){
-                                $unit;
+                                $unit = false;
                                 switch($param){
                                     case't1':
                                         $unit = $json->gamePlayers[$player]->faction->t1;
