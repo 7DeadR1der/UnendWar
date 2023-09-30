@@ -179,6 +179,7 @@ function spell(type){
         case"smith":
             if(turnFlag==1){
                 lockBtns();
+                lockAllCells;
                 unlockCells(1,cashCell.i,cashCell.j,'smith');
                 turnFlag=2;
             }
@@ -257,6 +258,7 @@ function buyUnit(typeUnit){
             if(thisPlayer.gold >= unit[7]){
                 if(gameField[cashCell.i][cashCell.j].contains.canAction == true){
                     lockBtns();
+                    lockAllCells();
                     unlockCells(1,cashCell.i,cashCell.j,'hire');
                     turnFlag=2;
                     hireUnit=unit[1];
@@ -363,6 +365,7 @@ function lockAllCells(){
     for(let i = 0; i<gameField.length; i++ ){
         for(let j = 0; j<gameField[i].length; j++){
             gameField[i][j].availability = false;
+            document.getElementById(`${i}-${j}`).style.border = '';
         }
     }
 }
@@ -993,6 +996,6 @@ const gameSettings = {
         {name:'Engineering', description:'Все здания получают +1 к прочности'},
         {name:'Undead I', description:'Увеличивает здоровье Лича на 1 ед., зомби получают спсобность "infect"'},
         {name:'Undead II', description:'Увеличивает здоровье Лича на 1 ед., Лич получает способность "darkStorm"'},
-        {name:"Scavengers", description:"Warchief получает спсобность 'scavenger'"},// и Warchief
+        {name:"Scavengers", description:"Warchief получает спсобность 'scavenger', Гоблины при создании имеют способность 'rush'"},// и Warchief
     ]
 };

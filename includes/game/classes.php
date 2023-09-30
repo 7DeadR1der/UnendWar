@@ -195,11 +195,11 @@ class Orcs {
         // (0)type-(1)class-(2)name-(3)hp-(4)attack-(5)movePoint-(6)range-(7)price-(8)foodprice-(9)ability-(10)image-(11)outgoing-(12)require
         $this->name = "Orcs";
         $this->t1 = GAME_OBJ['Goblin'];
-        $this->t2 = GAME_OBJ['Orc'];
+        $this->t2 = GAME_OBJ['Battler'];
         $this->t3 = GAME_OBJ['Onager'];
         $this->warchief = GAME_OBJ['War Boss'];
-        $this->townhall = GAME_OBJ['War House'];
-        $this->tower = GAME_OBJ['Watch tower'];
+        $this->townhall = GAME_OBJ['Warhouse'];
+        $this->tower = GAME_OBJ['Turret'];
     }
 }
 class Elves {
@@ -241,45 +241,45 @@ $gameObjs = [
         "Townhall" => ['building','townhall','Townhall',5,0,0,0,4,['hire'],'img/units/Kingdom/Townhall.png','t1-t2',''],
         "Tower" => ['building','tower','Tower',3,1,0,2,3,['hire'],"img/units/Kingdom/Tower.png",'t3-warchief',''],
     //SeaMercs
-        "Slave" => ['unit','t1','Slave',1,1,1,1,0,['worker'],'img/units/SeaMercs/Slave.png','',''];
-        "Raider" => ['unit','t2','Raider',1,1,2,1,1,[],"img/units/SeaMercs/Raider.png",'',''];
-        "Merc" => ['unit','t3','Merc',2,1,1,1,1,['pillage'],"img/units/SeaMercs/Merc.png",'',''];
-        "Berserk" => ['unit','warchief','Berserk',3,1,1,1,4,['bloodAxe'],"img/units/SeaMercs/Berserk.png",'','2t'];
-        "Forge" => ['building','townhall','Forge',5,0,0,0,4,['hire','smith'],'img/units/SeaMercs/Forge.png','t1-t2',''];
-        "Outpost" => ['building','tower','Outpost',3,1,0,2,3,['hire'],"img/units/SeaMercs/Outpost.png",'t3-warchief',''];
+        "Slave" => ['unit','t1','Slave',1,1,1,1,0,['worker'],'img/units/SeaMercs/Slave.png','',''],
+        "Raider" => ['unit','t2','Raider',1,1,2,1,1,[],"img/units/SeaMercs/Raider.png",'',''],
+        "Merc" => ['unit','t3','Merc',2,1,1,1,1,['pillage'],"img/units/SeaMercs/Merc.png",'',''],
+        "Berserk" => ['unit','warchief','Berserk',3,1,1,1,4,['bloodAxe'],"img/units/SeaMercs/Berserk.png",'','2t'],
+        "Forge" => ['building','townhall','Forge',5,0,0,0,4,['hire','smith'],'img/units/SeaMercs/Forge.png','t1-t2',''],
+        "Outpost" => ['building','tower','Outpost',3,1,0,2,3,['hire'],"img/units/SeaMercs/Outpost.png",'t3-warchief',''],
 
     //Undead
-        "Cultist" => ['unit','t1','Cultist',1,1,1,1,0,['worker'],'img/units/Undead/Cultist.png','',''];
-        "Zombie" => ['unit','t2','Zombie',2,1,1,1,1,[],"img/units/Undead/Zombie.png",'',''];
-        "Ghost" => ['unit','t3','Ghost',2,1,2,1,3,['vampir'],"img/units/Undead/Ghost.png",'',''];
-        "Lich" => ['unit','warchief','Lich',2,1,1,1,3,['darkArmy'],"img/units/Undead/Lich.png",'',''];
-        "Necropolis" => ['building','townhall','Necropolis',5,0,0,0,4,['hire'],'img/units/Undead/Necropolis.png','t1-t2',''];
-        "Soul tower" => ['building','tower','Soul tower',3,1,0,2,3,['hire'],"img/units/Undead/Soul tower.png",'t3-warchief',''];
+        "Cultist" => ['unit','t1','Cultist',1,1,1,1,0,['worker'],'img/units/Undead/Cultist.png','',''],
+        "Zombie" => ['unit','t2','Zombie',2,1,1,1,1,[],"img/units/Undead/Zombie.png",'',''],
+        "Ghost" => ['unit','t3','Ghost',2,1,2,1,3,['vampir'],"img/units/Undead/Ghost.png",'',''],
+        "Lich" => ['unit','warchief','Lich',2,1,1,1,3,['darkArmy'],"img/units/Undead/Lich.png",'',''],
+        "Necropolis" => ['building','townhall','Necropolis',5,0,0,0,4,['hire'],'img/units/Undead/Necropolis.png','t1-t2',''],
+        "Soul tower" => ['building','tower','Soul tower',3,1,0,2,3,['hire'],"img/units/Undead/Soul tower.png",'t3-warchief',''],
         "Skeleton" => ['unit','t1','Skeleton',1,1,1,1,0,[],'img/units/Undead/Skeleton.png','',''],
     //Orcs
-        "Goblin" => ['unit','t1','Goblin',1,1,1,1,0,['worker'],'img/units/Orcs/Goblin.png','',''];
-        "Orc" => ['unit','t2','Battler',2,1,1,1,1,[],"img/units/Orcs/Battler.png",'',''];
-        "Onager" => ['building','t3','Onager',1,1,1,2,4,['siegeDmg'],"img/units/Orcs/Onager.png",'',''];
-        "War Boss" => ['unit','warchief','War Boss',4,1,1,1,4,[],"img/units/Orcs/War Boss.png",'','2t'];
-        "War House" => ['building','townhall','Warhouse',5,0,0,0,4,['hire'],'img/units/Orcs/Warhouse.png','t1-t3',''];
-        "Watch tower" => ['building','tower','Turret',2,1,0,2,3,['hire'],"img/units/Orcs/Turret.png",'t2-warchief',''];
+        "Goblin" => ['unit','t1','Goblin',1,1,1,1,0,['worker'],'img/units/Orcs/Goblin.png','',''],
+        "Battler" => ['unit','t2','Battler',2,1,1,1,1,[],"img/units/Orcs/Battler.png",'',''],
+        "Onager" => ['building','t3','Onager',1,1,1,2,4,['siegeDmg'],"img/units/Orcs/Onager.png",'',''],
+        "War Boss" => ['unit','warchief','War Boss',4,1,1,1,4,[],"img/units/Orcs/War Boss.png",'','2t'],
+        "Warhouse" => ['building','townhall','Warhouse',5,0,0,0,4,['hire'],'img/units/Orcs/Warhouse.png','t1-t3',''],
+        "Turret" => ['building','tower','Turret',2,1,0,2,3,['hire'],"img/units/Orcs/Turret.png",'t2-warchief',''],
 
     //Elves
-        "Wind" => ['unit','t1','Wind',1,0,1,0,0,['worker','ethereal','growUp'],'img/units/Elves/Wind.png','',''];
-        "Treant" => ['unit','t2','Treant',2,1,1,1,0,[],"img/units/Elves/Treant.png",'',''];
-        "Pegas" => ['unit','t3','Pegas',2,2,3,1,4,[],"img/units/Elves/Pegas.png",'',''];
-        "Ihasabia" => ['unit','warchief','Ihasabia',2,1,1,1,3,['farSight','magic'],"img/units/Elves/Ihasabia.png",'','2t'];
-        "Temple" => ['building','townhall','Temple',5,0,0,0,4,['hire'],'img/units/Elves/Temple.png','t1-t2-wachief',''];
-        "Torre" => ['building','tower','Torre',3,1,0,2,3,['hire'],"img/units/Elves/Torre.png",'t3',''];
+        "Wind" => ['unit','t1','Wind',1,0,1,0,0,['worker','ethereal','growUp'],'img/units/Elves/Wind.png','',''],
+        "Treant" => ['unit','t2','Treant',2,1,1,1,0,[],"img/units/Elves/Treant.png",'',''],
+        "Pegas" => ['unit','t3','Pegas',2,2,3,1,4,[],"img/units/Elves/Pegas.png",'',''],
+        "Ihasabia" => ['unit','warchief','Ihasabia',2,1,1,1,3,['farSight','magic'],"img/units/Elves/Ihasabia.png",'','2t'],
+        "Temple" => ['building','townhall','Temple',5,0,0,0,4,['hire'],'img/units/Elves/Temple.png','t1-t2-wachief',''],
+        "Torre" => ['building','tower','Torre',3,1,0,2,3,['hire'],"img/units/Elves/Torre.png",'t3',''],
     
     //Neutral
 
-        "Chest" => ['building','t1','Chest',2,0,0,0,0,['treasure','meleeOnly'],'img/units/Neutral/Chest.png','',''];
-        "Wolf" => ['unit','t2','Wolf',2,1,1,1,1,[],"img/units/Neutral/Wolf.png",'',''];
-        "Ogre" => ['unit','t3','Ogre',4,1,1,1,3,[],"img/units/Neutral/Ogre.png",'',''];
-        "Dragon" => ['unit','warchief','Dragon',8,2,2,1,10,['monster'],"img/units/Neutral/Dragon.png",'','2t'];
-        "Ogre fort" => ['building','townhall','Ogre fort',6,1,0,1,6,['prison'],'img/units/Neutral/Ogre fort.png','',''];
-        "Bandit outpost" => ['building','tower','Bandit outpost',3,1,0,1,3,[],"img/units/Neutral/Bandit outpost.png",'',''];
+        "Chest" => ['building','t1','Chest',2,0,0,0,0,['treasure','meleeOnly'],'img/units/Neutral/Chest.png','',''],
+        "Wolf" => ['unit','t2','Wolf',2,1,1,1,1,[],"img/units/Neutral/Wolf.png",'',''],
+        "Ogre" => ['unit','t3','Ogre',4,1,1,1,3,[],"img/units/Neutral/Ogre.png",'',''],
+        "Dragon" => ['unit','warchief','Dragon',8,2,2,1,10,['monster'],"img/units/Neutral/Dragon.png",'','2t'],
+        "Ogre fort" => ['building','townhall','Ogre fort',6,1,0,1,6,['prison'],'img/units/Neutral/Ogre fort.png','',''],
+        "Bandit outpost" => ['building','tower','Bandit outpost',3,1,0,1,3,[],"img/units/Neutral/Bandit outpost.png",'',''],
 
 ];
 define("GAME_OBJ",$gameObjs);
@@ -433,7 +433,7 @@ function action(int $fi, int $fj, $btn, int $si, int $sj, $param){
                             array_splice($fUnit->ability,$search,1);
                         }
                     }
-                    if($fUnit->canMove==true && abs(($fi-$si)+($fj-$sj))<=$speed){
+                    if($fUnit->canMove==true && (abs($fi-$si)+abs($fj-$sj))<=$speed){
                         $sUnit = clone $fUnit;
                         $sUnit->canMove = false;
                         $fUnit = false;
@@ -444,16 +444,18 @@ function action(int $fi, int $fj, $btn, int $si, int $sj, $param){
                 }else if($sUnit->owner!=$fUnit->owner){
                     //attack
                     //new
-                    if($fUnit->canAction == true && abs(($fi-$si)+($fj-$sj))<=$fUnit->range){
-                        if(in_array('meleeOnly',$sUnit->ability) && abs(($fi-$si)+($fj-$sj))<=1){
-                            //open chest
-                            $sUnit->hp -= $atk;
-                            if($sUnit->hp <= 0){
-                                kill($fi,$fj,$si,$sj);
+                    if($fUnit->canAction == true && (abs($fi-$si)+abs($fj-$sj))<=$fUnit->range){
+                        if(in_array('meleeOnly',$sUnit->ability)){
+                            if((abs($fi-$si)+abs($fj-$sj))<=1){
+                                //open chest
+                                $sUnit->hp -= 1;
+                                if($sUnit->hp <= 0){
+                                    kill($fi,$fj,$si,$sj);
+                                }
+                                $fUnit->canAction=false;
+                                $animType = 'move';
+                                $animVariant = '';
                             }
-                            $fUnit->canAction=false;
-                            $animType = 'move';
-                            $animVariant = '';
 
                         }else if(in_array('magic',$fUnit->ability)){
                             //magic hit
@@ -507,7 +509,7 @@ function action(int $fi, int $fj, $btn, int $si, int $sj, $param){
                     if(in_array('surgery',$fUnit->ability)){
                         if($fUnit->canAction==true &&
                         $sUnit->hpMax > $sUnit->hp
-                        && abs(($fi-$si)+($fj-$sj))<=1 && $sUnit->type == 'unit' 
+                        && (abs($fi-$si)+abs($fj-$sj))<=1 && $sUnit->type == 'unit' 
                         /*&& ($json->gameField[$si][$sj]->contains->hp < ceil($json->gameField[$si][$sj]->contains->hpMax/2) &&
                         $json->gameField[$si][$sj]->contains->hp < 3 ||  $json->gameField[$si][$sj]->contains->hp == 1)*/
 
@@ -519,7 +521,7 @@ function action(int $fi, int $fj, $btn, int $si, int $sj, $param){
                         }
                     }else if(in_array('sacrifice',$fUnit->ability)){
                         if($fUnit->canAction == true && $sUnit->hpMax > $sUnit->hp
-                        && abs(($fi-$si)+($fj-$sj))<=1 && $sUnit->type == 'unit'){
+                        && (abs($fi-$si)+abs($fj-$sj))<=1 && $sUnit->type == 'unit'){
                             $sUnit->hp+=1;
                             $fUnit = false;
                         }
@@ -563,7 +565,7 @@ function action(int $fi, int $fj, $btn, int $si, int $sj, $param){
                 if(in_array('hire',$fUnit->ability)){
                     $array=explode('-',$fUnit->out);
                     if(in_array($param,$array)){
-                        if($fUnit->canAction==true && abs(($fi-$si)+($fj-$sj))<=1){
+                        if($fUnit->canAction==true && (abs($fi-$si)+abs($fj-$sj))<=1){
                             $cell=&$json->gameField[$si][$sj];
                             if($cell->contains==false&&$cell->obstacle==0){
                                 $unit;
@@ -728,7 +730,7 @@ function action(int $fi, int $fj, $btn, int $si, int $sj, $param){
                 break;
             case 'smith':
                 if(in_array('smith',$fUnit->ability) && !in_array('armor',$sUnit->ability)){
-                    if($fUnit->canAction==true && abs(($fi-$si)+($fj-$sj))<=1 
+                    if($fUnit->canAction==true && (abs($fi-$si)+abs($fj-$sj))<=1 
                     && $sUnit->type == 'unit' && $json->gamePlayers[$player]->gold>0){
                         
                         $fUnit->canAction =false;
@@ -1142,6 +1144,9 @@ function updateAfterTurn($newRound){
                     $json->gamePlayers[$cell->contains->owner]->gold+=1;
                 }*/
                 if($newRound==true && $cell->contains->owner == 0){
+                    $cell->contains->canMove = true;
+                    $cell->contains->canAction = true;
+
                     if(in_array('regeneration',$cell->contains->ability) && $cell->contains->hp < $cell->contains->hpMax){
                         $cell->contains->hp +=1;
                     }
