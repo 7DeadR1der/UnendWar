@@ -88,7 +88,8 @@ function loadGame(num){
             //game end
                 checkRoomFlag = false;
                 let doc = document.getElementById('gameStatistic');
-                let array = JSON.parse(xhr.response);
+                let array = JSON.parse(xhr.response)
+                //let array = jsonData.gamePlayers;
                 let ine = '';
                 for(let i=1;i<array.length;i++){
                     ine += '<div>';
@@ -180,21 +181,28 @@ function exitRoom(flag=false){
         xhr.open('GET',folder+'/includes/game/exitroom.php');
         xhr.onload = function(){
             checkUser('active_room');
-            dialogMenu(0)
         }
         xhr.send();
         document.getElementById('game-block').style.display = 'none';
     }
 }
 
-function changePlayer(faction){
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", folder+"/includes/game/changeplayer.php");
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-    xhr.onload = function(){
-        loadGame(0);
+function changePlayer(value,type=false){
+    if(type!==false){
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", folder+"/includes/game/changeplayer.php");
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        xhr.onload = function(){
+            loadGame(0);
+        }
+        let string = '';
+        if(type==0){
+            string = 'faction='+encodeURIComponent(value);
+        }else if(type==1){
+            string = 'color='+encodeURIComponent(value);
+        }
+        xhr.send(string);
     }
-    xhr.send('faction='+encodeURIComponent(faction));
 }
 
 function checkRoom(){

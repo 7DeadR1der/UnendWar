@@ -1,0 +1,118 @@
+{
+    "name": "Wolf Pit",
+    "shortName" : "wp",
+    "field" : [
+        [
+            {"contains":false,"resCount":12,"availability":true,"obstacle":0,"row":0,"column":5,"view":false},
+            {"contains":false,"resCount":0,"availability":true,"obstacle":2,"row":0,"column":6,"view":false}
+        ],
+        [
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":1,"column":0,"view":false}
+        ],
+        [
+
+        ],
+        [
+            {"contains":false,"resCount":9,"availability":true,"obstacle":0,"row":3,"column":0,"view":false}
+        ],
+        [
+            {"contains":false,"resCount":9,"availability":true,"obstacle":0,"row":4,"column":7,"view":false}
+        ],
+        [
+
+        ],
+        [
+            {"contains":false,"resCount":0,"availability":true,"obstacle":2,"row":6,"column":7,"view":false}
+        ],
+        [
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":7,"column":1,"view":false},
+            {"contains":false,"resCount":12,"availability":true,"obstacle":0,"row":7,"column":2,"view":false}
+        ]
+    ],
+    "creationUnits" : [
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 0,
+            "column" : 0
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t2",
+            "owner" : 0,
+            "row" : 0,
+            "column" : 1
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 0,
+            "column" : 7
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t2",
+            "owner" : 0,
+            "row" : 1,
+            "column" : 7
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "tower",
+            "owner" : 0,
+            "row" : 3,
+            "column" : 0
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "tower",
+            "owner" : 0,
+            "row" : 4,
+            "column" : 7
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t2",
+            "owner" : 0,
+            "row" : 6,
+            "column" : 0
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 7,
+            "column" : 0
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t2",
+            "owner" : 0,
+            "row" : 7,
+            "column" : 6
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 7,
+            "column" : 7
+        }
+    ],
+    "startPositions" : [
+        [1,4],
+        [6,3]
+    ],
+    "settings" : {
+        "land" : 2,
+        "maxPlayers" : 2,
+        "typeGame" : 0,
+        "customGame" : false,
+        "randomSpawn" : true,
+        "neutralSpawnOnStart" : true,
+        "rowLength" : 8,
+        "columnLength" : 8
+    }
+}

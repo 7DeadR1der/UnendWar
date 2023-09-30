@@ -1,0 +1,82 @@
+{
+    "name": "Central Force",
+    "shortName" : "cf",
+    "field" : [
+        [
+            {"contains":false,"resCount":9,"availability":true,"obstacle":0,"row":0,"column":0,"view":false},
+            {"contains":false,"resCount":12,"availability":true,"obstacle":0,"row":0,"column":5,"view":false},
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":0,"column":6,"view":false},
+            {"contains":false,"resCount":9,"availability":true,"obstacle":0,"row":0,"column":7,"view":false}
+        ],
+        [
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":1,"column":0,"view":false}
+        ],
+        [
+            {"contains":false,"resCount":12,"availability":true,"obstacle":0,"row":2,"column":0,"view":false}
+        ],
+        [
+
+        ],
+        [
+
+        ],
+        [
+            {"contains":false,"resCount":12,"availability":true,"obstacle":0,"row":5,"column":7,"view":false}
+        ],
+        [
+            {"contains":false,"resCount":0,"availability":true,"obstacle":2,"row":6,"column":7,"view":false}
+        ],
+        [
+            {"contains":false,"resCount":9,"availability":true,"obstacle":0,"row":7,"column":0,"view":false},
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":7,"column":1,"view":false},
+            {"contains":false,"resCount":12,"availability":true,"obstacle":0,"row":7,"column":2,"view":false},
+            {"contains":false,"resCount":9,"availability":true,"obstacle":0,"row":7,"column":7,"view":false}
+        ]
+    ],
+    "creationUnits" : [
+        {
+            "defaultUnit" : true,
+            "type" : "tower",
+            "owner" : 0,
+            "row" : 0,
+            "column" : 0
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "tower",
+            "owner" : 0,
+            "row" : 0,
+            "column" : 7
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "tower",
+            "owner" : 0,
+            "row" : 7,
+            "column" : 0
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "tower",
+            "owner" : 0,
+            "row" : 7,
+            "column" : 7
+        }
+    ],
+    "startPositions" : [
+        [0,4],
+        [4,7],
+        [7,3],
+        [3,0]
+    ],
+    "settings" : {
+        "land" : 0,
+        "maxPlayers" : 4,
+        "typeGame" : 0,
+        "customGame" : false,
+        "randomSpawn" : true,
+        "neutralSpawnOnStart" : true,
+        "rowLength" : 8,
+        "columnLength" : 8
+    }
+}

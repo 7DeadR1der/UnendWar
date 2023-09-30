@@ -147,6 +147,8 @@ if (session_status() === PHP_SESSION_NONE) {
                                     }
                                 }
                                 array_push($json->gamePlayers[$owner]->faction->warchief[8],'scavenger');
+
+                                array_push($json->gamePlayers[$owner]->faction->t1[8],'rush');
                                 break;
                             case "Undead I":
                                 array_push($json->gamePlayers[$owner]->skills,$choise);

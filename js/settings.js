@@ -36,3 +36,32 @@ function saveProfile(){
     '&name=' + encodeURIComponent(formData.name) +
     '&email=' + encodeURIComponent(formData.email));
 }
+
+function saveLocalSettings(){
+    
+    let formData = {
+        checkEndTurn: document.querySelector('input[name="checkEndTurn"]').checked ? 1 : 0,
+        enableAnimation: document.querySelector('input[name="enableAnimation"]').checked ? 1 : 0,
+    };
+
+    
+    let request = new XMLHttpRequest();
+    request.open('POST', folder+'/includes/login/changeLocal.php', true);
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+
+    request.onreadystatechange = function () {
+        if(request.readyState === 4 && request.status === 200){
+            if(request.response == "success"){
+                alert("Данные сохранены!");
+                location.reload();
+
+            }else{
+                alert('error');
+                alert(request.response);
+            }
+        }
+    }
+
+    request.send('checkEndTurn=' + encodeURIComponent(formData.checkEndTurn) +
+    '&enableAnimation=' + encodeURIComponent(formData.enableAnimation));
+}

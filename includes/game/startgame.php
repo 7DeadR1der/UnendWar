@@ -21,6 +21,7 @@ if (session_status() === PHP_SESSION_NONE) {
                 //"gameStatistic" => [],
                 "animation" => [],
                 "gameLevelSkills" => [],
+                "animation" => ['','','','','','']
 
             ];
             $game["gameLevelSkills"]["owner"] = 0;
@@ -122,7 +123,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     $table = json_encode($table);
                     $count_games = $user['count_games']+1;
                     $updateUser = mysqli_query($connect, "UPDATE `users` SET `count_games` = '$count_games', `win_table` = '$table' WHERE `id_user` = '$id'");
-                    $game['gamePlayers'][$k] = new Player($user['login'],$k,$array[$k-1]["faction"]);
+                    $game['gamePlayers'][$k] = new Player($user['login'],$k,$array[$k-1]["faction"],$array[$k-1]["color"]);
                     //$game['gamePlayers'][$k]->faction->start($k);
                     $count_players = $room['count_players'];
                 };

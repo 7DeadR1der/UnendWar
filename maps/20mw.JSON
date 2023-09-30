@@ -1,0 +1,197 @@
+{
+    "name": "MicroWar",
+    "shortName" : "mw",
+    "field" : [
+        [
+        ],
+        [
+        ],
+        [
+        ],
+        [
+            {"contains":false,"resCount":0,"obstacle":0,"row":3,"column":0}
+        ],
+        [
+            {"contains":false,"resCount":0,"obstacle":0,"row":4,"column":7}
+        ],
+        [
+        ],
+        [
+        ],
+        [
+        ]
+    ],
+    "creationUnits" : [
+        {
+            "defaultUnit" : true,
+            "type" : "t2",
+            "owner" : 1,
+            "row" : 0,
+            "column" : 6
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t2",
+            "owner" : 1,
+            "row" : 0,
+            "column" : 1
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t3",
+            "owner" : 1,
+            "row" : 0,
+            "column" : 2
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t3",
+            "owner" : 1,
+            "row" : 0,
+            "column" : 5
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "warchief",
+            "owner" : 1,
+            "row" : 0,
+            "column" : 4
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 1,
+            "row" : 1,
+            "column" : 6
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 1,
+            "row" : 1,
+            "column" : 5
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 1,
+            "row" : 1,
+            "column" : 4
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 1,
+            "row" : 1,
+            "column" : 3
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 1,
+            "row" : 1,
+            "column" : 2
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 1,
+            "row" : 1,
+            "column" : 1
+        },
+
+        
+        {
+            "defaultUnit" : true,
+            "type" : "t2",
+            "owner" : 2,
+            "row" : 7,
+            "column" : 1
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t2",
+            "owner" : 2,
+            "row" : 7,
+            "column" : 6
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t3",
+            "owner" : 2,
+            "row" : 7,
+            "column" : 5
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t3",
+            "owner" : 2,
+            "row" : 7,
+            "column" : 2
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "warchief",
+            "owner" : 2,
+            "row" : 7,
+            "column" : 3
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 2,
+            "row" : 6,
+            "column" : 1
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 2,
+            "row" : 6,
+            "column" : 2
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 2,
+            "row" : 6,
+            "column" : 3
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 2,
+            "row" : 6,
+            "column" : 4
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 2,
+            "row" : 6,
+            "column" : 5
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 2,
+            "row" : 6,
+            "column" : 6
+        }
+
+    ],
+    "startPositions" : [
+        [0,3],
+        [7,4]
+    ],
+    "settings" : {
+        "land" : 0,
+        "maxPlayers" : 2,
+        "customGame" : true,
+        "randomSpawn" : false,
+        "typeGame" : 0,
+        "neutralSpawnOnStart" : true,
+        "rowLength" : 8,
+        "columnLength" : 8
+    }
+}

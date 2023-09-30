@@ -2,7 +2,12 @@
 
 //player colors
 //red blue orange purple green yellow
+//old
 const colorPlayers = ['#bababa', '#fc9393', '#60c0ff', '#ffae58', '#f190ff', '#54fd7a', '#e3f054'];
+                        // gray - red - blue - orange - dark-blue - yellow - purple - pink - green
+//const colorPlayers =['#bababa','#f59678','#6bccf7','#fec689','#8781bd','#fdf799','#bd8dbf','#f39aac','#7eca9c'];
+
+
 const colorLands = ['#b1c37b','#f0fafa','#e8d479','#b1c37b'];
 //colors cursors? 
 const colorCursor = ['2px solid white','2px solid blue', '2px solid red','2px solid #00ff00','2px solid #19ffff'];
@@ -34,39 +39,47 @@ function pressCell(i,j){
                     unlockCells(speed, i, j, 'move');
                 }
                     
-                if(gameField[i][j].contains.canAction == true)
+                if(gameField[i][j].contains.canAction == true){
                     unlockCells(gameField[i][j].contains.range, i, j, 'atk');
-                if(gameField[i][j].contains.ability.includes('surgery',0))
-                    unlockCells(1,i,j,'heal');
-                if(gameField[i][j].contains.ability.includes('darkArmy',0))
-                    unlockCells(1,i,j,'darkArmy');
-                if(gameField[i][j].contains.ability.includes('darkStorm',0))
-                    unlockCells(1,i,j,'darkStorm');
-                if(gameField[i][j].contains.ability.includes('smith',0))
-                    document.getElementById('btnSmith').style.display = 'inline';
-                if(gameField[i][j].contains.type == 'building' && gameField[i][j].contains.canAction == true)
-                    document.getElementById('btnDelete').style.display = 'inline';
-                if(gameField[i][j].contains.out!='' && gameField[i][j].contains.canAction == true){
-                    let unitArray = gameField[i][j].contains.out.split('-');
-                    unitArray.forEach(type => {
-                        switch(type){
-                            case't1':
-                                document.getElementById('btnBuyT1').style.display = 'inline';
-                                break;
-                            case't2':
-                                document.getElementById('btnBuyT2').style.display = 'inline';
-                                break;
-                            case't3':
-                                document.getElementById('btnBuyT3').style.display = 'inline';
-                                break;
-                            case'warchief':
-                                document.getElementById('btnBuyWarchief').style.display = 'inline';
-                                break;
-                            default:
-                                console.log("ошибка");
-                                break;
-                        }
-                    });
+                    if(gameField[i][j].contains.ability.includes('surgery',0))
+                        unlockCells(1,i,j,'heal');
+                    if(gameField[i][j].contains.ability.includes('growUp',0))
+                        document.getElementById('btnGrowUp').style.display = 'inline';
+                    if(gameField[i][j].contains.ability.includes('darkArmy',0))
+                        document.getElementById('btnDarkArmy').style.display = 'inline';
+                    if(gameField[i][j].contains.ability.includes('smith',0))
+                        document.getElementById('btnSmith').style.display = 'inline';
+                    if(gameField[i][j].contains.type == 'building')
+                        document.getElementById('btnDelete').style.display = 'inline';
+                    if(gameField[i][j].contains.out!=''){
+                        let unitArray = gameField[i][j].contains.out.split('-');
+                        unitArray.forEach(type => {
+                            switch(type){
+                                case't1':
+                                    document.getElementById('btnBuyT1').style.display = 'inline';
+                                    break;
+                                case't2':
+                                    document.getElementById('btnBuyT2').style.display = 'inline';
+                                    break;
+                                case't3':
+                                    document.getElementById('btnBuyT3').style.display = 'inline';
+                                    break;
+                                case'warchief':
+                                    document.getElementById('btnBuyWarchief').style.display = 'inline';
+                                    break;
+                                default:
+                                    console.log("ошибка");
+                                    break;
+                            }
+                        });
+                    }
+
+
+
+                }
+                if(gameField[i][j].contains.canAction == true && gameField[i][j].contains.canMove == true){
+                    if(gameField[i][j].contains.ability.includes('darkStorm',0))
+                        document.getElementById('btnDarkStorm').style.display = 'inline';
                 }
                 turnFlag = 1;
                 document.getElementById('btnCancel').style.display = 'inline';
@@ -152,6 +165,10 @@ function spell(type){
         case"surgery":
         
             xhrAction(cashCell.i,cashCell.j,'heal','','','');
+            break;
+        case"growUp":
+        
+            xhrAction(cashCell.i,cashCell.j,'growUp','','','');
             break;
         case"darkArmy":
             xhrAction(cashCell.i,cashCell.j,'darkArmy','','','');
@@ -319,6 +336,7 @@ function lockBtns(){
     document.getElementById('btnBuyT2').style.display = 'none';
     document.getElementById('btnBuyT3').style.display = 'none';
     document.getElementById('btnBuyWarchief').style.display = 'none';
+    document.getElementById('btnGrowUp').style.display = 'none';
     document.getElementById('btnSurgeryHeal').style.display = 'none';
     document.getElementById('btnDarkArmy').style.display = 'none';
     document.getElementById('btnDarkStorm').style.display = 'none';
@@ -326,11 +344,12 @@ function lockBtns(){
     document.getElementById('btnDelete').style.display = 'none';
 }
 
-function endTurn(){
+function endTurn(sur=0){
     if(gameSettings.turnOwner == thisPlayer.owner){
-        if(confirm("Вы уверены что хотите закончить ход?")){
+        if((sur==1 && confirm("Вы уверены что хотите сдаться?")) || (getCookie("checkEndTurn") == 0 || confirm("Вы уверены что хотите закончить ход?"))){
             let xhr = new XMLHttpRequest();
-            xhr.open('GET',folder+'/includes/game/endturn.php');
+            let str = sur ? '?sur=1' : '';
+            xhr.open('GET',folder+'/includes/game/endturn.php'+str);
             xhr.onload = function(){
             };
             xhr.send();
@@ -551,6 +570,9 @@ function getLogin(json){
                 }
             });
         }
+        if(!'color' in thisPlayer){
+            thisPlayer.color = thisPlayer.owner;
+        }
         if(thisPlayer.live == false){
             document.getElementById('game-header-player').textContent = 'you lose';        
         }else{
@@ -572,25 +594,29 @@ function getLogin(json){
 }
 
 function loadField(json){
-    document.getElementById('game-header-player').textContent = json.gamePlayers[json.gameTurn].name + " (" + json.gamePlayers[json.gameTurn].statistic.score + ")";
-    document.getElementById('game-header-player').title = "Игрок - "+json.gamePlayers[json.gameTurn].name+", Очки - "+json.gamePlayers[json.gameTurn].statistic.score+", Позиция - "+json.gamePlayers[json.gameTurn].owner;
-    document.getElementById('game-header-player').style.backgroundColor = colorPlayers[json.gameTurn];
     gameField = json.gameField;
     for(let i=0;i<json.gamePlayers.length;i++){
         if(players[i]!=false){
             players[i] = {
                 name: json.gamePlayers[i].name,
                 owner: json.gamePlayers[i].owner,
+                color: json.gamePlayers[i].color || json.gamePlayers[i].color ==0 ? json.gamePlayers[i].color : json.gamePlayers[i].owner,
                 
             }
         }else{
             players[i] = {
             name: ' ',
-            owner: 0
+            owner: 0,
+            color: 0,
+
             }
 
         }
     }
+    
+    document.getElementById('game-header-player').textContent = json.gamePlayers[json.gameTurn].name + " (" + json.gamePlayers[json.gameTurn].statistic.score + ")";
+    document.getElementById('game-header-player').title = "Игрок - "+json.gamePlayers[json.gameTurn].name+", Очки - "+json.gamePlayers[json.gameTurn].statistic.score+", Позиция - "+json.gamePlayers[json.gameTurn].owner;
+    document.getElementById('game-header-player').style.backgroundColor = colorPlayers[players[json.gameTurn].color];
     for(let i=0;i<8;i++){
         for(let j=0;j<8;j++){
             let container = document.getElementById(`${i}-${j}`);
@@ -598,7 +624,7 @@ function loadField(json){
                 let titleText = "";
                 if(json.gameField[i][j].resCount>0)titleText=`Золото = ${json.gameField[i][j].resCount},`;
                 if(json.gameField[i][j].contains != false){
-                    container.getElementsByTagName('img')[0].style.backgroundColor = colorPlayers[json.gameField[i][j].contains.owner];
+                    container.getElementsByTagName('img')[0].style.backgroundColor = colorPlayers[players[json.gameField[i][j].contains.owner].color];
                     if(json.gameField[i][j].contains.owner == 0){
                         container.getElementsByTagName('img')[0].style.backgroundColor = colorLands[gameSettings.land];
                     }
@@ -638,7 +664,7 @@ function loadField(json){
                         }
                     }
                     if(thisPlayer.live!=false){
-                        document.getElementById('list_player').style.backgroundColor = colorPlayers[thisPlayer.owner];
+                        document.getElementById('list_player').style.backgroundColor = colorPlayers[thisPlayer.color];
                         document.getElementById('li_PlayerName').textContent = `${thisPlayer.name}`;
                         let imgs = '';
                         thisPlayer.skills.forEach(skill => {
@@ -732,7 +758,7 @@ function loadField(json){
         let k = i+1;
         let row = menuScore.insertRow(i);
         if(json.gamePlayers[k].live != false){
-            row.style.backgroundColor = colorPlayers[k];
+            row.style.backgroundColor = colorPlayers[players[k].color];
         }
         let cellId = row.insertCell(0);
         cellId.innerHTML = k;
@@ -745,15 +771,21 @@ function loadField(json){
 
 
     cancel();
-    //checkAnimation(json);
+    if(getCookie("enableAnimation") == 1){
+        checkAnimation(json);
+    }
+    
 }
 
 function checkAnimation(json){
-    let colorAnimation =  {
+    let colorAnimation =  { // here not ')' since it is added to the 'animation' function
         "white" : "rgba(255, 255, 255,",
         "red" : "rgba(200, 0, 0,",
         "green" : "rgba(0, 255, 0,",
         "blue" : "rgba(0, 0, 255,",
+        "aqua" : "rgba(0, 150, 255,",
+        "light" : "rgba(255, 255, 180,",
+        "gold" : "rgba(255, 255, 50,",
         "black" : "rgba(1, 1, 1,",
         "darkPurple" : "rgba(100, 0, 100,",
         "darkGreen" : "rgba(0, 150, 0,",
@@ -766,10 +798,14 @@ function checkAnimation(json){
     let variant = json.animation[5];
     let fContainer = undefined;
     let sContainer = undefined;
-    if(json.gameField[fi][fj].view == true && document.getElementById(`${fi}-${fj}`) !== null){
-        fContainer = document.getElementById(`${fi}-${fj}`);
+    let n;
+    let m;
+    if(fi !== '' && fj !== ''){
+        if(json.gameField[fi][fj].view == true && document.getElementById(`${fi}-${fj}`) !== null){
+            fContainer = document.getElementById(`${fi}-${fj}`);
+        }
     }
-    if(si != '' && sj != ''){
+    if(si !== '' && sj !== ''){
         if(json.gameField[si][sj].view == true && document.getElementById(`${si}-${sj}`) !== null){
             sContainer = document.getElementById(`${si}-${sj}`);
         }
@@ -792,9 +828,53 @@ function checkAnimation(json){
                 animation(sContainer,colorAnimation['green']);
             }
             break;
+        case 'magic':
+            animation(fContainer,colorAnimation['white']);
+            animation(sContainer,colorAnimation['aqua']);
+            break;
+        case 'chainLight':
+            // aqua
+            animation(fContainer,colorAnimation['white']);
+            animation(sContainer,colorAnimation['aqua']);
+            n = Number(si);
+            m = Number(sj);
+            switch(variant){
+                case "up":
+                    if(n-1>-1){
+                        if(json.gameField[n-1][m].view == true && document.getElementById(`${n-1}-${m}`) !== null){
+                            animation(document.getElementById(`${n-1}-${m}`),colorAnimation['aqua']);
+                        }
+                    }
+                    break;
+                case "right":
+                    if(m+1<8){
+                        if(json.gameField[n][m+1].view == true && document.getElementById(`${n}-${m+1}`) !== null){
+                            animation(document.getElementById(`${n}-${m+1}`),colorAnimation['aqua']);
+                        }
+                    }
+                    break;
+                case "down":
+                    if(n+1<8){
+                        if(json.gameField[n+1][m].view == true && document.getElementById(`${n+1}-${m}`) !== null){
+                            animation(document.getElementById(`${n+1}-${m}`),colorAnimation['aqua']);
+                        }
+                    }
+                    break;
+                case "left":
+                    if(m-1>-1){
+                        if(json.gameField[n][m-1].view == true && document.getElementById(`${n}-${m-1}`) !== null){
+                            animation(document.getElementById(`${n}-${m-1}`),colorAnimation['aqua']);
+                        }
+                    }
+                    break;
+                default:
+                    break;
+                        
+            }
+            break;
         case 'smith':
             animation(fContainer,colorAnimation['white']);
-            animation(sContainer,colorAnimation['blue']);
+            animation(sContainer,colorAnimation['gold']);
             break;
         case 'darkArmy':
             animation(fContainer,colorAnimation['darkPurple']);
@@ -802,9 +882,9 @@ function checkAnimation(json){
         case 'darkStorm':
             animation(fContainer,colorAnimation['darkPurple']);
             let array = [undefined,undefined,undefined,undefined];
-            let n = Number(fi);
-            let m = Number(fj);
-            if(n+1<8) if(json.gameField[n+1][m].view == true && document.getElementById(`${n+1}-${n}`) !== null) 
+            n = Number(fi);
+            m = Number(fj);
+            if(n+1<8) if(json.gameField[n+1][m].view == true && document.getElementById(`${n+1}-${m}`) !== null) 
             array[0] = document.getElementById(`${n+1}-${m}`)
             if(m+1<8) if(json.gameField[n][m+1].view == true && document.getElementById(`${n}-${m+1}`) !== null) 
             array[1] = document.getElementById(`${n}-${m+1}`)
@@ -819,6 +899,7 @@ function checkAnimation(json){
                 }
             }
             break;
+        
         default:
             break;
     }
@@ -826,7 +907,7 @@ function checkAnimation(json){
 
 }
 function animation(container,color){
-    let value = 0.40;
+    let value = 0.50;
     if(container != undefined){
         let anime = setInterval(function () { 
             value = value - 0.05; 
@@ -858,6 +939,7 @@ const gamestring = '<div id="game-header">'+
 '<button id="btnBuyT2" onclick="buyUnit(`t2`)" style="display: none">Нанять T2</button>'+
 '<button id="btnBuyT3" onclick="buyUnit(`t3`)" style="display: none">Нанять T3</button>'+
 '<button id="btnBuyWarchief" onclick="buyUnit(`warchief`)" style="display: none">Нанять Warchief</button>'+
+'<button id="btnGrowUp" onclick="spell(`growUp`)" style="display: none">Стать Энтом</button>'+
 '<button id="btnSurgeryHeal" onclick="spell(`surgery`)" style="display: none">Лечение</button>'+
 '<button id="btnDarkArmy" onclick="spell(`darkArmy`)" style="display: none">Армия Тьмы</button>'+
 '<button id="btnDarkStorm" onclick="spell(`darkStorm`)" style="display: none">Темная буря</button>'+

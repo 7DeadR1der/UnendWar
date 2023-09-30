@@ -1,0 +1,331 @@
+{
+    "name": "clear map for create",
+    "shortName" : "cm",
+    "field" : [
+        [
+
+        ],
+        [
+
+        ],
+        [
+            {"contains":false,"resCount":12,"obstacle":0,"row":2,"column":3}
+        ],
+        [
+            {"contains":false,"resCount":12,"obstacle":0,"row":3,"column":5}
+        ],
+        [
+            {"contains":false,"resCount":12,"obstacle":0,"row":4,"column":2}
+        ],
+        [
+            {"contains":false,"resCount":12,"obstacle":0,"row":5,"column":4}
+        ],
+        [
+
+        ],
+        [
+
+        ]
+    ],
+    "creationUnits" : [
+        {
+            "defaultUnit" : true,
+            "type" : "townhall",
+            "owner" : 0,
+            "row" : 3,
+            "column" : 3
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "townhall",
+            "owner" : 0,
+            "row" : 3,
+            "column" : 4
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "townhall",
+            "owner" : 0,
+            "row" : 4,
+            "column" : 3
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "townhall",
+            "owner" : 0,
+            "row" : 4,
+            "column" : 4
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "tower",
+            "owner" : 0,
+            "row" : 2,
+            "column" : 3
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "tower",
+            "owner" : 0,
+            "row" : 3,
+            "column" : 5
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "tower",
+            "owner" : 0,
+            "row" : 4,
+            "column" : 2
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "tower",
+            "owner" : 0,
+            "row" : 5,
+            "column" : 4
+        },
+        
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 0,
+            "column" : 1 
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 0,
+            "column" : 2
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 0,
+            "column" : 6
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 0,
+            "column" : 7
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 1,
+            "column" : 2
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 1,
+            "column" : 3
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 1,
+            "column" : 5
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 1,
+            "column" : 6
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 2,
+            "column" : 1
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 2,
+            "column" : 2
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 2,
+            "column" : 4
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 2,
+            "column" : 5
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 3,
+            "column" : 0
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 3,
+            "column" : 1
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 3,
+            "column" : 2
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 3,
+            "column" : 6
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 4,
+            "column" : 1
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 4,
+            "column" : 5
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 4,
+            "column" : 6
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 4,
+            "column" : 7
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 5,
+            "column" : 2
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 5,
+            "column" : 3
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 5,
+            "column" : 5
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 5,
+            "column" : 6
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 6,
+            "column" : 1
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 6,
+            "column" : 2
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 6,
+            "column" : 4
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 6,
+            "column" : 5
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 7,
+            "column" : 0
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 7,
+            "column" : 1
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 7,
+            "column" : 5
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 7,
+            "column" : 6
+        }
+    ],
+    "startPositions" : [
+        [1,0],
+        [0,4],
+        [2,7],
+        [5,0],
+        [7,3],
+        [6,7]
+    ],
+    "settings" : {
+        "land" : 2,
+        "maxPlayers" : 6,
+        "typeGame" : 0,
+        "customGame" : false,
+        "randomSpawn" : true,
+        "neutralSpawnOnStart" : true,
+        "rowLength" : 8,
+        "columnLength" : 8
+    }
+}

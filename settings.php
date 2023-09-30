@@ -24,6 +24,8 @@ if(!isset($_SESSION['user'])){
     //header('Location: ', 'index.php?page=authors');
     die();
 }else{
+    $cookieCET = $_COOKIE["checkEndTurn"]==1?"checked":"";
+    $cookieEA = $_COOKIE["enableAnimation"]==1?"checked":"";
     echo 
     '<div>
         <div>
@@ -60,6 +62,22 @@ if(!isset($_SESSION['user'])){
             <button onclick="saveProfile()">Сохранить профиль</button>
             <br>
             
+        </div>
+
+        <div>
+            <h4>Локальные настройки</h4>
+            <div>
+            <label>Подтверждение окончания хода</label>
+                <input name="checkEndTurn" type="checkbox" '.$cookieCET.'>
+                <br>
+            <label>Анимации</label>
+                <input name="enableAnimation" type="checkbox" '.$cookieEA.'>
+                <br>
+            <label></label>
+            <br>
+            <button onclick="saveLocalSettings()">Сохранить локальные настройки</button>
+            <br>
+            </div>
         </div>
     </div>';
 }

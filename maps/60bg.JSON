@@ -1,0 +1,71 @@
+{
+    "name": "Battleground",
+    "shortName" : "bg",
+    "field" : [
+        [
+            {"contains":false,"resCount":21,"obstacle":0,"row":0,"column":0},
+            {"contains":false,"resCount":0,"obstacle":2,"row":0,"column":3},
+            {"contains":false,"resCount":21,"obstacle":0,"row":0,"column":6},
+            {"contains":false,"resCount":0,"obstacle":1,"row":0,"column":7}
+        ],
+        [
+            {"contains":false,"resCount":0,"obstacle":2,"row":1,"column":7}
+        ],
+        [
+            {"contains":false,"resCount":0,"obstacle":1,"row":2,"column":0}
+        ],
+        [
+            {"contains":false,"resCount":21,"obstacle":0,"row":3,"column":7}
+        ],
+        [
+            {"contains":false,"resCount":21,"obstacle":0,"row":4,"column":0}
+        ],
+        [
+            {"contains":false,"resCount":0,"obstacle":1,"row":5,"column":7}
+        ],
+        [
+            {"contains":false,"resCount":0,"obstacle":2,"row":6,"column":0}
+        ],
+        [
+            {"contains":false,"resCount":0,"obstacle":1,"row":7,"column":0},
+            {"contains":false,"resCount":21,"obstacle":0,"row":7,"column":1},
+            {"contains":false,"resCount":0,"obstacle":2,"row":7,"column":4},
+            {"contains":false,"resCount":21,"obstacle":0,"row":7,"column":7}
+        ]
+    ],
+    "creationUnits" : [
+        {
+            "defaultUnit" : true,
+            "type" : "townhall",
+            "owner" : 0,
+            "row" : 3,
+            "column" : 4
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "townhall",
+            "owner" : 0,
+            "row" : 4,
+            "column" : 3
+        }
+
+    ],
+    "startPositions" : [
+        [0,1],
+        [0,5],
+        [3,0],
+        [4,7],
+        [7,2],
+        [7,6]
+    ],
+    "settings" : {
+        "land" : 1,
+        "maxPlayers" : 6,
+        "typeGame" : 0,
+        "customGame" : false,
+        "randomSpawn" : true,
+        "neutralSpawnOnStart" : true,
+        "rowLength" : 8,
+        "columnLength" : 8
+    }
+}

@@ -1,0 +1,96 @@
+{
+    "name": "Snowy Peaks",
+    "shortName" : "sp",
+    "field" : [
+        [
+            {"contains":false,"resCount":9,"obstacle":0,"row":0,"column":0},
+            {"contains":false,"resCount":12,"obstacle":0,"row":0,"column":4},
+            {"contains":false,"resCount":0,"obstacle":1,"row":0,"column":5}
+        ],
+        [
+
+        ],
+        [
+            {"contains":false,"resCount":9,"obstacle":0,"row":2,"column":5},
+            {"contains":false,"resCount":0,"obstacle":1,"row":2,"column":7}
+        ],
+        [
+            {"contains":false,"resCount":12,"obstacle":0,"row":3,"column":7}
+        ],
+        [
+            {"contains":false,"resCount":12,"obstacle":0,"row":4,"column":0}
+        ],
+        [
+            {"contains":false,"resCount":0,"obstacle":1,"row":5,"column":0},
+            {"contains":false,"resCount":9,"obstacle":0,"row":5,"column":2}
+        ],
+        [
+
+        ],
+        [
+            {"contains":false,"resCount":0,"obstacle":1,"row":7,"column":2},
+            {"contains":false,"resCount":12,"obstacle":0,"row":7,"column":3},
+            {"contains":false,"resCount":9,"obstacle":0,"row":7,"column":7}
+        ]
+    ],
+    "creationUnits" : [
+        {
+            "defaultUnit" : true,
+            "type" : "tower",
+            "owner" : 0,
+            "row" : 0,
+            "column" : 0
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "tower",
+            "owner" : 0,
+            "row" : 2,
+            "column" : 5
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "tower",
+            "owner" : 0,
+            "row" : 5,
+            "column" : 2
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "tower",
+            "owner" : 0,
+            "row" : 7,
+            "column" : 7
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "townhall",
+            "owner" : 0,
+            "row" : 0,
+            "column" : 7
+        },
+        {
+            "defaultUnit" : true,
+            "type" : "townhall",
+            "owner" : 0,
+            "row" : 7,
+            "column" : 0
+        }
+    ],
+    "startPositions" : [
+        [0,3],
+        [3,0],
+        [4,7],
+        [7,4]
+    ],
+    "settings" : {
+        "land" : 1,
+        "maxPlayers" : 4,
+        "typeGame" : 0,
+        "customGame" : false,
+        "randomSpawn" : true,
+        "neutralSpawnOnStart" : true,
+        "rowLength" : 8,
+        "columnLength" : 8
+    }
+}

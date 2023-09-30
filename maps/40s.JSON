@@ -1,0 +1,77 @@
+{
+    "name": "Socotra",
+    "shortName" : "s",
+    "field" : [
+        [
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":0,"column":0,"view":false},
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":0,"column":1,"view":false},
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":0,"column":2,"view":false},
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":0,"column":3,"view":false},
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":0,"column":4,"view":false},
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":0,"column":5,"view":false},
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":0,"column":6,"view":false},
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":0,"column":7,"view":false}
+        ],
+        [
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":1,"column":0,"view":false},
+            {"contains":false,"resCount":15,"availability":true,"obstacle":0,"row":1,"column":3,"view":false},
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":1,"column":7,"view":false}
+        ],
+        [
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":2,"column":0,"view":false},
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":2,"column":7,"view":false}
+        ],
+        [
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":3,"column":0,"view":false},
+            {"contains":false,"resCount":6,"availability":true,"obstacle":0,"row":3,"column":3,"view":false},
+            {"contains":false,"resCount":6,"availability":true,"obstacle":0,"row":3,"column":4,"view":false},
+            {"contains":false,"resCount":15,"availability":true,"obstacle":0,"row":3,"column":6,"view":false},
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":3,"column":7,"view":false}
+        ],
+        [
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":4,"column":0,"view":false},
+            {"contains":false,"resCount":15,"availability":true,"obstacle":0,"row":4,"column":1,"view":false},
+            {"contains":false,"resCount":6,"availability":true,"obstacle":0,"row":4,"column":3,"view":false},
+            {"contains":false,"resCount":6,"availability":true,"obstacle":0,"row":4,"column":4,"view":false},
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":4,"column":7,"view":false}
+        ],
+        [
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":5,"column":0,"view":false},
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":5,"column":7,"view":false}
+        ],
+        [
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":6,"column":0,"view":false},
+            {"contains":false,"resCount":15,"availability":true,"obstacle":0,"row":6,"column":4,"view":false},
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":6,"column":7,"view":false}
+        ],
+        [
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":7,"column":0,"view":false},
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":7,"column":1,"view":false},
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":7,"column":2,"view":false},
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":7,"column":3,"view":false},
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":7,"column":4,"view":false},
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":7,"column":5,"view":false},
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":7,"column":6,"view":false},
+            {"contains":false,"resCount":0,"availability":true,"obstacle":1,"row":7,"column":7,"view":false}
+        ]
+    ],
+    "creationUnits" : [
+
+    ],
+    "startPositions" : [
+        [1,1],
+        [6,1],
+        [1,6],
+        [6,6]
+    ],
+    "settings" : {
+        "land" : 2,
+        "maxPlayers" : 4,
+        "typeGame" : 0,
+        "customGame" : false,
+        "randomSpawn" : true,
+        "neutralSpawnOnStart" : true,
+        "rowLength" : 8,
+        "columnLength" : 8
+    }
+}

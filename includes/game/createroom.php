@@ -25,7 +25,7 @@ if (session_status() === PHP_SESSION_NONE) {
     $gameMap = $_POST['gameMap'];
     $gameCount = $_POST['gamePlayers'];
     $gameCreator = $_SESSION['user']['id'];
-    $array[0] = ["id"=>$gameCreator, "name" => $_SESSION['user']['login'], "faction" => "Random"];
+    $array[0] = ["id"=>$gameCreator, "name" => $_SESSION['user']['login'], "faction" => "Random", "color"=>1];
     $gamePlayers = json_encode($array);
     //$gamePlayers = $_SESSION['user']['id'].'-';
     //$gameFactions = "random".'-';

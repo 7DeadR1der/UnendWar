@@ -17,6 +17,12 @@ if (session_status() === PHP_SESSION_NONE) {
         
         if($game['game_state']==0){ //load game room
             $kd='';$sm='';$ud=''; $orc=''; $rnd=''; 
+            $c = ['','','','','','','','',''];
+            /*$clrArr = [
+                // gray - red - blue - orange - dark-blue - yellow - purple - pink - green
+                '#bababa','#f59678','#6bccf7','#fec689','#8781bd','#fdf799','#bd8dbf','#f39aac','#7eca9c'
+            ];*/
+            $clrArr = ['#bababa', '#fc9393', '#60c0ff', '#ffae58', '#f190ff', '#54fd7a', '#e3f054'];
             echo "<h4>".$game['name']." ".$game['id_room']."</h4>
             <p>Карта - ".$game['game_map']."</p>
             <p>Старт игры - ".$game['game_mode']."</p>
@@ -24,18 +30,45 @@ if (session_status() === PHP_SESSION_NONE) {
             <p>".$game['count_players']."/".$game['max_players']." игроков</p>";
             for($i = 0; $i<$game['max_players'];$i++){
                 if($game['local']==1){
+                    $c[$i] = 'selected';
                     echo "<div>player ".$i."<select name='player".$i."'>
-                    <option value='player'>player</option>
-                    <option value='none'>None</option>
+                        <option value='player'>player</option>
+                        <option value='none'>None</option>
                     </select>
                     <select name='faction".$i."'>
-                    <option value='Kingdom'>Kingdom</option>
-                    <option value='SeaMercs'>Seamercs</option>
-                    <option value='Undead'>Undead</option>
-                    <option value='Orcs'>Orcs</option>
-                    <option selected value='Random'>Random</option>
-                    </select></div>";
+                        <option value='Kingdom'>Kingdom</option>
+                        <option value='SeaMercs'>Seamercs</option>
+                        <option value='Undead'>Undead</option>
+                        <option value='Orcs'>Orcs</option>
+                        <option selected value='Random'>Random</option>
+                    </select>
+                    </div>";
                     //<option value='seamercs'>Seamercs</option>
+                    /*
+                    <select name='color".$i."'>
+                        <option ".$c[1]." style='background-color:".$clrArr[1]."' value=1>Red</option>
+                        <option ".$c[2]." style='background-color:".$clrArr[2]."' value=2>Blue</option>
+                        <option ".$c[3]." style='background-color:".$clrArr[3]."' value=3>Orange</option>
+                        <option ".$c[4]." style='background-color:".$clrArr[4]."' value=4>Purple</option>
+                        <option ".$c[5]." style='background-color:".$clrArr[5]."' value=5>Green</option>
+                        <option ".$c[6]." style='background-color:".$clrArr[6]."' value=6>Yellow</option>
+                        <option ".$c[0]." style='background-color:".$clrArr[0]."' value=0>Gray</option>
+                    </select>
+
+                        <select name='color' onchange='changePlayer(this.value,1)'>
+                        <option ".$c[1]." style='background-color:".$clrArr[1]."' value=1>Red</option>
+                        <option ".$c[2]." style='background-color:".$clrArr[2]."' value=2>Blue</option>
+                        <option ".$c[3]." style='background-color:".$clrArr[3]."' value=3>Orange</option>
+                        <option ".$c[4]." style='background-color:".$clrArr[4]."' value=4>Dark-blue</option>
+                        <option ".$c[5]." style='background-color:".$clrArr[5]."' value=5>Yellow</option>
+                        <option ".$c[6]." style='background-color:".$clrArr[6]."' value=6>Purple</option>
+                        <option ".$c[7]." style='background-color:".$clrArr[7]."' value=6>Pink</option>
+                        <option ".$c[8]." style='background-color:".$clrArr[8]."' value=6>Green</option>
+                        <option ".$c[0]." style='background-color:".$clrArr[0]."' value=9>Gray</option>
+                        
+                        </select>
+
+                     */
                 }else if(array_key_exists($i,$array)){
                     
                     switch ($array[$i]["faction"]){
@@ -55,14 +88,26 @@ if (session_status() === PHP_SESSION_NONE) {
                             $rnd = 'selected';
                             break;
                     }
+                    $c[$array[$i]["color"]] = "selected";
+
                     if($array[$i]["id"] == $_SESSION['user']['id']){
                         echo "<div>".$array[$i]["name"]." 
-                        <select name='faction' onchange='changePlayer(this.value)'>
+                        <select name='faction' onchange='changePlayer(this.value,0)'>
                             <option ".$kd." value='Kingdom'>Kingdom</option>
                             <option ".$sm." value='SeaMercs'>Seamercs</option>
                             <option ".$ud." value='Undead'>Undead</option>
                             <option ".$orc." value='Orcs'>Orcs</option>
                             <option ".$rnd." value='Random'>Random</option>
+                        </select>
+                        <select name='color' onchange='changePlayer(this.value,1)'>
+                            <option ".$c[1]." style='background-color:".$clrArr[1]."' value=1>Red</option>
+                            <option ".$c[2]." style='background-color:".$clrArr[2]."' value=2>Blue</option>
+                            <option ".$c[3]." style='background-color:".$clrArr[3]."' value=3>Orange</option>
+                            <option ".$c[4]." style='background-color:".$clrArr[4]."' value=4>Purple</option>
+                            <option ".$c[5]." style='background-color:".$clrArr[5]."' value=5>Green</option>
+                            <option ".$c[6]." style='background-color:".$clrArr[6]."' value=6>Yellow</option>
+                            <option ".$c[0]." style='background-color:".$clrArr[0]."' value=0>Gray</option>
+                        
                         </select>
                         </div>";
                         //after insert into up code
@@ -80,11 +125,25 @@ if (session_status() === PHP_SESSION_NONE) {
                             <option ".$orc." value='Orcs'>Orcs</option>
                             <option ".$rnd." value='Random'>Random</option>
                         </select>
+                        
+                        <select name='color' disabled>
+                        <option ".$c[1]." style='background-color:".$clrArr[1]."' value=1>Red</option>
+                        <option ".$c[2]." style='background-color:".$clrArr[2]."' value=2>Blue</option>
+                        <option ".$c[3]." style='background-color:".$clrArr[3]."' value=3>Orange</option>
+                        <option ".$c[4]." style='background-color:".$clrArr[4]."' value=4>Dark-blue</option>
+                        <option ".$c[5]." style='background-color:".$clrArr[5]."' value=5>Yellow</option>
+                        <option ".$c[6]." style='background-color:".$clrArr[6]."' value=6>Purple</option>
+                        <option ".$c[7]." style='background-color:".$clrArr[7]."' value=6>Pink</option>
+                        <option ".$c[8]." style='background-color:".$clrArr[8]."' value=6>Green</option>
+                        <option ".$c[0]." style='background-color:".$clrArr[0]."' value=9>Gray</option>
+                        
+                        </select>
                         </div>";
 
                     }
                     
             $kd='';$sm='';$ud=''; $orc=''; $rnd=''; 
+            $c = ['','','','','','','','',''];
                 }
             }
             if($array[0]["id"] == $_SESSION['user']['id'] && $game['local'] == 0){
@@ -100,7 +159,8 @@ if (session_status() === PHP_SESSION_NONE) {
             $json = json_decode($game['game_json']);
             $flag = false;
             
-            while(!isset($json->gamePlayers[$json->gameTurn]) || $json->gamePlayers[$json->gameTurn]->live==false || checkPlayerInRoom()){
+            while(!isset($json->gamePlayers[$json->gameTurn]) || $json->gamePlayers[$json->gameTurn]->live==false || checkPlayerInRoom())
+            {
                 if($json->gameTurn>=count($json->gamePlayers)){
                     $json->gameTurn=0;
                     //code for bot and etc
@@ -156,6 +216,9 @@ if (session_status() === PHP_SESSION_NONE) {
                         $count = $cell->contains->range;
                     }if($count == 0){
                         $count = 1;
+                    }
+                    if($count<3 && in_array('farSight',$cell->contains->ability)){
+                        $count += 1;
                     }
                     $cell->view = true;
                     if($count>0){
