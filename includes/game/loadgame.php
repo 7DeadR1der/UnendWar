@@ -106,7 +106,7 @@ if (session_status() === PHP_SESSION_NONE) {
                             <option ".$c[4]." style='background-color:".$clrArr[4]."' value=4>Purple</option>
                             <option ".$c[5]." style='background-color:".$clrArr[5]."' value=5>Green</option>
                             <option ".$c[6]." style='background-color:".$clrArr[6]."' value=6>Yellow</option>
-                            <option ".$c[0]." style='background-color:".$clrArr[0]."' value=0>Gray</option>
+                            <option ".$c[0]." style='background-color:".$clrArr[0]."' value=9>Gray</option>
                         
                         </select>
                         </div>";
@@ -130,11 +130,9 @@ if (session_status() === PHP_SESSION_NONE) {
                         <option ".$c[1]." style='background-color:".$clrArr[1]."' value=1>Red</option>
                         <option ".$c[2]." style='background-color:".$clrArr[2]."' value=2>Blue</option>
                         <option ".$c[3]." style='background-color:".$clrArr[3]."' value=3>Orange</option>
-                        <option ".$c[4]." style='background-color:".$clrArr[4]."' value=4>Dark-blue</option>
-                        <option ".$c[5]." style='background-color:".$clrArr[5]."' value=5>Yellow</option>
-                        <option ".$c[6]." style='background-color:".$clrArr[6]."' value=6>Purple</option>
-                        <option ".$c[7]." style='background-color:".$clrArr[7]."' value=6>Pink</option>
-                        <option ".$c[8]." style='background-color:".$clrArr[8]."' value=6>Green</option>
+                        <option ".$c[4]." style='background-color:".$clrArr[4]."' value=4>Purple</option>
+                        <option ".$c[5]." style='background-color:".$clrArr[5]."' value=5>Green</option>
+                        <option ".$c[6]." style='background-color:".$clrArr[6]."' value=6>Yellow</option>
                         <option ".$c[0]." style='background-color:".$clrArr[0]."' value=9>Gray</option>
                         
                         </select>
