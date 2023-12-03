@@ -1,8 +1,8 @@
 "use strict"
 //for local
-const folder = "/game.exe";
+//const folder = "/game.exe";
 //for server
-//const folder = "";
+const folder = "";
 
 const localSettings = {
     checkEndTurn: getCookie("checkEndTurn"),
