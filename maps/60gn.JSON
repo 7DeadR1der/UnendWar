@@ -101,6 +101,7 @@
         "customGame" : false,
         "randomSpawn" : true,
         "neutralSpawnOnStart" : true,
+        "spawnStartUnit" : true,
         "rowLength" : 8,
         "columnLength" : 8
     }

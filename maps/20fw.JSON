@@ -1,0 +1,296 @@
+{
+    "name": "Fight War",
+    "shortName" : "fw",
+    "field" : [
+        [
+        ],
+        [
+            {"contains":false,"resCount":0,"obstacle":1,"row":1,"column":4}
+        ],
+        [
+            {"contains":false,"resCount":0,"obstacle":1,"row":2,"column":7}
+        ],
+        [
+        ],
+        [
+        ],
+        [
+            {"contains":false,"resCount":0,"obstacle":1,"row":5,"column":0}
+        ],
+        [
+            {"contains":false,"resCount":0,"obstacle":1,"row":6,"column":3}
+        ],
+        [
+        ]
+    ],
+    "creationUnits" : [
+        {
+            "defaultUnit" : true,
+            "pack" : false, 
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 0,
+            "column" : 0
+        },
+        {
+            "defaultUnit" : false,
+            "pack" : "t2Pack", 
+            "type" : "rnd",
+            "owner" : 0,
+            "row" : 0,
+            "column" : 3
+        },
+        {
+            "defaultUnit" : true,
+            "pack" : false, 
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 0,
+            "column" : 4
+        },
+        {
+            "defaultUnit" : false,
+            "pack" : "t2Pack", 
+            "type" : "rnd",
+            "owner" : 0,
+            "row" : 0,
+            "column" : 5
+        },
+        {
+            "defaultUnit" : false,
+            "pack" : "wcPack", 
+            "type" : "rnd",
+            "owner" : 0,
+            "row" : 0,
+            "column" : 7
+        },
+        {
+            "defaultUnit" : true,
+            "pack" : false, 
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 1,
+            "column" : 5
+        },
+        {
+            "defaultUnit" : false,
+            "pack" : "t2Pack", 
+            "type" : "rnd",
+            "owner" : 0,
+            "row" : 1,
+            "column" : 6
+        },
+        {
+            "defaultUnit" : false,
+            "pack" : "t2Pack", 
+            "type" : "rnd",
+            "owner" : 0,
+            "row" : 2,
+            "column" : 3
+        },
+        {
+            "defaultUnit" : false,
+            "pack" : "t3Pack", 
+            "type" : "rnd",
+            "owner" : 0,
+            "row" : 2,
+            "column" : 4
+        },
+        {
+            "defaultUnit" : false,
+            "pack" : "t2Pack", 
+            "type" : "rnd",
+            "owner" : 0,
+            "row" : 3,
+            "column" : 2
+        },
+        {
+            "defaultUnit" : true,
+            "pack" : false, 
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 3,
+            "column" : 3
+        },
+        {
+            "defaultUnit" : false,
+            "pack" : "t3Pack", 
+            "type" : "rnd",
+            "owner" : 0,
+            "row" : 3,
+            "column" : 7
+        },
+        {
+            "defaultUnit" : false,
+            "pack" : "t3Pack", 
+            "type" : "rnd",
+            "owner" : 0,
+            "row" : 4,
+            "column" : 0
+        },
+        {
+            "defaultUnit" : true,
+            "pack" : false, 
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 4,
+            "column" : 4
+        },
+        {
+            "defaultUnit" : false,
+            "pack" : "t2Pack", 
+            "type" : "rnd",
+            "owner" : 0,
+            "row" : 4,
+            "column" : 5
+        },
+        {
+            "defaultUnit" : false,
+            "pack" : "t3Pack", 
+            "type" : "rnd",
+            "owner" : 0,
+            "row" : 5,
+            "column" : 3
+        },
+        {
+            "defaultUnit" : false,
+            "pack" : "t2Pack", 
+            "type" : "rnd",
+            "owner" : 0,
+            "row" : 5,
+            "column" : 4
+        },
+        {
+            "defaultUnit" : false,
+            "pack" : "t2Pack", 
+            "type" : "rnd",
+            "owner" : 0,
+            "row" : 6,
+            "column" : 1
+        },
+        {
+            "defaultUnit" : true,
+            "pack" : false, 
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 6,
+            "column" : 2
+        },
+        {
+            "defaultUnit" : false,
+            "pack" : "wcPack", 
+            "type" : "rnd",
+            "owner" : 0,
+            "row" : 7,
+            "column" : 0
+        },
+        {
+            "defaultUnit" : false,
+            "pack" : "t2Pack", 
+            "type" : "rnd",
+            "owner" : 0,
+            "row" : 7,
+            "column" : 2
+        },
+        {
+            "defaultUnit" : true,
+            "pack" : false, 
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 7,
+            "column" : 3
+        },
+        {
+            "defaultUnit" : false,
+            "pack" : "t2Pack", 
+            "type" : "rnd",
+            "owner" : 0,
+            "row" : 7,
+            "column" : 4
+        },
+        {
+            "defaultUnit" : true,
+            "pack" : false, 
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 7,
+            "column" : 7
+        },
+        {
+            "defaultUnit" : true,
+            "pack" : false, 
+            "type" : "warchief",
+            "owner" : 1,
+            "row" : 2,
+            "column" : 1
+        },
+        {
+            "defaultUnit" : true,
+            "pack" : false, 
+            "type" : "warchief",
+            "owner" : 2,
+            "row" : 5,
+            "column" : 6
+        },
+        {
+            "defaultUnit" : false,
+            "pack" : "townhallPack", 
+            "type" : 0,
+            "owner" : 1,
+            "row" : 1,
+            "column" : 1
+        },
+        {
+            "defaultUnit" : false,
+            "pack" : "townhallPack", 
+            "type" : 0,
+            "owner" : 2,
+            "row" : 6,
+            "column" : 6
+        }
+    ],
+    "startPositions" : [
+        [1,1],
+        [6,6]
+    ],
+    "unitPacks" : {
+        "townhallPack" : [
+            ["building","townhall","Camp",3,1,0,1,4,["hire","surgery","armor"],"img/units/Neutral/Bandit outpost.png","t2-t3",""]
+        ],
+        "t2Pack" : [
+            "Scout",
+            "Raider",
+            "Zombie",
+            "Battler",
+            "Wolf"
+        ],
+        "t3Pack" : [
+            "Knight",
+            "Merc",
+            "Onager",
+            "Ghost",
+            "Ogre"
+        ],
+        "wcPack" : [
+            "Dragon",
+            "Ogre fort",
+            "Dragon",
+            "Ogre fort",
+            ["unit","warchief","Skeleton King",4,2,1,1,6,["infect","armor","monster"],"img/units/Undead/Happy Skeleton.png","",""]
+        ]
+    },
+    "settings" : {
+        "land" : 0,
+        "maxPlayers" : 2,
+        "typeGame" : 0,
+        "customGame" : true,
+        "randomSpawn" : false,
+        "neutralSpawnOnStart" : false,
+        "spawnStartUnit" : false,
+        "rowLength" : 8,
+        "columnLength" : 8
+    },
+    "factions" : {
+        "customFactions" : false
+    }
+}

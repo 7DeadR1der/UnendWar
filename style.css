@@ -259,7 +259,7 @@ body{
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
-    width: 450px;
+    width: 440px;
     height: 600px;
 }
 .room-header{
@@ -289,7 +289,7 @@ body{
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    width: 450;
+    width: 440px;
     height: 600px;
 }
 #game-header{
@@ -299,13 +299,30 @@ body{
     justify-content: space-between;
 }
 #game-field{
-    width: 422px;
-    /* width: 438px; */
+    /* new */
+    width: 420px;
+    height: 420px;
+    max-width: 420px;
+    max-height: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items:safe center;
+    justify-content: safe center;
+    /*overflow: auto;*/
+    background-color: gray;
+    padding: 2px;
+    /* old */
+    /* width: 422px;
     padding: 3px;
     background-color: gray;
     display: flex;
     flex-flow: row wrap;
-    align-items:flex-start;
+    align-items:flex-start; */
+}
+.gfRow{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
 }
 .gfCell{
     width: 50px;

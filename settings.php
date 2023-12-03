@@ -32,9 +32,9 @@ if(!isset($_SESSION['user'])){
             <h2>Settings</h2>
         </div>
         <div>
-        <h4>Настройки профиля</h4>
+        <h4>Profile settings</h4>
             <div>
-                <label>Имя</label>
+                <label>name</label>
                 <br>
                 <input name="name" type="text" value="'.$_SESSION['user']['name'].'">
             </div>
@@ -45,37 +45,41 @@ if(!isset($_SESSION['user'])){
             </div>
             <div>
             <br>
-                <label>Старый Пароль</label>
+                <label>Old password</label>
                 <br>
                 <input name="oldPass" type="text">
                 <br>
-                <label>Новый Пароль</label>
+                <label>New password</label>
                 <br>
                 <input name="newPass" type="text">
                 <br>
-                <label>Подтвердите Пароль</label>
+                <label>Confirm new password</label>
                 <br>
                 <input name="confirmPass" type="text">
                 <br>
             </div>
             <br>
-            <button onclick="saveProfile()">Сохранить профиль</button>
+            <button onclick="saveProfile()">Save profile</button>
             <br>
             
         </div>
 
         <div>
-            <h4>Локальные настройки</h4>
+            <h4>Local settings</h4>
             <div>
-            <label>Подтверждение окончания хода</label>
+            <label>Confirm end turn</label>
                 <input name="checkEndTurn" type="checkbox" '.$cookieCET.'>
                 <br>
-            <label>Анимации</label>
+            <label>Animation</label>
                 <input name="enableAnimation" type="checkbox" '.$cookieEA.'>
                 <br>
-            <label></label>
+            <label>Language</label>
+            <select>
+                <option '.$_COOKIE["language"]=="en"?"selected":"".' value="en">English</option>
+                <option '.$_COOKIE["language"]=="ru"?"selected":"".' value="ru">Russian</option>
+            </select>
             <br>
-            <button onclick="saveLocalSettings()">Сохранить локальные настройки</button>
+            <button onclick="saveLocalSettings()">Save local settings</button>
             <br>
             </div>
         </div>

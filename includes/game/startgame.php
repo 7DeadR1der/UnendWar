@@ -15,6 +15,7 @@ if (session_status() === PHP_SESSION_NONE) {
                 "gameTurn" => 1,
                 "gameLand" => mt_rand(0,2),
                 "local" => $room['local'],
+                "gameSize" => [8,8],
                 "gameVictoryCond" => [],
                 "gamePlayers" => [],
                 "gameField" => [],
@@ -134,9 +135,9 @@ if (session_status() === PHP_SESSION_NONE) {
                     $str = 'player'.$n;
                     if(!empty($_GET[$str])){
                         $faction = $_GET[$str];
-                        echo $_GET[$str];
+                        //echo $_GET[$str];
                         if($faction=="Random"){
-                            $num=mt_rand(1,3);
+                            $num=mt_rand(1,4);
                             switch($num){
                                 case 1:
                                     $faction="Kingdom";
@@ -157,8 +158,8 @@ if (session_status() === PHP_SESSION_NONE) {
                                     break;
                             }
                         }
-                        echo $faction;
-                        echo $str;
+                        //echo $faction;
+                        //echo $str;
                         $game['gamePlayers'][$k]= new Player($str,$k,$faction);
                     }
                 }
@@ -175,9 +176,9 @@ if (session_status() === PHP_SESSION_NONE) {
             $startJson = json_encode($array);
             $jsonData = json_encode($json);
             $updateRoom = mysqli_query($connect, "UPDATE `rooms` SET `game_state` = 1, `game_json` = '$jsonData', `game_field_json` = '$startJson' ,`last_mod` = '$ts'  WHERE `id_room` = '$idRoom'");
-            echo "success";
+            echo response(1);
         }else{
-            echo "Нельзя начать в одиночку";
+            echo response(0,"You can't solo start");
         }
     }
     //echo $jsonData;

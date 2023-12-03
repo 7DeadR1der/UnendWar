@@ -31,7 +31,7 @@ if(!empty($_POST["faction"]) || !empty($_POST["color"])){
                     for($l=0;$l<count($array);$l++){
                         array_push($colorArr,$array[$l]["color"]);
                     }
-                    var_dump($colorArr);
+                    //var_dump($colorArr);
                     if(!in_array($_POST['color'],$colorArr)){
                         $array[$key]["color"]=$_POST['color'];
                         $varSend=true;

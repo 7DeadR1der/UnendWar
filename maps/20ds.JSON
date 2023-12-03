@@ -17,7 +17,7 @@
             {"contains":false,"resCount":9,"obstacle":0,"row":3,"column":7}
         ],
         [
-            {"contains":false,"resCount":0,"obstacle":0,"row":4,"column":0},
+            {"contains":false,"resCount":9,"obstacle":0,"row":4,"column":0},
             {"contains":false,"resCount":0,"obstacle":2,"row":4,"column":7}
         ],
         [
@@ -34,6 +34,7 @@
     "creationUnits" : [
         {
             "defaultUnit" : true,
+            "pack" : false, 
             "type" : "warchief",
             "owner" : 0,
             "row" : 0,
@@ -41,6 +42,7 @@
         },
         {
             "defaultUnit" : true,
+            "pack" : false, 
             "type" : "tower",
             "owner" : 0,
             "row" : 1,
@@ -48,6 +50,7 @@
         },
         {
             "defaultUnit" : true,
+            "pack" : false, 
             "type" : "t2",
             "owner" : 0,
             "row" : 3,
@@ -55,6 +58,7 @@
         },
         {
             "defaultUnit" : true,
+            "pack" : false, 
             "type" : "t2",
             "owner" : 0,
             "row" : 4,
@@ -62,6 +66,7 @@
         },
         {
             "defaultUnit" : true,
+            "pack" : false, 
             "type" : "tower",
             "owner" : 0,
             "row" : 6,
@@ -69,6 +74,7 @@
         },
         {
             "defaultUnit" : true,
+            "pack" : false, 
             "type" : "warchief",
             "owner" : 0,
             "row" : 7,
@@ -87,6 +93,7 @@
         "customGame" : false,
         "randomSpawn" : true,
         "neutralSpawnOnStart" : true,
+        "spawnStartUnit" : true,
         "rowLength" : 8,
         "columnLength" : 8
     }

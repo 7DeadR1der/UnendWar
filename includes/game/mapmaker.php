@@ -1,15 +1,25 @@
 <?php
 //map name 21lr - 1 цифра макс кол-во игроков, 2 цифра режим игры который может играться 0-классик 1-охота 2-сбор
-
+$mapSettings;
 
 function mapMaker($field, $map, $count, $type, $mode, $players){
     global $json;
+    global $mapSettings;
     $startPositions = [];
     $rndArrUnit = [];
     // new
     if($map != "40rnd"){
         $jsonMap = json_decode(file_get_contents("../../maps/".$map.".JSON"));
+        $mapSettings = $jsonMap->settings;
         $json->gameLand = $jsonMap->settings->land;
+        if($jsonMap->settings->customGame == true && isset($jsonMap->factions) && $jsonMap->factions->customFactions){
+            for($i=0;$i<count($players);$i++){
+                $name = $players[$i]->faction->name;
+                if(property_exists($jsonMap->factions, $name)){
+                    $players[$i] = $jsonMap->factions->$name;
+                }
+            }
+        }
         foreach ($jsonMap->startPositions as $key => $value) {
             array_push($startPositions,$json->gameField[$value[0]][$value[1]]);
         }
@@ -33,13 +43,28 @@ function mapMaker($field, $map, $count, $type, $mode, $players){
             $o = $value->owner;
             $t = $value->type;
             $default = $value->defaultUnit;
+            $pack = $value->pack;
             if($default){
                 $json->gameField[$i][$j]->contains = spawn($json->gamePlayers[$o]->faction->$t,(int)$o,false,true,false);
             }else{
-                $json->gameField[$i][$j]->contains = spawn(GAME_OBJ[$t],$o,false,true,false);
+                if($pack){
+                    if($t == "rnd"){
+                        $t = array_rand($jsonMap->unitPacks->$pack);
+                    }
+                    if (is_numeric($t)){
+                        $u = is_array($jsonMap->unitPacks->$pack[$t]) ? $jsonMap->unitPacks->$pack[$t] : GAME_OBJ[$jsonMap->unitPacks->$pack[$t]];
+                        $json->gameField[$i][$j]->contains = spawn($u,$o,false,true,false);
+                    }else{
+                        //error
+                    }
+                }else{
+                    $json->gameField[$i][$j]->contains = spawn(GAME_OBJ[$t],$o,false,true,false);
+                }
             }
         }
+        //random generation
     }else{
+        $mapSettings = 'rnd';
         $zones = [];
         //выбор шаблона
         $array_pattern = [];
@@ -441,6 +466,7 @@ class Zone{
 
 
 function playerMaker($mode,$startPositions,$count,$players){
+    global $mapSettings;
     $n = $count;
     $l = count($startPositions);
     /*
@@ -485,31 +511,40 @@ function playerMaker($mode,$startPositions,$count,$players){
         if($n>0){
             
             $startPositions[$i]->resCount = 0;
-            switch($mode){
-                case 'classic':
-                    //$startPositions[$k]->contains = new Unit($players[$i+1]->faction->townhall,$i+1,true);
-                    $startPositions[$i]->contains = spawn($players[$i+1]->faction->townhall,$i+1,false,true,false);
-                    break;
-                case 'fat':
-                    //$startPositions[$k]->contains = new Unit($players[$i+1]->faction->townhall,$i+1,true);
-                    $startPositions[$i]->contains = spawn($players[$i+1]->faction->townhall,$i+1,false,true,false);
-                    $players[$i+1]->gold += 12;
-                    break;
-                case 'nomad':
-                    //$startPositions[$k]->contains = new Unit($players[$i+1]->faction->t1,$i+1,true);
-                    $startPositions[$i]->contains = spawn($players[$i+1]->faction->t1,$i+1,false,true,false);
-                    $players[$i+1]->gold +=$players[$i+1]->faction->townhall[7];
-                    break;
-                default:
-                    //$startPositions[$k]->contains = new Unit($players[$i+1]->faction->townhall,$i+1,true);
-                    $startPositions[$i]->contains = spawn($players[$i+1]->faction->townhall,$i+1,false,true,false);
-                    break;
+                switch($mode){
+                    case 'classic':
+                        //$startPositions[$k]->contains = new Unit($players[$i+1]->faction->townhall,$i+1,true);
+                        if($mapSettings == 'rnd' || $mapSettings->spawnStartUnit == true){
+                            $startPositions[$i]->contains = spawn($players[$i+1]->faction->townhall,$i+1,false,true,false);
+                        }
+                        break;
+                    case 'fat':
+                        //$startPositions[$k]->contains = new Unit($players[$i+1]->faction->townhall,$i+1,true);
+                        if($mapSettings == 'rnd' || $mapSettings->spawnStartUnit == true){
+                            $startPositions[$i]->contains = spawn($players[$i+1]->faction->townhall,$i+1,false,true,false);
+                        }
+                        $players[$i+1]->gold += 12;
+                        break;
+                    case 'nomad':
+                        //$startPositions[$k]->contains = new Unit($players[$i+1]->faction->t1,$i+1,true);
+                        if($mapSettings == 'rnd' || $mapSettings->spawnStartUnit == true){
+                            $startPositions[$i]->contains = spawn($players[$i+1]->faction->t1,$i+1,false,true,false);
+                        }
+                        $players[$i+1]->gold +=$players[$i+1]->faction->townhall[7];
+                        break;
+                    default:
+                        //$startPositions[$k]->contains = new Unit($players[$i+1]->faction->townhall,$i+1,true);
+                        $startPositions[$i]->contains = spawn($players[$i+1]->faction->townhall,$i+1,false,true,false);
+                        break;
+                
+                }
             
-            }
             $n-=1;
         }
         else{
-            $startPositions[$i]->contains = spawn($players[0]->faction->tower,0,false,true,false);
+            if($mapSettings == 'rnd' || $mapSettings->neutralSpawnOnStart == true){
+                $startPositions[$i]->contains = spawn($players[0]->faction->tower,0,false,true,false);
+            }
         }
     }
 

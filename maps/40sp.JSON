@@ -36,6 +36,7 @@
     "creationUnits" : [
         {
             "defaultUnit" : true,
+            "pack" : false, 
             "type" : "tower",
             "owner" : 0,
             "row" : 0,
@@ -43,6 +44,7 @@
         },
         {
             "defaultUnit" : true,
+            "pack" : false, 
             "type" : "tower",
             "owner" : 0,
             "row" : 2,
@@ -50,6 +52,7 @@
         },
         {
             "defaultUnit" : true,
+            "pack" : false, 
             "type" : "tower",
             "owner" : 0,
             "row" : 5,
@@ -57,6 +60,7 @@
         },
         {
             "defaultUnit" : true,
+            "pack" : false, 
             "type" : "tower",
             "owner" : 0,
             "row" : 7,
@@ -64,6 +68,7 @@
         },
         {
             "defaultUnit" : true,
+            "pack" : false, 
             "type" : "townhall",
             "owner" : 0,
             "row" : 0,
@@ -71,6 +76,7 @@
         },
         {
             "defaultUnit" : true,
+            "pack" : false, 
             "type" : "townhall",
             "owner" : 0,
             "row" : 7,
@@ -90,6 +96,7 @@
         "customGame" : false,
         "randomSpawn" : true,
         "neutralSpawnOnStart" : true,
+        "spawnStartUnit" : true,
         "rowLength" : 8,
         "columnLength" : 8
     }

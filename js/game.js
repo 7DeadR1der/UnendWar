@@ -3,12 +3,12 @@
 //player colors
 //red blue orange purple green yellow
 //old
-const colorPlayers = ['#bababa', '#fc9393', '#60c0ff', '#ffae58', '#f190ff', '#54fd7a', '#e3f054'];
-                        // gray - red - blue - orange - dark-blue - yellow - purple - pink - green
-//const colorPlayers =['#bababa','#f59678','#6bccf7','#fec689','#8781bd','#fdf799','#bd8dbf','#f39aac','#7eca9c'];
+//const colorPlayers = ['#bababa', '#fc9393', '#60c0ff', '#ffae58', '#f190ff', '#54fd7a', '#e3f054'];
+                    // gray - red - blue - orange - dark-blue - yellow - purple - pink - green
+const colorPlayers =['#bababa','#f59678','#6bccf7','#ffbd76','#8d87be','#fdf777','#cf8fd1','#f39aac','#7eca9c'];
 
 
-const colorLands = ['#b1c37b','#f0fafa','#e8d479','#b1c37b'];
+const colorLands = ['#b1c37b','#f0fafa','#e8d479','#bc9565'];
 //colors cursors? 
 const colorCursor = ['2px solid white','2px solid blue', '2px solid red','2px solid #00ff00','2px solid #19ffff'];
 let thisPlayer;
@@ -275,7 +275,8 @@ function levelUp(type,owner,choise){
     xhr.open('GET',folder+'/includes/game/level.php?'+'type='+type+'&owner='+owner+'&choise='+choise);
     xhr.onload = function(){
         //console.log(xhr.response);
-        let data = xhr.response.split('-');
+        let x = JSON.parse(xhr.response);
+        let data = x.data.split('-');
         if(data[0]=='choice'){
 
             let skillsChoise = [];
@@ -321,8 +322,8 @@ function cancel(){
     hireUnit = undefined;
     turnFlag = 0;
     unlockAllCells();
-    for(let i=0;i<8;i++){
-    for(let j=0;j<8;j++){
+    for(let i=0;i<gameField.length;i++){
+    for(let j=0;j<gameField[i].length;j++){
         document.getElementById(`${i}-${j}`).style.border = '';
     }
     }
@@ -348,7 +349,7 @@ function lockBtns(){
 
 function endTurn(sur=0){
     if(gameSettings.turnOwner == thisPlayer.owner){
-        if((sur==1 && confirm("Вы уверены что хотите сдаться?")) || (getCookie("checkEndTurn") == 0 || confirm("Вы уверены что хотите закончить ход?"))){
+        if((sur==1 && confirm("Вы уверены что хотите сдаться?")) || (sur == 0 && (getCookie("checkEndTurn") == 0 || confirm("Вы уверены что хотите закончить ход?")))){
             let xhr = new XMLHttpRequest();
             let str = sur ? '?sur=1' : '';
             xhr.open('GET',folder+'/includes/game/endturn.php'+str);
@@ -377,34 +378,37 @@ function unlockAllCells(){
     }
 }
 function unlockCells(count,i,j,type){
+    let sMin = -1;
+    let iMax = gameSettings.size[0]
+    let jMax = gameSettings.size[1]
     let arrayCells = [];
     if (count>0){
-        if(i+1<8) arrayCells.push(gameField[i+1][j]);
-        if(j+1<8) arrayCells.push(gameField[i][j+1]);
-        if(i-1>-1)arrayCells.push(gameField[i-1][j]);
-        if(j-1>-1)arrayCells.push(gameField[i][j-1]);
+        if(i+1<iMax)arrayCells.push(gameField[i+1][j]);
+        if(j+1<jMax)arrayCells.push(gameField[i][j+1]);
+        if(i-1>sMin)arrayCells.push(gameField[i-1][j]);
+        if(j-1>sMin)arrayCells.push(gameField[i][j-1]);
         if(count>1){
-            if(i+2<8) arrayCells.push(gameField[i+2][j]);
-            if(j+2<8) arrayCells.push(gameField[i][j+2]);
-            if(i-2>-1)arrayCells.push(gameField[i-2][j]);
-            if(j-2>-1)arrayCells.push(gameField[i][j-2]);
-            if(i+1<8&&j+1<8)  arrayCells.push(gameField[i+1][j+1]);
-            if(i+1<8&&j-1>-1) arrayCells.push(gameField[i+1][j-1]);
-            if(i-1>-1&&j+1<8) arrayCells.push(gameField[i-1][j+1]);
-            if(i-1>-1&&j-1>-1)arrayCells.push(gameField[i-1][j-1]);
+            if(i+2<iMax) arrayCells.push(gameField[i+2][j]);
+            if(j+2<jMax) arrayCells.push(gameField[i][j+2]);
+            if(i-2>sMin)arrayCells.push(gameField[i-2][j]);
+            if(j-2>sMin)arrayCells.push(gameField[i][j-2]);
+            if(i+1<iMax&&j+1<jMax)arrayCells.push(gameField[i+1][j+1]);
+            if(i+1<jMax&&j-1>sMin)arrayCells.push(gameField[i+1][j-1]);
+            if(i-1>sMin&&j+1<jMax)arrayCells.push(gameField[i-1][j+1]);
+            if(i-1>sMin&&j-1>sMin)arrayCells.push(gameField[i-1][j-1]);
             if(count>2){
-                if(i+3<8) arrayCells.push(gameField[i+3][j]);
-                if(j+3<8) arrayCells.push(gameField[i][j+3]);
-                if(i-3>-1)arrayCells.push(gameField[i-3][j]);
-                if(j-3>-1)arrayCells.push(gameField[i][j-3]);
-                if(i+2<8&&j+1<8)  arrayCells.push(gameField[i+2][j+1]);
-                if(i+2<8&&j-1>-1) arrayCells.push(gameField[i+2][j-1]);
-                if(i-2>-1&&j+1<8) arrayCells.push(gameField[i-2][j+1]);
-                if(i-2>-1&&j-1>-1)arrayCells.push(gameField[i-2][j-1]);
-                if(i+1<8&&j+2<8)  arrayCells.push(gameField[i+1][j+2]);
-                if(i+1<8&&j-2>-1) arrayCells.push(gameField[i+1][j-2]);
-                if(i-1>-1&&j+2<8) arrayCells.push(gameField[i-1][j+2]);
-                if(i-1>-1&&j-2>-1)arrayCells.push(gameField[i-1][j-2]);
+                if(i+3<iMax) arrayCells.push(gameField[i+3][j]);
+                if(j+3<jMax) arrayCells.push(gameField[i][j+3]);
+                if(i-3>sMin)arrayCells.push(gameField[i-3][j]);
+                if(j-3>sMin)arrayCells.push(gameField[i][j-3]);
+                if(i+2<iMax&&j+1<jMax)arrayCells.push(gameField[i+2][j+1]);
+                if(i+2<iMax&&j-1>sMin)arrayCells.push(gameField[i+2][j-1]);
+                if(i-2>sMin&&j+1<jMax)arrayCells.push(gameField[i-2][j+1]);
+                if(i-2>sMin&&j-1>sMin)arrayCells.push(gameField[i-2][j-1]);
+                if(i+1<iMax&&j+2<jMax)arrayCells.push(gameField[i+1][j+2]);
+                if(i+1<iMax&&j-2>sMin)arrayCells.push(gameField[i+1][j-2]);
+                if(i-1>sMin&&j+2<jMax)arrayCells.push(gameField[i-1][j+2]);
+                if(i-1>sMin&&j-2>sMin)arrayCells.push(gameField[i-1][j-2]);
             }
         }
     }
@@ -502,8 +506,14 @@ function loadGameFile(json){
     if (document.getElementById('game-field') === null){
         document.getElementById('game-block').innerHTML = gamestring;
         //console.log(json);
-        for(let i=0;i<8;i++){
-            for(let j=0;j<8;j++){
+        let row = json.gameSize[0];
+        let col = json.gameSize[1];
+        for(let i=0;i<row;i++){
+            let stroke = document.createElement('div');
+            stroke.className = 'gfRow';
+
+
+            for(let j=0;j<col;j++){
                 /*
                 let cellAdd = document.createElement('img');
                 cellAdd.className = 'gfCell';
@@ -523,12 +533,14 @@ function loadGameFile(json){
                 cellAdd.appendChild(anim);
                 cellAdd.appendChild(img);
 
-                document.getElementById('game-field').appendChild(cellAdd);
+                stroke.appendChild(cellAdd);
 
             }
+            document.getElementById('game-field').appendChild(stroke);
         }
     }
-    
+    gameSettings.size[0] = json.gameSize[0];
+    gameSettings.size[1] = json.gameSize[1];
     gameSettings.turnOwner = json.gameTurn;
     gameSettings.land = json.gameLand;
     update(json);
@@ -620,8 +632,8 @@ function loadField(json){
     document.getElementById('game-header-player').textContent = json.gamePlayers[json.gameTurn].name + " (" + json.gamePlayers[json.gameTurn].statistic.score + ")";
     document.getElementById('game-header-player').title = "Игрок - "+json.gamePlayers[json.gameTurn].name+", Очки - "+json.gamePlayers[json.gameTurn].statistic.score+", Позиция - "+json.gamePlayers[json.gameTurn].owner;
     document.getElementById('game-header-player').style.backgroundColor = colorPlayers[players[json.gameTurn].color];
-    for(let i=0;i<8;i++){
-        for(let j=0;j<8;j++){
+    for(let i=0;i<json.gameField.length;i++){
+        for(let j=0;j<json.gameField[i].length;j++){
             let container = document.getElementById(`${i}-${j}`);
             if(gameField[i][j].view == true){
                 let titleText = "";
@@ -803,6 +815,9 @@ function checkAnimation(json){
     let sContainer = undefined;
     let n;
     let m;
+    let sMin = -1;
+    let iMax = gameSettings.size[0];
+    let jMax = gameSettings.size[1];
     if(fi !== '' && fj !== ''){
         if(json.gameField[fi][fj].view == true && document.getElementById(`${fi}-${fj}`) !== null){
             fContainer = document.getElementById(`${fi}-${fj}`);
@@ -843,28 +858,28 @@ function checkAnimation(json){
             m = Number(sj);
             switch(variant){
                 case "up":
-                    if(n-1>-1){
+                    if(n-1>sMin){
                         if(json.gameField[n-1][m].view == true && document.getElementById(`${n-1}-${m}`) !== null){
                             animation(document.getElementById(`${n-1}-${m}`),colorAnimation['aqua']);
                         }
                     }
                     break;
                 case "right":
-                    if(m+1<8){
+                    if(m+1<jMax){
                         if(json.gameField[n][m+1].view == true && document.getElementById(`${n}-${m+1}`) !== null){
                             animation(document.getElementById(`${n}-${m+1}`),colorAnimation['aqua']);
                         }
                     }
                     break;
                 case "down":
-                    if(n+1<8){
+                    if(n+1<Imax){
                         if(json.gameField[n+1][m].view == true && document.getElementById(`${n+1}-${m}`) !== null){
                             animation(document.getElementById(`${n+1}-${m}`),colorAnimation['aqua']);
                         }
                     }
                     break;
                 case "left":
-                    if(m-1>-1){
+                    if(m-1>sMin){
                         if(json.gameField[n][m-1].view == true && document.getElementById(`${n}-${m-1}`) !== null){
                             animation(document.getElementById(`${n}-${m-1}`),colorAnimation['aqua']);
                         }
@@ -887,13 +902,13 @@ function checkAnimation(json){
             let array = [undefined,undefined,undefined,undefined];
             n = Number(fi);
             m = Number(fj);
-            if(n+1<8) if(json.gameField[n+1][m].view == true && document.getElementById(`${n+1}-${m}`) !== null) 
+            if(n+1<iMax) if(json.gameField[n+1][m].view == true && document.getElementById(`${n+1}-${m}`) !== null) 
             array[0] = document.getElementById(`${n+1}-${m}`)
-            if(m+1<8) if(json.gameField[n][m+1].view == true && document.getElementById(`${n}-${m+1}`) !== null) 
+            if(m+1<jMax) if(json.gameField[n][m+1].view == true && document.getElementById(`${n}-${m+1}`) !== null) 
             array[1] = document.getElementById(`${n}-${m+1}`)
-            if(n-1>-1)if(json.gameField[n-1][m].view == true && document.getElementById(`${n-1}-${m}`) !== null) 
+            if(n-1>sMin)if(json.gameField[n-1][m].view == true && document.getElementById(`${n-1}-${m}`) !== null) 
             array[2] = document.getElementById(`${n-1}-${m}`)
-            if(m-1>-1)if(json.gameField[n][m-1].view == true && document.getElementById(`${n}-${m-1}`) !== null) 
+            if(m-1>sMin)if(json.gameField[n][m-1].view == true && document.getElementById(`${n}-${m-1}`) !== null) 
             array[3] = document.getElementById(`${n}-${m-1}`)
             
             for(let i=0;i<array.length;i++){
@@ -916,7 +931,7 @@ function animation(container,color){
             value = value - 0.05; 
             container.getElementsByClassName('anim-filter')[0].style.backgroundColor = color + value + ")";//белый почти все 
             if(value < 0.01){
-                console.log('end');
+                //console.log('end');
                 clearInterval(anime);
             }
         }, 100); 
@@ -976,6 +991,7 @@ const gamestring = '<div id="game-header">'+
 
 const gameSettings = {
     turnOwner: 0,
+    size:[8,8],
     land: 0,
     level1: 5,
     level2: 15,
@@ -988,7 +1004,7 @@ const gameSettings = {
     //skills:['Strength I','Strength II','Pathfinder','Surgery','Estates I', 'Estates'];
     skills:[
         {name:'Strength I', description:'Увеличивает силу атаки Вождя на 1'},
-        {name:'Strength II', description:'Увеличивает здоровье Вождя на 2'},
+        {name:'Endurance', description:'Увеличивает здоровье Вождя на 2'},
         {name:'Pathfinder', description:'Увеличивает скорость Вождя на 1'},
         {name:'Surgery', description:'Позволяет вождю лечить себя или союзников'},
         {name:'Estates I', description:'Единовременно дает 5 золота'},

@@ -24,30 +24,30 @@ if (session_status() === PHP_SESSION_NONE) {
             switch($type){
                 case 1:
                     $skills=false;
-                    if($player->level==0 && $player->exp>=$gameSettings["level1"]){
-                        $skills = rndSkills($player,$gameSettings);
-                    }else if($player->level==1 && $player->exp>=$gameSettings["level2"]){
-                        $skills = rndSkills($player,$gameSettings);
-                    }else if($player->faction->name == 'Orcs' && $player->level==2 && $player->exp>=$gameSettings["level3"]){
-                        $skills = rndSkills($player,$gameSettings);
+                    if($player->level==0 && $player->exp>=GAME_SETTINGS["level1"]){
+                        $skills = rndSkills($player,GAME_SETTINGS);
+                    }else if($player->level==1 && $player->exp>=GAME_SETTINGS["level2"]){
+                        $skills = rndSkills($player,GAME_SETTINGS);
+                    }else if($player->faction->name == 'Orcs' && $player->level==2 && $player->exp>=GAME_SETTINGS["level3"]){
+                        $skills = rndSkills($player,GAME_SETTINGS);
                     }
                     if($skills!=false){
                         $dataType = "choice";
                         $dataF = $skills[0];
                         $dataS = $skills[1];
                         $jsonSkills = $dataType.'-'.$dataF.'-'.$dataS;
-                        echo $jsonSkills;
+                        echo response(1,'',$jsonSkills);
                     }
                     break;
                 case 2:
                     $flag=false;
-                    if($player->level==0 && $player->exp>=$gameSettings["level1"]){
+                    if($player->level==0 && $player->exp>=GAME_SETTINGS["level1"]){
                         $player->level=1;
                         $flag=true;
-                    }else if($player->level==1 && $player->exp>=$gameSettings["level2"]){
+                    }else if($player->level==1 && $player->exp>=GAME_SETTINGS["level2"]){
                         $player->level=2;
                         $flag=true;
-                    }else if($player->faction->name == 'Orcs' && $player->level==2 && $player->exp>=$gameSettings["level3"]){
+                    }else if($player->faction->name == 'Orcs' && $player->level==2 && $player->exp>=GAME_SETTINGS["level3"]){
                         $player->level=3;
                         $flag=true;
                     }
@@ -63,7 +63,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                 }
                                 $json->gamePlayers[$owner]->faction->warchief[4] += 1;
                                 break;
-                            case "Strength II":
+                            case "Endurance": // Strength II
                                 array_push($json->gamePlayers[$owner]->skills,$choise);
                                 $array = selectUnits('warchief',$owner,$json->gameField);
                                 if(count($array)>0){
@@ -144,8 +144,11 @@ if (session_status() === PHP_SESSION_NONE) {
                                 if(count($array)>0){
                                     for($k=0;$k<count($array);$k++){
                                         array_push($array[$k]->ability,'scavenger');
+                                        $array[$k]->hp +=1;
+                                        $array[$k]->hpMax +=1;
                                     }
                                 }
+                                $json->gamePlayers[$owner]->faction->warchief[3] += 1;
                                 array_push($json->gamePlayers[$owner]->faction->warchief[8],'scavenger');
 
                                 array_push($json->gamePlayers[$owner]->faction->t1[8],'rush');
@@ -202,16 +205,16 @@ if (session_status() === PHP_SESSION_NONE) {
         $skillsPoint = 0;
         $skillsChoise = [false,false];
         $skillsData = $gS["skills"];
-        if($player->faction->name == "Orcs"){
-            array_push($skillsData,$gS["orcs_skills"][0]);
-        }
+        //if($player->faction->name == "Orcs"){
+        //    array_push($skillsData,$gS["orcs_skills"][0]);
+        //}
         while($skillsPoint < 2){
             if($player->faction->name == 'Undead' && $skillsPoint==0){
-                if(in_array($gS["undead_skills"][0]["name"],$player->skills)){
-                    $skillsChoise[$skillsPoint] = $gS["undead_skills"][1]["name"];
+                if(in_array($gS["skills"][0]["name"],$player->skills)){
+                    $skillsChoise[$skillsPoint] = $gS["skills"][1]["name"];
                     $skillsPoint+=1;
                 }else{
-                    $skillsChoise[$skillsPoint] = $gS["undead_skills"][0]["name"];
+                    $skillsChoise[$skillsPoint] = $gS["skills"][0]["name"];
                     $skillsPoint+=1;
                 }
             //}else if(in_array(,$player->skills)){
@@ -219,7 +222,9 @@ if (session_status() === PHP_SESSION_NONE) {
             }else{
                 $rndSkill = $skillsData[rand(0,count($skillsData)-1)];
                 
-                if(!in_array($rndSkill["name"],$player->skills) && $skillsChoise[0]!=$rndSkill["name"]){
+                if(!in_array($rndSkill["name"],$player->skills) && 
+                $skillsChoise[0]!=$rndSkill["name"] && 
+                (!array_key_exists("faction",$rndSkill) || $rndSkill["faction"] == $player->faction->name)){
                     if(array_key_exists("require",$rndSkill)){
                         if(in_array($rndSkill["require"],$player->skills)){
                             $skillsChoise[$skillsPoint] = $rndSkill["name"];
@@ -238,8 +243,8 @@ if (session_status() === PHP_SESSION_NONE) {
     }
     function selectUnits($class,$owner,$gf){
         $array = [];
-        for($i=0;$i<8;$i++){
-            for($j=0;$j<8;$j++){
+        for($i=0;$i<count($gf);$i++){
+            for($j=0;$j<count($gf[$i]);$j++){
                 if($gf[$i][$j]->contains!=false){
                     if($class=='building'){
                         if($gf[$i][$j]->contains->type == $class && $gf[$i][$j]->contains->owner == $owner){

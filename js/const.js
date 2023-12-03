@@ -29,4 +29,22 @@ function getCookie(name){
     return matches ? decodeURIComponent(matches[1]) : undefined;*/
 }
 
+function readJSON(file, callback){
+    let xhr = new XMLHttpRequest();
+    let value;
+    //xhr.overrideMimeType("application/json");
+    xhr.open("GET", folder + file, true);
+    xhr.onload = function(){
+        console.log(xhr.response);
+        //value = JSON.parse(xhr.response);
+        //console.log(x);
+        
+    }
+    xhr.send();
+    return value;
+}
+
+let fff = readJSON("/includes/game/game_settings.JSON");
+console.log(fff);
+
 

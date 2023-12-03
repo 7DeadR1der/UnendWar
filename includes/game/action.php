@@ -23,7 +23,7 @@ if (session_status() === PHP_SESSION_NONE) {
                 $ts = time();
                 $jsonData = json_encode($json);
                 $updateRoom = mysqli_query($connect, "UPDATE `rooms` SET `game_json` = '$jsonData' ,`last_mod` = '$ts'  WHERE `id_room` = '$idRoom'");
-                echo "success";
+                echo response(1,'success');
             }
         }
 

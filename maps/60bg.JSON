@@ -36,6 +36,7 @@
     "creationUnits" : [
         {
             "defaultUnit" : true,
+            "pack" : false, 
             "type" : "townhall",
             "owner" : 0,
             "row" : 3,
@@ -43,6 +44,7 @@
         },
         {
             "defaultUnit" : true,
+            "pack" : false, 
             "type" : "townhall",
             "owner" : 0,
             "row" : 4,
@@ -65,6 +67,7 @@
         "customGame" : false,
         "randomSpawn" : true,
         "neutralSpawnOnStart" : true,
+        "spawnStartUnit" : true,
         "rowLength" : 8,
         "columnLength" : 8
     }

@@ -13,7 +13,7 @@ if($id != 0){
         $array = [];
         $array[0]=$response["game_field_json"];
         $array[1]=$response["game_json"];
-        echo json_encode($array);
+        echo response(1,'',$array);
     }
 }else{
     $query = mysqli_query($connect,"SELECT `id_room`, `name`, `game_map`, `local`, `date_create`, `date_end_game` FROM `rooms` WHERE `game_state` = 2 ORDER BY `id_room` DESC");
@@ -28,7 +28,7 @@ if($id != 0){
         array_push($array,$row);
         
     }
-    echo json_encode($array);
+    echo response(2,'',$array);
 
 }
 

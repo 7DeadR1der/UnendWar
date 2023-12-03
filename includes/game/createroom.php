@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
     require_once '../general.php';
     $gameName = $_POST['gameName'];
-    echo $gameName;
+    //echo $gameName;
     $gameMode = $_POST['gameMode'];
     switch($_POST['gameMap'][1]){
         case'0':
@@ -39,7 +39,7 @@ if (session_status() === PHP_SESSION_NONE) {
         $query = mysqli_query($connect, "SELECT `id_room` FROM `rooms` WHERE (`id_creator` = '$gameCreator') ORDER BY `id_room` DESC LIMIT 1");
         $idroom = mysqli_fetch_row($query);
         mysqli_query($connect, "UPDATE `users` SET `active_room` = '$idroom[0]' WHERE `id_user` = '$gameCreator'");
-        echo ' success';
+        echo response(1);
     }
     include("../update.php");
 ?>

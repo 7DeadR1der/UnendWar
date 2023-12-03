@@ -1,0 +1,62 @@
+{
+    "level1" : 5,
+    "level2" : 15,
+    "level3" : 30,
+    "limit_workers" : 6,
+    "limit_army" : 4,
+    "limit_warchiefs" : 1,
+    "limit_townhalls" : 2,
+    "limit_towers" : 4,
+    "skills" : [
+        {
+            "name" : "Undead I", 
+            "faction" : "Undead",
+            "description" : "Увеличивает здоровье Лича на 1 ед., зомби получают спсобность 'infect'"
+        },
+        {
+            "name" : "Undead II", 
+            "faction" : "Undead",
+            "require" : "Undead I", 
+            "description" : "Увеличивает здоровье Лича на 1 ед., Лич получает способность 'darkStorm'"
+        },
+        {
+            "name" : "Strength I", 
+            "description" : "Увеличивает силу атаки Вождя на 1"
+        },
+        {
+            "name" : "Endurance",
+            "description" : "Увеличивает здоровье Вождя на 2"
+        },
+        {
+            "name" : "Pathfinder", 
+            "description" : "Увеличивает скорость Вождя на 1"
+        },
+        {
+            "name" : "Surgery", 
+            "description" : "Позволяет вождю лечить себя или союзников"
+        },
+        {
+            "name" : "Estates I", 
+            "description" : "Единовременно дает 5 золота"
+        },
+        {
+            "name" : "Estates II", 
+            "require" : "---", 
+            "description" : "Каждый ход дает 1 золото"
+        },
+        {
+            "name" : "Engineering", 
+            "description" : "Все здания получают +1 к прочности"
+        },
+        {
+            "name" : "Scavengers", 
+            "faction" : "Orcs",
+            "description" : "Warchief получает спсобность 'scavenger', Гоблины при создании имеют способность 'rush'"
+        },
+        {
+            "name" : "Lighting", 
+            "faction" : "Elves",
+            "description" : "Warchief получает ..."
+        }
+    ]
+}

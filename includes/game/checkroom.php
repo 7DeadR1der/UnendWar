@@ -7,8 +7,8 @@ if (session_status() === PHP_SESSION_NONE) {
     $query = mysqli_query($connect, "SELECT `last_mod` FROM `rooms` WHERE `id_room` = '$idRoom'");
     $row = mysqli_fetch_row($query);
     if($_COOKIE['lm']<$row[0]){
-        echo 'success';
+        echo response(1);
     }else{
-        echo 'nothing';
+        echo response(2,'not change');
     }
 ?>

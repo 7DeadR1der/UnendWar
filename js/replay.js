@@ -5,20 +5,25 @@ replayBlock.style.display = "none";
 let replayJson;
 let replayStatistic;
 let replayTurn = 0;
-const colorPlayers = ['#bababa', '#fc9393', '#60c0ff', '#ffae58', '#f190ff', '#54fd7a', '#e3f054'];
-
-const colorLands = ['#b1c37b','#f0fafa','#e8d479','#b1c37b'];
-//const colorLands = ['#b1c37b','#f0fafa','#efc279','#b1c37b'];
+//const colorPlayers = ['#bababa', '#fc9393', '#60c0ff', '#ffae58', '#f190ff', '#54fd7a', '#e3f054'];
+            //      gray        red         blue    orange   purple    yellow  dark-blue     green   brown
+let colorPlayers = ['#bababa','#f59678','#6bccf7','#ffbd76','#8d87be','#fdf777','#cf8fd1','#f39aac','#7eca9c'];
+const colorLands = ['#b1c37b','#f0fafa','#e8d479','#bc9565'];
+//const colorLands = ['#b1c37b','#f0fafa','#efc279','#b1c37b'];'#fdf777','#cf8fd1',
 for(let i=0;i<8;i++){
+    let stroke = document.createElement('div');
+    stroke.className = 'gfRow';
+
     for(let j=0;j<8;j++){
         let cellAdd = document.createElement('img');
         cellAdd.className = 'gfCell';
         cellAdd.id = `${i}-${j}`;
         cellAdd.src = '';
         cellAdd.onclick = function (){pressCell(i,j)};
-        document.getElementById('game-field').appendChild(cellAdd);
+        stroke.appendChild(cellAdd);
 
     }
+    document.getElementById('game-field').appendChild(stroke);
 }
 
 
@@ -29,7 +34,8 @@ function loadReplay(id){
         let xhr = new XMLHttpRequest();
         xhr.open('GET', folder+'/includes/game/replay.php?id='+id);
         xhr.onload = function(){
-            let res = JSON.parse(xhr.response);
+            let x = JSON.parse(xhr.response);
+            let res = x.data;
             replayJson = JSON.parse(res[0]);
             replayStatistic = JSON.parse(res[1]);
             document.querySelector(`input[name='timeLine']`).max = replayJson.length-1;
@@ -266,10 +272,11 @@ function loadHistory(){
         let xhr = new XMLHttpRequest();
         xhr.open('GET', folder+'/includes/game/replay.php?id=0');
         xhr.onload = function(){
-            let res = JSON.parse(xhr.response);
+            let x = JSON.parse(xhr.response);
+            let res = x.data;
             let table = historyBlock.getElementsByTagName("table")[0];
             let tbody = table.getElementsByTagName("tbody")[0];
-            console.log(res);
+            //console.log(res);
             //let tbody = document.getElementById("history").getElementsByTagName("table").getElementsByTagName("tbody");
             for(let i=0;i<res.length;i++){
                 let row = tbody.insertRow(i);

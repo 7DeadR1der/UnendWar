@@ -86,7 +86,8 @@
     "creationUnits" : [
         {
             "defaultUnit" : true,
-            "type" : "type, t1,t2,t3,warchief,townhall,tower",
+            "pack" : "false or pack name", 
+            "type" : "type, t1,t2,t3,warchief,townhall,tower number(pack) / rnd for random(pack)",
             "owner" : 0,
             "row" : 0,
             "column" : 0
@@ -97,6 +98,12 @@
         [0,0],
         [0,0]
     ],
+    "unitPacks" : {
+        "packName" : [
+            ["unit","t1","Peasant",1,1,1,1,0,["worker"],"img/units/Kingdom/Peasant.png","",""],
+            ["unit","t1","Peasant",1,1,1,1,0,["worker"],"img/units/Kingdom/Peasant.png","",""]
+        ]
+    },
     "settings" : {
         "land" : 0,
         "maxPlayers" : 2,
@@ -104,7 +111,56 @@
         "customGame" : false,
         "randomSpawn" : true,
         "neutralSpawnOnStart" : true,
+        "spawnStartUnit" : true,
         "rowLength" : 8,
         "columnLength" : 8
+    },
+    "factions" : {
+        "customFactions" : false,
+        "Neutral" : {
+            "name" : "Neutral",
+            "t1" : [],
+            "t2" : [],
+            "t3" : [],
+            "warchief" : [],
+            "townhall" : [],
+            "tower" : []
+        },
+        "Kingdom" : {
+            "name" : "Kingdom",
+            "t1" : [],
+            "t2" : [],
+            "t3" : [],
+            "warchief" : [],
+            "townhall" : [],
+            "tower" : []
+        },
+        "SeaMercs" : {
+            "name" : "SeaMercs",
+            "t1" : [],
+            "t2" : [],
+            "t3" : [],
+            "warchief" : [],
+            "townhall" : [],
+            "tower" : []
+        },
+        "Undead" : {
+            "name" : "Undead",
+            "t1" : [],
+            "t2" : [],
+            "t3" : [],
+            "warchief" : [],
+            "townhall" : [],
+            "tower" : []
+        },
+        "Orcs" : {
+            "name" : "Orcs",
+            "t1" : [],
+            "t2" : [],
+            "t3" : [],
+            "warchief" : [],
+            "townhall" : [],
+            "tower" : []
+        }
     }
 }

@@ -13,6 +13,7 @@ $land = 0;
 
 
 $clrLands = ['#b1c37b','#f0fafa','#e8d479','#b1c37b'];    // ['#b1c37b','#f0fafa','#e8d479','#b1c37b'];
+/*
 $fullColor = [
     '#f59678',        //'#f2684e',         //'#bababa', //0 красный
     '#8781bd',        //'#8394ca',        //'#4d6fb9',         //'#fc9393', //1 синий 
@@ -23,7 +24,9 @@ $fullColor = [
     '#f39aac',        //'#ee68a5',         //'#e3f054', //6 розовый
     '#bd8dbf',        //'#a55da6',         //'#bababa', //7 фиолетовый
     '#bababa'         //'#0bb3b6'  7acac7         //'#bababa'  //8 бирюзовый
-];
+];*/
+$fullColor = ['#bababa','#98dcde','#f39197','#8d92d9','#d88bc5','#f6f08c','#f19e65','#73e694','#b68c76'];
+
 $clrPl = [
     '#bababa', //mercs
     '#6bccf7', //kingdom
@@ -75,7 +78,7 @@ $objs = [
 
 // $objs['']
 // $unit['']
-
+/*
 $field = [
     [
         ["contains"=>0 , "src"=>$objs['mnt'], "owner"=>0],
@@ -157,8 +160,8 @@ $field = [
         ["contains"=>1 , "src"=>$unit['st1'], "owner"=>0],
         ["contains"=>0 , "src"=>$objs['tre'], "owner"=>0]
     ],
-];
-/*
+];*/
+
 $field = [
     [
         ["contains"=>0 , "src"=>$objs['mnt'], "owner"=>0],
@@ -240,7 +243,7 @@ $field = [
         ["contains"=>1 , "src"=>$unit['st1'], "owner"=>0],
         ["contains"=>0 , "src"=>$objs['tre'], "owner"=>0]
     ],
-];*/
+];
 
 echo "<div id='game-field'>";
 for($i=0;$i<8;$i++){
@@ -248,7 +251,7 @@ for($i=0;$i<8;$i++){
         echo "<img class='gfCell' ";
         if($field[$i][$j]['contains']!=0){
             echo "src='".$field[$i][$j]['src']."' ";
-            echo "style='background-color: ".$clrPl[$field[$i][$j]['owner']]."' ";
+            echo "style='background-color: ".$fullColor[$field[$i][$j]['owner']]."' ";
         }else{
             if($field[$i][$j]['src'] == ''){
                 echo "src='../img/null.png' ";

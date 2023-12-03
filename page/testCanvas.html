@@ -1,0 +1,66 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+ 
+</head>
+<body>    -->
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+    
+        }
+    #ffmain{
+        width: 420px;
+        height: 420px;
+        max-width: 420px;
+        max-height: 420px;
+        display: flex;
+        flex-direction: column;
+        align-items:safe center;
+        justify-content: safe center;
+        overflow: auto;
+    
+        background-color: #0a0a0a;
+        padding: 2px;
+    }
+    .stroke{
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+    }
+    .cell {
+        width: 50px;
+        height: 50px;
+        background-color: #bababa;
+        margin: 1px;
+        position: relative;
+        border: 1px solid black;
+    }
+    .cell:hover{
+        border: 2px solid yellow;
+    }
+    </style>
+    <div id="ffmain"></div>
+<script type="text/javascript">
+    let gf = document.getElementById('ffmain');
+    let row = 11;
+    let col = 11;
+        for(let i=0; i<row; i++){
+            let stroke = document.createElement('div');
+            stroke.className = 'stroke';
+
+            for(let j=0; j<col; j++){
+                let cell = document.createElement('div');
+                cell.className = 'cell';
+                cell.id = i+'-'+j;
+
+
+                stroke.appendChild(cell);
+            }
+            gf.appendChild(stroke);
+        }
+</script>
+<!-- </body>
+</html> -->

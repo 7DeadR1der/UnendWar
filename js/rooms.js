@@ -47,14 +47,29 @@ function checkUser(type){
     let xhr = new XMLHttpRequest();
     xhr.open('GET',folder+'/includes/checkuser.php?type='+type);
     xhr.onload = function (){
-        value = xhr.response;
-        if(value == 'rooms'){
-            document.getElementById('room-block').style.display = 'flex';
-            loadRooms();
-        }else {
-            document.getElementById('game-block').style.display = 'flex';
-            loadGame(value);
+        let x = JSON.parse(xhr.response);
+        switch(x.status){
+            case 3:
+                document.getElementById('room-block').style.display = 'flex';
+                loadRooms();
+                break;
+            case 2:
+                document.getElementById('game-block').style.display = 'flex';
+                loadGame(x.data);
+                break;
+            default:
+                x.message = x.message ? x.message : 'Unknown error';
+                alert(x.message);
+                break;
         }
+        // value = xhr.response;
+        // if(value == 'rooms'){
+        //     document.getElementById('room-block').style.display = 'flex';
+        //     loadRooms();
+        // }else {
+        //     document.getElementById('game-block').style.display = 'flex';
+        //     loadGame(value);
+        // }
     }
     xhr.send();
 }
@@ -63,7 +78,16 @@ function loadRooms(){
     let xhr = new XMLHttpRequest();
     xhr.open('GET',folder+'/includes/game/loadrooms.php');
     xhr.onload = function (){
-        document.getElementById('room-content').innerHTML = xhr.response;
+        let x = JSON.parse(xhr.response);
+        switch(x.status){
+            case 1:
+                document.getElementById('room-content').innerHTML = x.data;
+                break;
+            default:
+                x.message = x.message ? x.message : 'Unknown error';
+                alert(x.message);
+                break;
+        }
     }
     xhr.send();
 }
@@ -72,60 +96,70 @@ function loadGame(num){
     let xhr = new XMLHttpRequest();
     xhr.open('GET', folder+'/includes/game/loadgame.php?id='+num);
     xhr.onload = function (){
-        if(xhr.response[0] == '<'){
-            document.getElementById('game-block').innerHTML = xhr.response;
-            checkRoomFlag = true;       
-        }else if (xhr.response[0] == '{'){
-            let jsonData = JSON.parse(xhr.response);
-            if(jsonData.gameVictoryCond.winner == false){
-                //console.log(jsonData);
-                loadGameFile(jsonData);
-                checkRoomFlag = true;
-            }else{
-            //game end
-            }
-        }else{
-            //game end
-                checkRoomFlag = false;
-                let doc = document.getElementById('gameStatistic');
-                let array = JSON.parse(xhr.response)
-                //let array = jsonData.gamePlayers;
-                let ine = '';
-                for(let i=1;i<array.length;i++){
-                    ine += '<div>';
-                    ine += '<h4>'+array[i]['name']+'</h4>';
-                    if(array[i]['live'] == true){
-                        ine += '<h4>Победитель!</h4>';
-                    }
-                    ine += '<ul>';
-                    ine += '<li>Фракция - '+array[i]['faction']['name']+'</li>';
-                    ine += '<li>Количество очков - '+array[i]['statistic']['score']+'</li>';
-                    ine += '<li>Золота получено - '+array[i]['statistic']['goldUp']+'</li>';
-                    ine += '<li>Золота потрачено - '+array[i]['statistic']['goldDown']+'</li>';
-                    ine += '<li>Вождей создано - '+array[i]['statistic']['warchiefUp']+'</li>';
-                    ine += '<li>Вождей убито - '+array[i]['statistic']['warchiefDown']+'</li>';
-                    if(typeof(array[i]['statistic']['workerUp'] != undefined && array[i]['statistic']['workerUp'] !== null)){
-                        ine += '<li>Рабочих создано - '+array[i]['statistic']['workerUp']+'</li>';
-                        ine += '<li>Рабочих убито - '+array[i]['statistic']['workerDown']+'</li>';
-                    }
-                    ine += '<li>Юнитов создано - '+array[i]['statistic']['unitUp']+'</li>';
-                    ine += '<li>Юнитов убито - '+array[i]['statistic']['unitDown']+'</li>';
-                    ine += '<li>Зданий построено - '+array[i]['statistic']['buildUp']+'</li>';
-                    ine += '<li>Зданий разрушено - '+array[i]['statistic']['buildDown']+'</li>';
-                    ine += '<li>Опыта получено - '+array[i]['exp']+'</li>';
-                    let skillStr = '';
-                    array[i]['skills'].forEach(skill => {
-                        skillStr += skill+', ';
-                    });
-                    ine += '<li>Навыки - '+skillStr+'</li>';
-                    ine += '</ul>';
-                    ine += '</div>';
+        //console.log(xhr.response);
+        let x = JSON.parse(xhr.response);
+        switch(x.status){
+            case 1:
+                document.getElementById('game-block').innerHTML = x.data;
+                checkRoomFlag = true;  
+                break;
+            case 2:
+                let jsonData = x.data;//JSON.parse(x.data);
+                if(jsonData.gameVictoryCond.winner == false){
+                    //console.log(jsonData);
+                    loadGameFile(jsonData);
+                    checkRoomFlag = true;
+                }else{
+                //game end
                 }
-                doc.innerHTML = ine;
-                dialogEndGame(1);
-
-                //alert(`Игра окончена! Победитель игрок - ${xhr.response}`)
-                exitRoom(true);
+                break;
+            case 3:
+                //game end
+                    checkRoomFlag = false;
+                    let doc = document.getElementById('gameStatistic');
+                    let array = x.data;//JSON.parse(x.data);
+                    //let array = jsonData.gamePlayers;
+                    let ine = '';
+                    for(let i=1;i<array.length;i++){
+                        ine += '<div>';
+                        ine += '<h4>'+array[i]['name']+'</h4>';
+                        if(array[i]['live'] == true){
+                            ine += '<h4>Победитель!</h4>';
+                        }
+                        ine += '<ul>';
+                        ine += '<li>Фракция - '+array[i]['faction']['name']+'</li>';
+                        ine += '<li>Количество очков - '+array[i]['statistic']['score']+'</li>';
+                        ine += '<li>Золота получено - '+array[i]['statistic']['goldUp']+'</li>';
+                        ine += '<li>Золота потрачено - '+array[i]['statistic']['goldDown']+'</li>';
+                        ine += '<li>Вождей создано - '+array[i]['statistic']['warchiefUp']+'</li>';
+                        ine += '<li>Вождей убито - '+array[i]['statistic']['warchiefDown']+'</li>';
+                        if(typeof(array[i]['statistic']['workerUp'] != undefined && array[i]['statistic']['workerUp'] !== null)){
+                            ine += '<li>Рабочих создано - '+array[i]['statistic']['workerUp']+'</li>';
+                            ine += '<li>Рабочих убито - '+array[i]['statistic']['workerDown']+'</li>';
+                        }
+                        ine += '<li>Юнитов создано - '+array[i]['statistic']['unitUp']+'</li>';
+                        ine += '<li>Юнитов убито - '+array[i]['statistic']['unitDown']+'</li>';
+                        ine += '<li>Зданий построено - '+array[i]['statistic']['buildUp']+'</li>';
+                        ine += '<li>Зданий разрушено - '+array[i]['statistic']['buildDown']+'</li>';
+                        ine += '<li>Опыта получено - '+array[i]['exp']+'</li>';
+                        let skillStr = '';
+                        array[i]['skills'].forEach(skill => {
+                            skillStr += skill+', ';
+                        });
+                        ine += '<li>Навыки - '+skillStr+'</li>';
+                        ine += '</ul>';
+                        ine += '</div>';
+                    }
+                    doc.innerHTML = ine;
+                    dialogEndGame(1);
+    
+                    //alert(`Игра окончена! Победитель игрок - ${xhr.response}`)
+                    exitRoom(true);
+                break;
+            default:
+                x.message = x.message ? x.message : 'Unknown error';
+                alert(x.message);
+                break;
         }
     }
     xhr.send();
@@ -151,8 +185,20 @@ function createRoom(){
     xhr.open('POST',folder+'/includes/game/createroom.php');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
     xhr.onload = function (){
-        alert(xhr.response);
-        checkUser('active_room');
+        
+        let x = JSON.parse(xhr.response);
+        switch(x.status){
+            case 1:
+                //alert(x.data);
+                checkUser('active_room');
+                break;
+            default:
+                x.message = x.message ? x.message : 'Unknown error';
+                alert(x.message);
+                break;
+        }
+        //alert(xhr.response);
+        //checkUser('active_room');
     };
     xhr.onerror = function(){
         alert('ошибка при создании лобби');
@@ -210,10 +256,9 @@ function checkRoom(){
         let xhr = new XMLHttpRequest();
         xhr.open('GET',folder+'/includes/game/checkroom.php');
         xhr.onload = function(){
-            let rsp = xhr.response;
-            if(rsp == 'success'){
+            let x = JSON.parse(xhr.response);
+            if(x.status == 1){
                 loadGame(0);
-            }else if(rsp == 'nothing'){
             }
 
         }
@@ -241,10 +286,16 @@ function startGame() {
         xhr.open('GET',folder+'/includes/game/startgame.php'+str);
         //xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
         xhr.onload = function(){
-            if(xhr.response == 'success'){
-                loadGame(0);
-            }else{
-                alert(xhr.response);
+            //console.log(xhr.response);
+            let x = JSON.parse(xhr.response);
+            switch(x.status){
+                case 1:
+                    loadGame(0);
+                    break;
+                default:
+                    x.message = x.message ? x.message : 'Unknown error';
+                    alert(x.message);
+                    break;
             }
         }
         xhr.send();
