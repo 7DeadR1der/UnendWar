@@ -67,8 +67,8 @@ if (session_status() === PHP_SESSION_NONE) {
                         <option ".$c[4]." style='background-color:".$clrArr[4]."' value=4>Dark-blue</option>
                         <option ".$c[5]." style='background-color:".$clrArr[5]."' value=5>Yellow</option>
                         <option ".$c[6]." style='background-color:".$clrArr[6]."' value=6>Purple</option>
-                        <option ".$c[7]." style='background-color:".$clrArr[7]."' value=6>Pink</option>
-                        <option ".$c[8]." style='background-color:".$clrArr[8]."' value=6>Green</option>
+                        <option ".$c[7]." style='background-color:".$clrArr[7]."' value=7>Pink</option>
+                        <option ".$c[8]." style='background-color:".$clrArr[8]."' value=8>Green</option>
                         <option ".$c[0]." style='background-color:".$clrArr[0]."' value=9>Gray</option>
                     </select>
 
@@ -110,8 +110,8 @@ if (session_status() === PHP_SESSION_NONE) {
                             <option ".$c[4]." style='background-color:".$clrArr[4]."' value=4>Dark-blue</option>
                             <option ".$c[5]." style='background-color:".$clrArr[5]."' value=5>Yellow</option>
                             <option ".$c[6]." style='background-color:".$clrArr[6]."' value=6>Purple</option>
-                            <option ".$c[7]." style='background-color:".$clrArr[7]."' value=6>Pink</option>
-                            <option ".$c[8]." style='background-color:".$clrArr[8]."' value=6>Green</option>
+                            <option ".$c[7]." style='background-color:".$clrArr[7]."' value=7>Pink</option>
+                            <option ".$c[8]." style='background-color:".$clrArr[8]."' value=8>Green</option>
                             <option ".$c[0]." style='background-color:".$clrArr[0]."' value=9>Gray</option>
                         </select>   
                         </div>";
@@ -138,8 +138,8 @@ if (session_status() === PHP_SESSION_NONE) {
                         <option ".$c[4]." style='background-color:".$clrArr[4]."' value=4>Dark-blue</option>
                         <option ".$c[5]." style='background-color:".$clrArr[5]."' value=5>Yellow</option>
                         <option ".$c[6]." style='background-color:".$clrArr[6]."' value=6>Purple</option>
-                        <option ".$c[7]." style='background-color:".$clrArr[7]."' value=6>Pink</option>
-                        <option ".$c[8]." style='background-color:".$clrArr[8]."' value=6>Green</option>
+                        <option ".$c[7]." style='background-color:".$clrArr[7]."' value=7>Pink</option>
+                        <option ".$c[8]." style='background-color:".$clrArr[8]."' value=8>Green</option>
                         <option ".$c[0]." style='background-color:".$clrArr[0]."' value=9>Gray</option>
                         
                         </select>

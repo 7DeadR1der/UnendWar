@@ -6,12 +6,12 @@ if (session_status() === PHP_SESSION_NONE) {
     $gameName = $_POST['gameName'];
     //echo $gameName;
     $gameMode = $_POST['gameMode'];
-    switch($_POST['gameMap'][1]){
+    /*switch($_POST['gameMap'][1]){
         case'0':
             $gameType= "classic";
             break;
         case'1':
-            $gameType= "hunt";
+            $gameType= "score";
             break;
         case'2':
             $gameType= "collect";
@@ -19,8 +19,8 @@ if (session_status() === PHP_SESSION_NONE) {
         default:
             $gameType= "classic";
             break;
-    };
-    //$gameType = $_POST['gameType'];
+    };*/
+    $gameType = $_POST['gameType'];
     $cwc = $_POST["cwc"]; //Classic Win Check
     $gameMap = $_POST['gameMap'];
     $gameCount = $_POST['gamePlayers'];

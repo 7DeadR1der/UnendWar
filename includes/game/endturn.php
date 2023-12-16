@@ -29,11 +29,15 @@ if (session_status() === PHP_SESSION_NONE) {
             //check Victory
             //win from domination
             if($result["win"]["type"] != 0){
+                $owner = $result["win"]["players"][0];
+                $login = $json->gamePlayers[$owner]->name;
+                $json->gameVictoryCond->winner = $login;
+                $json->gamePlayers[$owner]->statistic->winner = 1;
+
                 if($json->local == 0){
                     //because now exist only one type for win
-                    $owner = $result["win"]["players"][0];
 
-                    $login = $json->gamePlayers[$owner]->name;
+                    //$login = $json->gamePlayers[$owner]->name;
                     //echo $login;
                     $userQuery = mysqli_query($connect,"SELECT `login`, `count_wins`, `win_table` FROM `users` WHERE `login` = '$login'");
                     $user = mysqli_fetch_assoc($userQuery);
@@ -54,7 +58,6 @@ if (session_status() === PHP_SESSION_NONE) {
                         ];
                     }*/
 
-                    $json->gameVictoryCond->winner = $login;
                     //$json->gameStatistic[$owner]["winner"] = 1;
                     $count_wins = $user['count_wins']+1;
                     //echo $count_wins;

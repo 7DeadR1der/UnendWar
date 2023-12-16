@@ -35,7 +35,7 @@ function readJSON(file, callback){
     //xhr.overrideMimeType("application/json");
     xhr.open("GET", folder + file, true);
     xhr.onload = function(){
-        console.log(xhr.response);
+        //console.log(xhr.response);
         //value = JSON.parse(xhr.response);
         //console.log(x);
         
@@ -44,7 +44,7 @@ function readJSON(file, callback){
     return value;
 }
 
-let fff = readJSON("/includes/game/game_settings.JSON");
-console.log(fff);
+//let fff = readJSON("/includes/game/game_settings.JSON");
+//console.log(fff);
 
 

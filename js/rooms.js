@@ -123,7 +123,8 @@ function loadGame(num){
                     for(let i=1;i<array.length;i++){
                         ine += '<div>';
                         ine += '<h4>'+array[i]['name']+'</h4>';
-                        if(array[i]['live'] == true){
+                        //if(array[i]['live'] == true){
+                        if(array[i]['statistic']['winner']==1){
                             ine += '<h4>Победитель!</h4>';
                         }
                         ine += '<ul>';
@@ -169,10 +170,10 @@ function createRoom(){
     let formData = {
         name: document.getElementById('inputGameName').value,
         mode: document.getElementById('selectGameMode').value,
-        //type: 0,
+        type: document.getElementById('selectGameType').value,
         map: document.querySelector('select[name="gameMap"]').value,
         count: document.querySelector('input[name="gamePlayers"]').value,
-        cwc: 0,
+        cwc: 1,
         local: 0
     }
     if(document.getElementById('selectLocalGame').checked){
@@ -204,9 +205,11 @@ function createRoom(){
         alert('ошибка при создании лобби');
     }
     xhr.send('gameName='+encodeURIComponent(formData.name)
+    +'&gameType='+encodeURIComponent(formData.type)
     +'&gameMode='+encodeURIComponent(formData.mode)//+'&gameType='+encodeURIComponent(formData.type)
     +'&cwc='+encodeURIComponent(formData.cwc)
-    +'&gameMap='+encodeURIComponent(formData.map)+'&gamePlayers='+encodeURIComponent(formData.count)
+    +'&gameMap='+encodeURIComponent(formData.map)
+    +'&gamePlayers='+encodeURIComponent(formData.count)
     +'&gameLocal='+encodeURIComponent(formData.local));
     dialogCreateRoom();
 }
