@@ -20,7 +20,7 @@ if (session_status() === PHP_SESSION_NONE) {
                 "gamePlayers" => [],
                 "gameField" => [],
                 //"gameStatistic" => [],
-                "animation" => [],
+                //"animation" => [],
                 "gameLevelSkills" => [],
                 "animation" => ['','','','','','']
 
@@ -37,9 +37,9 @@ if (session_status() === PHP_SESSION_NONE) {
                     $game["gameVictoryCond"]["type"] = false;
                     $game["gameVictoryCond"]["condition"] = false;
                     break;
-                case"hunt":
-                    $game["gameVictoryCond"]["type"] = 'hunt';
-                    $game["gameVictoryCond"]["condition"] = false;
+                case"score":
+                    $game["gameVictoryCond"]["type"] = 'score';
+                    $game["gameVictoryCond"]["condition"] = 45;
                     break;
                 case"collect":
                     $game["gameVictoryCond"]["type"] = 'collect';
