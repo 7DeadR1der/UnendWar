@@ -1,9 +1,18 @@
 "use strict"
+const version = '1.2.6';
 //for local
 //const folder = "/game.exe";
 //for server
 const folder = "";
 
+let metaVer = document.querySelector('meta[name="version"]').content;
+if(metaVer != version){
+    console.log('true reload for update cache');
+    location.reload(true);
+}
+
+
+//
 const localSettings = {
     checkEndTurn: getCookie("checkEndTurn"),
     enableAnimation: getCookie("enableAnimation"),
@@ -27,6 +36,14 @@ function getCookie(name){
         "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1')+"=([^;]*"
     ));
     return matches ? decodeURIComponent(matches[1]) : undefined;*/
+}
+function changeTab(button,num){
+    let container = button.parentElement.parentElement;
+    let items = container.querySelectorAll(".tab-item");
+    items.forEach(item => {
+        item.style.display = 'none';
+    });
+    items[num].style.display = 'flex';
 }
 
 function readJSON(file, callback){

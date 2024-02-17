@@ -73,18 +73,21 @@ if(!isset($_SESSION['user'])){
             <label>Animation</label>
                 <input name="enableAnimation" type="checkbox" '.$cookieEA.'>
                 <br>
-            <label>Language</label>
-            <select>
-                <option '.$_COOKIE["language"]=="en"?"selected":"".' value="en">English</option>
-                <option '.$_COOKIE["language"]=="ru"?"selected":"".' value="ru">Russian</option>
-            </select>
-            <br>
             <button onclick="saveLocalSettings()">Save local settings</button>
             <br>
             </div>
         </div>
     </div>';
 }
+/*
+
+            <label>Language</label>
+            <select>
+                <option '.$_COOKIE["language"]=="en"?"selected":"".' value="en">English</option>
+                <option '.$_COOKIE["language"]=="ru"?"selected":"".' value="ru">Russian</option>
+            </select>
+            <br>
+*/
 //<h4>Настройки игры</h4>
 //<p>Coming soon</p>
 //<button onclick="clearSession()">Завершить все сессии учетной записи</button>

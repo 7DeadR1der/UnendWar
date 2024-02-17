@@ -43,11 +43,13 @@
     "Torre" : ["building","tower","Torre",3,1,0,2,3,["hire"],"img/units/Elves/Torre.png","t3",""],
 
 
-    "Chest" : ["building","t1","Chest",2,0,0,0,0,["treasure","meleeOnly"],"img/units/Neutral/Chest.png","",""],
+    "Chest" : ["building","t1","Chest",2,0,0,0,0,["object","treasure"],"img/units/Neutral/Chest.png","",""],
     "Wolf" : ["unit","t2","Wolf",2,1,1,1,1,[],"img/units/Neutral/Wolf.png","",""],
     "Ogre" : ["unit","t3","Ogre",4,1,1,1,3,[],"img/units/Neutral/Ogre.png","",""],
     "Dragon" : ["unit","warchief","Dragon",7,2,2,1,10,["monster"],"img/units/Neutral/Dragon.png","","2t"],
     "Ogre fort" : ["building","townhall","Ogre fort",6,1,0,1,6,["prison"],"img/units/Neutral/Ogre fort.png","",""],
-    "Bandit outpost" : ["building","tower","Bandit outpost",3,1,0,1,3,[],"img/units/Neutral/Bandit outpost.png","",""]
+    "Bandit outpost" : ["building","tower","Bandit outpost",3,1,0,1,3,[],"img/units/Neutral/Bandit outpost.png","",""],
 
+    "Grave" : ["building","t1","Grave",1,0,0,0,0,["object","grave"],"img/units/Neutral/Grave.png","",""],
+    "Herzog" : ["unit","warchief","Herzog",5,2,1,1,7,["infect","lifeGift"],"img/units/Neutral/Herzog.png","","2t"]
 }

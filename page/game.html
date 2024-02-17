@@ -10,8 +10,7 @@
         <div id="room-content">
         </div>
     </div>
-    <div id="game-block">
-    </div>
+    <div id="game-block"></div>
 </main>
 
     <div class="dialog-block">
@@ -42,6 +41,7 @@
                     <option value="20lr">(2)Last Refuge</option>
                     <option value="20ds">(2)Dragon Storm</option>
                     <option value="20wp">(2)Wolf Pit</option>
+                    <option value="20dv">(2)Death Valley</option>
                     <!-- <option value="20gm">(2)Golden Mountains</option>
                     <option value="20lm">(2)Lonely Mountain</option>
                     <option value="20mc">(2)Meeting Cave</option>
@@ -86,6 +86,9 @@
         <div class="dialog-menu">
             <div id="menu-score">
                 <h5>Счет</h5>
+                <ul id="info-list">
+
+                </ul>
                 <table class="info-table">
                     <thead>
                         <tr>
@@ -100,10 +103,40 @@
                 </table>
             </div>
             <!-- <button onclick="surrender()">Сдаться</button> --><!-- Доделать -->
+            <!-- <button onclick="dialogFaction(1)">Ваша Фракция</button> -->
             <button onclick="exitRoom();dialogMenu(0);">Выйти из игры</button>
             <button onclick="endTurn(1);dialogMenu(0);">Сдаться</button>
             <button onclick="dialogMenu(0)">Закрыть</button>
         </div>
+        <div class="dialog-faction">
+            <h5>Ваша Фракция</h5>
+            <h6 id="dialog-faction-name"></h6>
+            <ol id="dialog-faction-skills">
+
+            </ol>
+            <!--
+                Technology
+            -->
+            <div class="tab">
+                <div class="tab-nav">
+                    <button class="tab-link" onclick="changeTab(this,0)">T1</button>
+                    <button class="tab-link" onclick="changeTab(this,1)">T2</button>
+                    <button class="tab-link" onclick="changeTab(this,2)">T3</button>
+                    <button class="tab-link" onclick="changeTab(this,3)">Warchief</button>
+                    <button class="tab-link" onclick="changeTab(this,4)">Townhall</button>
+                    <button class="tab-link" onclick="changeTab(this,5)">Tower</button>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-item" id="tab-t1"></div>
+                    <div class="tab-item" id="tab-t2"></div>
+                    <div class="tab-item" id="tab-t3"></div>
+                    <div class="tab-item" id="tab-warchief"></div>
+                    <div class="tab-item" id="tab-townhall"></div>
+                    <div class="tab-item" id="tab-tower"></div>
+                </div>
+            </div>
+            <button onclick="dialogFaction(0)">Закрыть</button>
+        </div>
     </div>
-    <script src="js/rooms.js"></script>
     <script src="js/game.js"></script>
+    <script src="js/rooms.js"></script>

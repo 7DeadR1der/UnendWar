@@ -11,6 +11,7 @@ if (isset($_GET['page'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="version" content="1.2.6">
     <script src="js/const.js"></script>
     <?php 
         include("template/head.html");

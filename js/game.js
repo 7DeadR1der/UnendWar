@@ -8,7 +8,7 @@
 const colorPlayers =['#bababa','#f59678','#6bccf7','#ffbd76','#8d87be','#fdf777','#cf8fd1','#f39aac','#7eca9c'];
 
 
-const colorLands = ['#b1c37b','#f0fafa','#e8d479','#bc9565'];
+const colorLands = ['#b1c37b','#f0fafa','#e8d479','#c7a787'];//#bc9565
 //colors cursors? 
 const colorCursor = ['2px solid white','2px solid blue', '2px solid red','2px solid #00ff00','2px solid #19ffff'];
 let thisPlayer;
@@ -503,8 +503,35 @@ function getRandomInt(min, max) {
 // ---------------Game create and update---------------
 
 function loadGameFile(json){
-    if (document.getElementById('game-field') === null){
+    if (document.getElementById('game-field')===null){
         document.getElementById('game-block').innerHTML = gamestring;
+        
+        document.getElementById('game-field').addEventListener('mousedown', (e)=> {
+            isDown = true;
+            startX = e.pageX - document.getElementById('game-field').offsetLeft;
+            startY = e.pageY - document.getElementById('game-field').offsetTop;
+            scrollLeft = document.getElementById('game-field').scrollLeft;
+            scrollTop = document.getElementById('game-field').scrollTop;
+        })
+        document.getElementById('game-field').addEventListener('mouseleave', (e)=>{
+            isDown = false;
+            document.getElementById('game-field').style.cursor = 'default';
+        })
+        document.getElementById('game-field').addEventListener('mouseup', (e)=>{
+            isDown = false;
+            document.getElementById('game-field').style.cursor = 'default';
+        })
+        document.getElementById('game-field').addEventListener('mousemove', (e)=>{
+            if (!isDown) return;
+            document.getElementById('game-field').style.cursor = 'all-scroll'//'grabbing';
+            e.preventDefault();
+            const x = e.pageX - document.getElementById('game-field').offsetLeft;
+            const y = e.pageY - document.getElementById('game-field').offsetTop;
+            const walkX = (x - startX) * 1; // Change this number to adjust the scroll speed
+            const walkY = (y - startY) * 1; // Change this number to adjust the scroll speed
+            document.getElementById('game-field').scrollLeft = scrollLeft - walkX;
+            document.getElementById('game-field').scrollTop = scrollTop - walkY;
+        })
         //console.log(json);
         let row = json.gameSize[0];
         let col = json.gameSize[1];
@@ -682,13 +709,14 @@ function loadField(json){
                         document.getElementById('list_player').style.backgroundColor = colorPlayers[thisPlayer.color];
                         document.getElementById('li_PlayerName').textContent = `${thisPlayer.name}`;
                         let imgs = '';
+                        document.getElementById('dialog-faction-skills').innerHTML = '';
                         thisPlayer.skills.forEach(skill => {
                             let text = "";
                             switch(skill){
                                 case"Strength I":
                                     text = gameSettings.skills[0].description;
                                     break;
-                                case"Strength II":
+                                case"Endurance":
                                     text = gameSettings.skills[1].description;
                                     break;
                                 case"Pathfinder":
@@ -719,14 +747,35 @@ function loadField(json){
                                     text = "ошибка описания";
                                     break;
                             }
+                            document.getElementById('dialog-faction-skills').innerHTML += `<li>${skill} - ${text}</li>`;
                             imgs += `\u00A0\u00A0<img alt="${skill}" src="img/icons/skills/16${skill}.png" title="${text}">`;
                         });
                         if(imgs!=''){
                             document.getElementById('li_PlayerName').insertAdjacentHTML('beforeend', imgs);
                         }
+                        let varNextLevelExp = 0;
+                        switch(thisPlayer.level){
+                            case 0:
+                                varNextLevelExp=gameSettings.level1;
+                                break;
+                            case 1:
+                                varNextLevelExp=gameSettings.level2;
+                                break;
+                            case 2:
+                                if(thisPlayer.faction.name === 'Orcs'){
+                                    varNextLevelExp=gameSettings.level3;
+                                }else{
+                                    varNextLevelExp = 'X';
+                                }
+                                break;
+                            default:
+                                varNextLevelExp = 'X';
+                                break;
+                            
+                        }
                         document.getElementById('li_PlayerGold').textContent = `Золото = ${thisPlayer.gold}`;
-                        document.getElementById('li_PlayerLevel').textContent = `Уровень = ${thisPlayer.level}`;
-                        document.getElementById('li_PlayerExp').textContent = `Опыт = ${thisPlayer.exp}`;
+                        document.getElementById('li_PlayerLevel').textContent = `Уровень = ${thisPlayer.level}` + ` (${thisPlayer.exp}/${varNextLevelExp})`;
+                        //document.getElementById('li_PlayerExp').textContent = `Опыт = ${thisPlayer.exp}`;
                         document.getElementById('li_limit_workers').textContent = `Рабочие - ${thisPlayer.count_workers}/${gameSettings.limit_workers}`;
                         document.getElementById('li_limit_army').textContent = `Армия - ${thisPlayer.count_army}/${gameSettings.limit_army}`;
                         document.getElementById('li_limit_warchiefs').textContent = `Вожди - ${thisPlayer.count_warchiefs}/${gameSettings.limit_warchiefs}`;
@@ -740,7 +789,29 @@ function loadField(json){
                         document.getElementById('btnBuyWarchief').textContent = 'Нанять ' + thisPlayer.faction.warchief[2];
                         document.getElementById('btnBuildTownhall').textContent = 'Построить ' + thisPlayer.faction.townhall[2];
                         document.getElementById('btnBuildTower').textContent = 'Построить ' + thisPlayer.faction.tower[2];
-                    
+                        //Faction tree
+                        document.getElementById('dialog-faction-name').innerHTML = thisPlayer.faction.name;
+                        let arrayFactionUnits = [thisPlayer.faction.t1,thisPlayer.faction.t2,thisPlayer.faction.t3,thisPlayer.faction.warchief,thisPlayer.faction.townhall,thisPlayer.faction.tower];
+                        arrayFactionUnits.forEach(elem => {
+                            let tabIndex = 'tab-' + elem[1];
+                            let string = "";
+                            string += `<img src="${elem[9]}" alt="${elem[2]}">`;
+                            string += `<h6>${elem[2]}</h6>`;
+                            string += 
+                            `<ul>` +
+                            `<li>Type - ${elem[0]}</li>` +
+                            `<li>Class - ${elem[1]}</li>` +
+                            `<li>Health - ${elem[3]}</li>` +
+                            `<li>Attack - ${elem[4]}</li>` +
+                            `<li>Speed - ${elem[5]}</li>` +
+                            `<li>Range - ${elem[6]}</li>` +
+                            `<li>Price - ${elem[7]}</li>` +
+                            `<li>Ability - ${elem[8].join(', ')}</li>` +
+                            `</ul>`;
+                            document.getElementById(tabIndex).innerHTML = string;
+
+                        });
+
                     }
                 }else{
                     container.getElementsByTagName('img')[0].style.filter = 'brightness(100%)';
@@ -767,6 +838,11 @@ function loadField(json){
         }
     }
     //score
+    let menuList = document.getElementById("menu-score").getElementsByTagName("ul")[0];
+    menuList.innerHTML = "";
+    let strTypeWin = (json.gameVictoryCond.type == false) ? 'Classic' : json.gameVictoryCond.type;
+    let strCondWin = (json.gameVictoryCond.condition == false) ? '' : ' ('+json.gameVictoryCond.condition+')';
+    menuList.innerHTML += "<li>Условие победы - " + strTypeWin + strCondWin + "</li>";
     let menuScore = document.getElementById('menu-score').getElementsByTagName('table')[0].getElementsByTagName('tbody')[0];
     menuScore.innerHTML = '';
     for(let i=0;i<json.gamePlayers.length-1;i++){
@@ -940,6 +1016,7 @@ function animation(container,color){
 
 }
 
+//scrolling game field
 
 
 //'<h5 id="game-header-h5"></h5>'+
@@ -948,7 +1025,7 @@ const gamestring = '<div id="game-header">'+
 '<h4 id="game-header-player"></h4>'+
 '<button id="btnDialogMenu" onclick="dialogMenu(1)">Меню</button>'+
 '</div>'+
-'<div id="game-field">   </div>'+
+'<div id="game-field"></div>'+
 '<div id="game-btns">'+
 '<button id="btnCancel" onclick="cancel()" style="display: none">Отмена</button>'+
 '<button id="btnBuildTownhall" onclick="build(`townhall`)" style="display: none">Построить Townhall</button>'+
@@ -966,10 +1043,10 @@ const gamestring = '<div id="game-header">'+
 '</div>'+
 '<div id="game-info">'+
 '<ul id="list_player">'+
-    '<li id="li_PlayerName"></li>'+
+    '<li id="li_PlayerName" onclick="dialogFaction(1)"></li>'+
     '<li id="li_PlayerGold"></li>'+
     '<li id="li_PlayerLevel"></li>'+
-    '<li id="li_PlayerExp"></li>'+
+    //'<li id="li_PlayerExp"></li>'+
     '<li id="li_limit_workers"></li>'+
     '<li id="li_limit_army"></li>'+
     '<li id="li_limit_warchiefs"></li>'+
@@ -1012,6 +1089,12 @@ const gameSettings = {
         {name:'Engineering', description:'Все здания получают +1 к прочности'},
         {name:'Undead I', description:'Увеличивает здоровье Лича на 1 ед., зомби получают спсобность "infect"'},
         {name:'Undead II', description:'Увеличивает здоровье Лича на 1 ед., Лич получает способность "darkStorm"'},
-        {name:"Scavengers", description:"Warchief получает спсобность 'scavenger', Гоблины при создании имеют способность 'rush'"},// и Warchief
+        {name:"Scavengers", description:"Получаемый опыт увлечивается на 1 ед., орки (Т2) получают способность 'cannibal'"},// и Warchief
     ]
 };
+
+let isDown = false;
+let startX;
+let startY;
+let scrollLeft;
+let scrollTop;
