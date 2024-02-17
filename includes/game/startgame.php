@@ -13,7 +13,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
             $game = [
                 "gameTurn" => 1,
-                "gameLand" => mt_rand(0,2),
+                "gameLand" => mt_rand(0,3),
                 "local" => $room['local'],
                 "gameSize" => [8,8],
                 "gameVictoryCond" => [],
@@ -112,6 +112,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                 $array[$k-1]["faction"]="Elves";
                                 break;
                             default:
+                                $array[$k-1]["faction"]="Kingdom";
                                 break;
                         }
                     } 

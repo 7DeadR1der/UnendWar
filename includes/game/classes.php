@@ -277,7 +277,7 @@ $gameObjs = [
     
     //Neutral
 
-        "Chest" => ['building','t1','Chest',2,0,0,0,0,['treasure','meleeOnly'],'img/units/Neutral/Chest.png','',''],
+        "Chest" => ['building','t1','Chest',2,0,0,0,0,['treasure','object'],'img/units/Neutral/Chest.png','',''],
         "Wolf" => ['unit','t2','Wolf',2,1,1,1,1,[],"img/units/Neutral/Wolf.png",'',''],
         "Ogre" => ['unit','t3','Ogre',4,1,1,1,3,[],"img/units/Neutral/Ogre.png",'',''],
         "Dragon" => ['unit','warchief','Dragon',7,2,2,1,10,['monster'],"img/units/Neutral/Dragon.png",'','2t'],
@@ -447,7 +447,7 @@ function action(int $fi, int $fj, $btn, int $si, int $sj, $param){
                     //attack
                     //new
                     if($fUnit->canAction == true && (abs($fi-$si)+abs($fj-$sj))<=$fUnit->range){
-                        if(in_array('meleeOnly',$sUnit->ability)){
+                        if(in_array('object',$sUnit->ability)){
                             if((abs($fi-$si)+abs($fj-$sj))<=1){
                                 //open chest
                                 $sUnit->hp -= 1;
@@ -737,6 +737,7 @@ function action(int $fi, int $fj, $btn, int $si, int $sj, $param){
                         
                         $fUnit->canAction =false;
                         setGold($player,'-',1);
+                        scoring($player,1);
                         //$json->gamePlayers[$player]->scoring($player,1);
                         array_push($sUnit->ability,'armor');
                         $animType = 'smith';
@@ -902,6 +903,10 @@ function kill($fi,$fj,$si,$sj){
     $killUnit = true;
     // check onDeath ability
     if(in_array('rebirth', $sUnit->ability) && $killUnit == true){
+        $search = array_search('rebirth',$sUnit->ability);
+            if($search !== false){
+                array_splice($sUnit->ability,$search,1);
+            }
         $killUnit = false;
         $sUnit->hp = $sUnit->hpMax;
         array_push($sUnit->ability,'evasion');
@@ -972,15 +977,31 @@ function kill($fi,$fj,$si,$sj){
     if(in_array('treasure',$sUnit->ability)){
         setGold($player,'+',3);
     }
+    if(in_array('grave',$sUnit->ability)){
+        setGold($player,'+',2);
+        if($killUnit == true){
+            $spawn = spawn(GAME_OBJ["Skeleton"],0,false,true,false);
+            if($spawn != false){
+                $sUnit = $spawn;
+                $killUnit = false;
+            }
+        }
+    }    
     if(in_array('monster',$sUnit->ability)){
         $fUnit->hpMax+=1;
         $fUnit->hp+=1;
         $exp += 3;
     }
+    if(in_array('lifeGift',$sUnit->ability)){
+        if($fUnit->type == 'unit' && !in_array('rebirth',$fUnit->ability)){
+            array_push($fUnit->ability,'rebirth');
+        }
+    }
+
     if(in_array('prison',$sUnit->ability)){
-        $arrayChance = ['T','T','T','T','G','G','G','G','G','G'];
+        $arrayChance = ['T','T','T','T','T','T','T','G','G','G'];
         $rnd =array_rand($arrayChance);
-        $goldValue = 5;
+        $goldValue = 6;
         switch($arrayChance[$rnd]){
             case 'T':
                 $rndPl = array_rand($json->gamePlayers);
@@ -1009,6 +1030,9 @@ function kill($fi,$fj,$si,$sj){
                 break;
         }
         
+    }
+    if(in_array('Scavengers', $json->gamePlayers[$player]->skills)){
+        $exp+=1;
     }
     $json->gamePlayers[$player]->exp+=$exp;
     if($killUnit == true){

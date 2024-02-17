@@ -51,7 +51,7 @@
         {
             "name" : "Scavengers", 
             "faction" : "Orcs",
-            "description" : "Warchief получает спсобность 'scavenger', Гоблины при создании имеют способность 'rush'"
+            "description" : "Теперь за каждое убийство вы будете получать на 1 ед. опыта больше, а орки (T2) получают способность 'cannibal'"
         },
         {
             "name" : "Lighting", 

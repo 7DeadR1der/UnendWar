@@ -8,7 +8,7 @@ let replayTurn = 0;
 //const colorPlayers = ['#bababa', '#fc9393', '#60c0ff', '#ffae58', '#f190ff', '#54fd7a', '#e3f054'];
             //      gray        red         blue    orange   purple    yellow  dark-blue     green   brown
 let colorPlayers = ['#bababa','#f59678','#6bccf7','#ffbd76','#8d87be','#fdf777','#cf8fd1','#f39aac','#7eca9c'];
-const colorLands = ['#b1c37b','#f0fafa','#e8d479','#bc9565'];
+const colorLands = ['#b1c37b','#f0fafa','#e8d479','#c7a787'];
 //const colorLands = ['#b1c37b','#f0fafa','#efc279','#b1c37b'];'#fdf777','#cf8fd1',
 for(let i=0;i<8;i++){
     let stroke = document.createElement('div');

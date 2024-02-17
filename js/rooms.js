@@ -28,6 +28,15 @@ function dialogMenu(a){
         c.style.display = 'none';
     }
 }
+function dialogFaction(a){
+    dialogBack(a);
+    let c = document.getElementsByClassName('dialog-faction')[0];
+    if(a == 1){
+        c.style.display = 'flex';
+    }else{
+        c.style.display = 'none';
+    }
+}
 function dialogBack(a){
     let dialog = document.getElementsByClassName('dialog-block')[0];
     if (a == 1){
@@ -40,6 +49,8 @@ function dialogBack(a){
 
 }
 
+
+//
 function checkUser(type){
     document.getElementById('room-block').style.display = 'none';
     document.getElementById('game-block').style.display = 'none';
@@ -267,7 +278,7 @@ function checkRoom(){
         }
         xhr.send();
     }
-    setTimeout(checkRoom,2000);
+    setTimeout(checkRoom,1500);
 
 }
 
@@ -310,6 +321,7 @@ function selectMapType(val){
     document.getElementById('countRangeDisplay').textContent=val[0];
     document.getElementById('inputRangePlayers').max = val[0];
     document.getElementById('inputRangePlayers').value = val[0];
+    /*
     switch(val[1]){
         case '0':
             document.getElementById('classicWinCheck').disabled = true;
@@ -328,7 +340,7 @@ function selectMapType(val){
             break;
         default:
             break;
-    }
+    }*/
 }
 
 //checkUser();

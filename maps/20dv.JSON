@@ -1,0 +1,127 @@
+{
+    "name": "Death Valley",
+    "shortName" : "dv",
+    "field" : [
+        [
+            {"contains":false,"resCount":0,"obstacle":1,"row":0,"column":0},
+            {"contains":false,"resCount":9,"obstacle":0,"row":0,"column":3},
+            {"contains":false,"resCount":0,"obstacle":2,"row":0,"column":4}
+        ],
+        [
+            {"contains":false,"resCount":12,"obstacle":0,"row":1,"column":0}
+        ],
+        [
+        ],
+        [
+            {"contains":false,"resCount":0,"obstacle":1,"row":3,"column":7}
+        ],
+        [
+            {"contains":false,"resCount":9,"obstacle":0,"row":4,"column":7}
+        ],
+        [
+            {"contains":false,"resCount":0,"obstacle":2,"row":5,"column":0}
+        ],
+        [
+        ],
+        [
+            {"contains":false,"resCount":0,"obstacle":1,"row":7,"column":2},
+            {"contains":false,"resCount":12,"obstacle":0,"row":7,"column":6},
+            {"contains":false,"resCount":0,"obstacle":2,"row":7,"column":7}
+        ]
+    ],
+    "creationUnits" : [
+        {
+            "defaultUnit" : false,
+            "pack" : false, 
+            "type" : "Herzog",
+            "owner" : 0,
+            "row" : 1,
+            "column" : 6
+        },
+        {
+            "defaultUnit" : true,
+            "pack" : false, 
+            "type" : "t3",
+            "owner" : 0,
+            "row" : 6,
+            "column" : 1
+        },
+        {
+            "defaultUnit" : true,
+            "pack" : false, 
+            "type" : "tower",
+            "owner" : 0,
+            "row" : 0,
+            "column" : 3
+        },
+        {
+            "defaultUnit" : true,
+            "pack" : false, 
+            "type" : "tower",
+            "owner" : 0,
+            "row" : 4,
+            "column" : 7
+        },
+        {
+            "defaultUnit" : false,
+            "pack" : false, 
+            "type" : "Grave",
+            "owner" : 0,
+            "row" : 4,
+            "column" : 0
+        },
+        {
+            "defaultUnit" : false,
+            "pack" : false, 
+            "type" : "Grave",
+            "owner" : 0,
+            "row" : 6,
+            "column" : 0
+        },
+        {
+            "defaultUnit" : false,
+            "pack" : false, 
+            "type" : "Grave",
+            "owner" : 0,
+            "row" : 7,
+            "column" : 0
+        },
+        {
+            "defaultUnit" : false,
+            "pack" : false, 
+            "type" : "Grave",
+            "owner" : 0,
+            "row" : 7,
+            "column" : 1
+        },
+        {
+            "defaultUnit" : false,
+            "pack" : false, 
+            "type" : "Grave",
+            "owner" : 0,
+            "row" : 7,
+            "column" : 3
+        }
+
+    ],
+    "startPositions" : [
+        [2,1],
+        [6,5]
+    ],
+    "unitPacks" : {
+    },
+    "settings" : {
+        "land" : 3,
+        "maxPlayers" : 2,
+        "typeGame" : 0,
+        "customGame" : false,
+        "randomSpawn" : true,
+        "neutralSpawnOnStart" : true,
+        "spawnStartUnit" : true,
+        "rowLength" : 8,
+        "columnLength" : 8
+    },
+    "factions" : {
+        "customFactions" : false
+    }
+}
