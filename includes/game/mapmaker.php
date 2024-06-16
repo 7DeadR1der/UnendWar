@@ -12,6 +12,16 @@ function mapMaker($field, $map, $count, $type, $mode, $players){
         $jsonMap = json_decode(file_get_contents("../../maps/".$map.".JSON"));
         $mapSettings = $jsonMap->settings;
         $json->gameLand = $jsonMap->settings->land;
+        neutralByLand($json->gameLand);
+        $json->gameSize[0]= $mapSettings->rowLength;
+        $json->gameSize[1]= $mapSettings->columnLength;
+        
+        for($i=0;$i<$mapSettings->rowLength;$i++){
+            for($j=0;$j<$mapSettings->columnLength;$j++){
+                //$field[$i][$j] = new Cell($i,$j);
+                $json->gameField[$i][$j] = new Cell($i,$j);
+            }
+        };
 
 
 
@@ -69,14 +79,19 @@ function mapMaker($field, $map, $count, $type, $mode, $players){
     }else{
         $mapSettings = 'rnd';
         neutralByLand($json->gameLand);
-        $i_f=8;
-        $j_f=8;
+        $i_f=$json->gameSize[0];
+        $j_f=$json->gameSize[1];
         $start_value = mt_rand(15,21);
         $count_zone_cells = ($i_f*$j_f)-($count*9);
         $zone_value = mt_rand(round($count_zone_cells*1.5), round($count_zone_cells*2.5));
         $pack_start = ['g','g','g','g','A','c','c','c','T1','T2'];
         $pack_res = ['g','g','g','g','c','c','c','t','t','Th'];
         $pack_enemy = ['T2','T2','T2','T2','T2','T2','T3','T3','T3','W'];
+        for($i=0;$i<$i_f;$i++){
+            for($j=0;$j<$j_f;$j++){
+                $json->gameField[$i][$j] = new Cell($i,$j);
+            }
+        };
         
         $hash_field = [];
         for($i=0;$i<$i_f;$i++){
@@ -278,7 +293,7 @@ function mapMaker($field, $map, $count, $type, $mode, $players){
                         break;
                     case 'W':
                             if($value_enemy>=12){
-                                $json->gameField[$i][$j]->contains = spawn($json->gamePlayers[0]->faction->warchief,0,false,true,false);
+                                $json->gameField[$i][$j]->contains = spawn($json->gamePlayers[0]->faction->leader,0,false,true,false);
                                 $value_enemy-=12;
                                 array_splice($hash_field,$rnd,1);
                             }
@@ -402,7 +417,7 @@ function neutralByLand($land){
             $json->gamePlayers[0]->faction->t1 = GAME_OBJ['Chest'];
             $json->gamePlayers[0]->faction->t2 = GAME_OBJ['Wolf'];
             $json->gamePlayers[0]->faction->t3 = GAME_OBJ['Ogre'];
-            $json->gamePlayers[0]->faction->warchief = GAME_OBJ['Dragon'];
+            $json->gamePlayers[0]->faction->leader = GAME_OBJ['Dragon'];
             $json->gamePlayers[0]->faction->townhall = GAME_OBJ['Ogre fort'];
             $json->gamePlayers[0]->faction->tower = GAME_OBJ['Bandit outpost'];
             break;
@@ -410,31 +425,31 @@ function neutralByLand($land){
             $json->gamePlayers[0]->faction->t1 = GAME_OBJ['Chest'];
             $json->gamePlayers[0]->faction->t2 = GAME_OBJ['Wolf'];
             $json->gamePlayers[0]->faction->t3 = GAME_OBJ['Ogre'];
-            $json->gamePlayers[0]->faction->warchief = GAME_OBJ['Dragon'];
+            $json->gamePlayers[0]->faction->leader = GAME_OBJ['Dragon'];
             $json->gamePlayers[0]->faction->townhall = GAME_OBJ['Ogre fort'];
             $json->gamePlayers[0]->faction->tower = GAME_OBJ['Bandit outpost'];
             break;
         case 2:
             $json->gamePlayers[0]->faction->t1 = GAME_OBJ['Chest'];
-            $json->gamePlayers[0]->faction->t2 = GAME_OBJ['Wolf'];
+            $json->gamePlayers[0]->faction->t2 = GAME_OBJ['Boar'];
             $json->gamePlayers[0]->faction->t3 = GAME_OBJ['Ogre'];
-            $json->gamePlayers[0]->faction->warchief = GAME_OBJ['Dragon'];
+            $json->gamePlayers[0]->faction->leader = GAME_OBJ['Dragon'];
             $json->gamePlayers[0]->faction->townhall = GAME_OBJ['Ogre fort'];
             $json->gamePlayers[0]->faction->tower = GAME_OBJ['Bandit outpost'];
             break;
         case 3:
             $json->gamePlayers[0]->faction->t1 = GAME_OBJ['Grave'];
             $json->gamePlayers[0]->faction->t2 = GAME_OBJ['Wolf'];
-            $json->gamePlayers[0]->faction->t3 = GAME_OBJ['Ogre'];
-            $json->gamePlayers[0]->faction->warchief = GAME_OBJ['Herzog'];
-            $json->gamePlayers[0]->faction->townhall = GAME_OBJ['Ogre fort'];
+            $json->gamePlayers[0]->faction->t3 = GAME_OBJ['Spider'];
+            $json->gamePlayers[0]->faction->leader = GAME_OBJ['Herzog'];
+            $json->gamePlayers[0]->faction->townhall = GAME_OBJ['Sacrifice stones'];
             $json->gamePlayers[0]->faction->tower = GAME_OBJ['Bandit outpost'];
             break;
         default:
             $json->gamePlayers[0]->faction->t1 = GAME_OBJ['Chest'];
             $json->gamePlayers[0]->faction->t2 = GAME_OBJ['Wolf'];
             $json->gamePlayers[0]->faction->t3 = GAME_OBJ['Ogre'];
-            $json->gamePlayers[0]->faction->warchief = GAME_OBJ['Dragon'];
+            $json->gamePlayers[0]->faction->leader = GAME_OBJ['Dragon'];
             $json->gamePlayers[0]->faction->townhall = GAME_OBJ['Ogre fort'];
             $json->gamePlayers[0]->faction->tower = GAME_OBJ['Bandit outpost'];
             break;    

@@ -16,6 +16,7 @@ let players = [];
 let gameTurn;
 let hireUnit;
 let turnFlag = 0;
+let cashType = undefined;
 let cashUnit = undefined;
 let cashCell = {
     i: undefined,
@@ -45,10 +46,18 @@ function pressCell(i,j){
                         unlockCells(1,i,j,'heal');
                     if(gameField[i][j].contains.ability.includes('growUp',0))
                         document.getElementById('btnGrowUp').style.display = 'inline';
+                    if(gameField[i][j].contains.ability.includes('darkPact',0))
+                        document.getElementById('btnDarkPact').style.display = 'inline';
                     if(gameField[i][j].contains.ability.includes('darkArmy',0))
                         document.getElementById('btnDarkArmy').style.display = 'inline';
+                    if(gameField[i][j].contains.ability.includes('darkBolt',0))
+                        document.getElementById('btnDarkBolt').style.display = 'inline';
                     if(gameField[i][j].contains.ability.includes('smith',0))
                         document.getElementById('btnSmith').style.display = 'inline';
+                    if(gameField[i][j].contains.ability.includes('lifeLocket',0))
+                        document.getElementById('btnLifeLocket').style.display = 'inline';
+                    if(gameField[i][j].contains.ability.includes('teleport',0))
+                        document.getElementById('btnTeleport').style.display = 'inline';
                     if(gameField[i][j].contains.type == 'building')
                         document.getElementById('btnDelete').style.display = 'inline';
                     if(gameField[i][j].contains.out!=''){
@@ -64,14 +73,18 @@ function pressCell(i,j){
                                 case't3':
                                     document.getElementById('btnBuyT3').style.display = 'inline';
                                     break;
-                                case'warchief':
-                                    document.getElementById('btnBuyWarchief').style.display = 'inline';
+                                case'leader':
+                                    document.getElementById('btnBuyLeader').style.display = 'inline';
                                     break;
                                 default:
                                     console.log("ошибка");
                                     break;
                             }
                         });
+                    }
+                    if(gameField[i][j].contains.ability.includes('worker',0)){
+                        document.getElementById('btnBuildTownhall').style.display = 'inline';
+                        document.getElementById('btnBuildTower').style.display = 'inline';
                     }
 
 
@@ -91,35 +104,76 @@ function pressCell(i,j){
             }
         }
     }
-    else if(turnFlag == 1 && gameField[i][j].contains == false && gameField[i][j].availability == true){
-        //moving
-        if(gameField[cashCell.i][cashCell.j].contains.canMove == true){
+    else if(turnFlag == 1 && gameField[i][j].availability == true){
+        if(gameField[i][j].contains == false){
+            //moving
+            if(gameField[cashCell.i][cashCell.j].contains.canMove == true){
+                xhrAction(cashCell.i,cashCell.j,'',i,j,'');
+                cancel();
+            }
+        }
+        else if(gameField[i][j].contains!=false && gameField[i][j].contains.owner!=thisPlayer.owner){
+            //attack
+            if(gameField[cashCell.i][cashCell.j].contains.canAction == true){
+                xhrAction(cashCell.i,cashCell.j,'',i,j,'');
+                cancel();
+            }
+        }
+        else if(gameField[i][j].contains!=false && gameField[i][j].contains.owner==thisPlayer.owner){
+            //heal
             xhrAction(cashCell.i,cashCell.j,'',i,j,'');
             cancel();
         }
     }
-    else if(gameField[i][j].contains!=false && gameField[i][j].contains.owner!=thisPlayer.owner 
-    && gameField[i][j].availability == true && turnFlag == 1){
-        //attack
-        if(gameField[cashCell.i][cashCell.j].contains.canAction == true){
-            xhrAction(cashCell.i,cashCell.j,'',i,j,'');
-            cancel();
+    else if(turnFlag==2 && gameField[i][j].availability==true){
+        switch(cashType){
+            case'hire':
+                if(gameField[i][j].contains==false){
+                    //hire units i dont know how this create =((((
+                    xhrAction(cashCell.i,cashCell.j,cashType,i,j,hireUnit);
+                    cancel();
+                }
+                break;
+            case'smith':
+                if(gameField[i][j].contains!=false && gameField[i][j].contains.owner==thisPlayer.owner){
+                    //smith
+                    xhrAction(cashCell.i,cashCell.j,cashType,i,j,'');
+                    cancel();
+                }
+                break;
+            case'darkPact':
+                if(gameField[i][j].contains!=false && gameField[i][j].contains.owner==thisPlayer.owner){
+                    //darkPact
+                    xhrAction(cashCell.i,cashCell.j,cashType,i,j,'');
+                    cancel();
+                }
+                break;
+            case'darkArmy':
+                if(gameField[i][j].contains==false){
+                    //darkArmy
+                    xhrAction(cashCell.i,cashCell.j,cashType,i,j,'');
+                    cancel();
+                }
+                break;
+            case'darkBolt':
+                if(gameField[i][j].contains!=false && gameField[i][j].contains.owner!=thisPlayer.owner){
+                    xhrAction(cashCell.i,cashCell.j,cashType,i,j,'');
+                    cancel();
+                }
+                break;
+            case 'teleport':
+                if(gameField[i][j].contains==false && gameField[i][j].obstacle == 0){
+                    xhrAction(cashCell.i,cashCell.j,cashType,i,j,'');
+                    cancel();
+                }
+                break;
+            default:
+                break;
         }
     }
-    else if(turnFlag == 1 && gameField[i][j].contains!=false && gameField[i][j].contains.owner==thisPlayer.owner && gameField[i][j].availability == true){
-        //heal
-        xhrAction(cashCell.i,cashCell.j,'',i,j,'');
-        cancel();
-    }
-    //hire units i dont know how this create =((((
-    else if(turnFlag==2 && gameField[i][j].availability==true && gameField[i][j].contains==false){
-        xhrAction(cashCell.i,cashCell.j,'hire',i,j,hireUnit);
-        cancel();
-    }
-    else if(turnFlag==2 && gameField[i][j].contains!=false && gameField[i][j].contains.owner==thisPlayer.owner && gameField[i][j].availability == true){
-        xhrAction(cashCell.i,cashCell.j,'smith',i,j,'');
-        cancel();
-    }
+    
+    
+    //cancel
     else if((turnFlag == 1 || turnFlag == 2) && (gameField[i][j] == gameField[cashCell.i][cashCell.j] || gameField[i][j].contains==false || (gameField[i][j].availability == false && gameField[i][j].contains.owner==thisPlayer.owner))){
         cancel();
     }
@@ -161,28 +215,69 @@ function pressCell(i,j){
     }
 }
 function spell(type){
+    cashType = type;
     switch(type){
         case"surgery":
-        
             xhrAction(cashCell.i,cashCell.j,'heal','','','');
             break;
         case"growUp":
-        
             xhrAction(cashCell.i,cashCell.j,'growUp','','','');
             break;
-        case"darkArmy":
-            xhrAction(cashCell.i,cashCell.j,'darkArmy','','','');
+        case"darkPact":
+            if(turnFlag==1){
+                lockBtns();
+                lockAllCells();
+                unlockCells(1,cashCell.i,cashCell.j,'alliedUnits');
+                turnFlag=2;
+            }
             break;
-        case"darkStorm":
-            xhrAction(cashCell.i,cashCell.j,'darkStorm','','','');
+        case"darkArmy":
+            if(turnFlag==1){
+                lockBtns();
+                lockAllCells();
+                unlockCells(1,cashCell.i,cashCell.j,'hire');
+                turnFlag=2;
+            }
+            //xhrAction(cashCell.i,cashCell.j,'darkArmy','','','');
+            break;
+        case"darkBolt":
+            if(turnFlag==1){
+                lockBtns();
+                lockAllCells();
+                unlockCells(2,cashCell.i,cashCell.j,'enemyAll');
+                turnFlag=2;
+            }
+            break;
+        case"lifeLocket":
+            xhrAction(cashCell.i,cashCell.j,'lifeLocket','','','');
             break;
         case"smith":
             if(turnFlag==1){
                 lockBtns();
-                lockAllCells;
-                unlockCells(1,cashCell.i,cashCell.j,'smith');
+                lockAllCells();
+                unlockCells(1,cashCell.i,cashCell.j,'alliedUnits');
                 turnFlag=2;
             }
+            break;
+        case"teleport":
+            if(turnFlag==1){
+                lockBtns();
+                lockAllCells();
+                let arrayBuildings = [];
+                gameField.forEach(row => {
+                    row.forEach(cell =>{
+                        if(cell.contains!= false && cell.contains.owner == thisPlayer.owner && cell.contains.type == 'building'){
+                            unlockCells(1,cell.row,cell.column,'teleport');
+
+                        }
+                    })
+                });
+                //unlockCells(1,cashCell.i,cashCell.j,'teleport');
+                turnFlag=2;
+            }
+            break;
+        case"darkStorm":
+            xhrAction(cashCell.i,cashCell.j,'darkStorm','','','');
             break;
         default:
             break;
@@ -219,6 +314,7 @@ function build(typeBuilding){
 }
 function buyUnit(typeUnit){
     if(turnFlag==1){
+        cashType = 'hire';
         let unit;
         let checkLimit=false;
         switch(typeUnit){
@@ -237,16 +333,16 @@ function buyUnit(typeUnit){
                     checkLimit = true;
                 unit = thisPlayer.faction.t3;
                 break;
-            case 'warchief':
-                if(thisPlayer.count_warchiefs<gameSettings.limit_warchiefs){
-                    if(thisPlayer.faction.warchief[11]=='2t'){
+            case 'leader':
+                if(thisPlayer.count_leaders<gameSettings.limit_leaders){
+                    if(thisPlayer.faction.leader[11]=='2t'){
                         if(thisPlayer.count_towers>=2){
                             checkLimit = true;
-                            unit = thisPlayer.faction.warchief;
-                        }else alert('Для Вождя нужно 2 башни');
+                            unit = thisPlayer.faction.leader;
+                        }else alert('Для Лидера нужно 2 башни');
                     }else{
                         checkLimit = true;
-                        unit = thisPlayer.faction.warchief;
+                        unit = thisPlayer.faction.leader;
                     }
                 }
                 break;
@@ -259,7 +355,7 @@ function buyUnit(typeUnit){
                 if(gameField[cashCell.i][cashCell.j].contains.canAction == true){
                     lockBtns();
                     lockAllCells();
-                    unlockCells(1,cashCell.i,cashCell.j,'hire');
+                    unlockCells(1,cashCell.i,cashCell.j,cashType);
                     turnFlag=2;
                     hireUnit=unit[1];
                     //cancel();
@@ -319,6 +415,7 @@ function cancel(){
     cashCell.i = undefined;
     cashCell.j = undefined;
     cashUnit = undefined;
+    cashType = undefined;
     hireUnit = undefined;
     turnFlag = 0;
     unlockAllCells();
@@ -333,18 +430,26 @@ function cancel(){
     //document.getElementById('btnSpell').style.display = 'none';
  }
 function lockBtns(){
+    let btns = document.querySelectorAll('#game-btns button');
+    btns.forEach(el => {
+        if(el.id != 'btnCancel'){
+            el.style.display = 'none';
+        }
+    });
+    /*
     document.getElementById('btnBuildTownhall').style.display = 'none';
     document.getElementById('btnBuildTower').style.display = 'none';
     document.getElementById('btnBuyT1').style.display = 'none';
     document.getElementById('btnBuyT2').style.display = 'none';
     document.getElementById('btnBuyT3').style.display = 'none';
-    document.getElementById('btnBuyWarchief').style.display = 'none';
+    document.getElementById('btnBuyLeader').style.display = 'none';
     document.getElementById('btnGrowUp').style.display = 'none';
     document.getElementById('btnSurgeryHeal').style.display = 'none';
     document.getElementById('btnDarkArmy').style.display = 'none';
     document.getElementById('btnDarkStorm').style.display = 'none';
     document.getElementById('btnSmith').style.display = 'none';
     document.getElementById('btnDelete').style.display = 'none';
+    */
 }
 
 function endTurn(sur=0){
@@ -429,10 +534,6 @@ function unlockCells(count,i,j,type){
                     document.getElementById(`${cell.row}-${cell.column}`).style.border = colorCursor[2];
                 }
             });
-            if(gameField[i][j].contains.ability.includes('worker',0)){
-                document.getElementById('btnBuildTownhall').style.display = 'inline';
-                document.getElementById('btnBuildTower').style.display = 'inline';
-            }
             break;
         case"heal":
             if(gameField[i][j].contains.ability.includes('surgery',0)){
@@ -457,7 +558,7 @@ function unlockCells(count,i,j,type){
                 }
             });
             break;
-        case"smith":
+        case"alliedUnits":
                 arrayCells.forEach(cell => {
                     if(cell.contains!=false&&cell.contains.type!='building'&&cell.contains.owner==thisPlayer.owner){
                         cell.availability=true;
@@ -466,7 +567,23 @@ function unlockCells(count,i,j,type){
                 });
                 document.getElementById('btnSmith').style.display = 'none';
             break;
-        case"darkArmy":
+        case"enemyAll":
+            arrayCells.forEach(cell => {
+                if(cell.contains!=false&&cell.contains.owner!=thisPlayer.owner){
+                    cell.availability=true;
+                    document.getElementById(`${cell.row}-${cell.column}`).style.border = colorCursor[4];
+                }
+            });
+                break;
+        case 'teleport':
+            arrayCells.forEach(cell => {
+                if(cell.contains==false&&cell.obstacle==0){
+                    cell.availability=true;
+                    document.getElementById(`${cell.row}-${cell.column}`).style.border = colorCursor[4];
+                }
+            });
+            break;
+        case"darkArmy": //not using
             document.getElementById('btnDarkArmy').style.display = 'inline';
             break;
         case"darkStorm":
@@ -566,8 +683,8 @@ function loadGameFile(json){
             document.getElementById('game-field').appendChild(stroke);
         }
     }
-    gameSettings.size[0] = json.gameSize[0];
-    gameSettings.size[1] = json.gameSize[1];
+    gameSettings.size[0]=json.gameSize[0];
+    gameSettings.size[1]=json.gameSize[1];
     gameSettings.turnOwner = json.gameTurn;
     gameSettings.land = json.gameLand;
     update(json);
@@ -582,9 +699,10 @@ function loadGameFile(json){
 function update(json){
     json.gamePlayers.forEach(el =>{
         if(el!==null&&typeof(el)!=undefined && el.live != false){
+            //console.log('121');
             el.count_workers =0;
             el.count_army =0;
-            el.count_warchiefs =0;
+            el.count_leaders =0;
             el.count_townhalls =0;
             el.count_towers =0;
         }
@@ -601,6 +719,7 @@ function getLogin(json){
         //console.log(login);
         //let numOwner = 0;
         if(json.local == 1){
+            //console.log('local thisplayer');
             thisPlayer = json.gamePlayers[gameSettings.turnOwner];
         }else{
             json.gamePlayers.forEach(pl => {
@@ -692,8 +811,8 @@ function loadField(json){
                             case't3':
                                 json.gamePlayers[json.gameField[i][j].contains.owner].count_army++;
                                 break;
-                            case'warchief':
-                                json.gamePlayers[json.gameField[i][j].contains.owner].count_warchiefs++;
+                            case'leader':
+                                json.gamePlayers[json.gameField[i][j].contains.owner].count_leaders++;
                                 break;
                             case'townhall':
                                 json.gamePlayers[json.gameField[i][j].contains.owner].count_townhalls++;
@@ -734,10 +853,10 @@ function loadField(json){
                                 case"Engineering":
                                     text = gameSettings.skills[6].description;
                                     break;
-                                case"Undead I":
+                                case"Undead Horde":
                                     text = gameSettings.skills[7].description;
                                     break;
-                                case"Undead II":
+                                case"Undead Unholy":
                                     text = gameSettings.skills[8].description;
                                     break;
                                 case"Scavengers":
@@ -778,7 +897,7 @@ function loadField(json){
                         //document.getElementById('li_PlayerExp').textContent = `Опыт = ${thisPlayer.exp}`;
                         document.getElementById('li_limit_workers').textContent = `Рабочие - ${thisPlayer.count_workers}/${gameSettings.limit_workers}`;
                         document.getElementById('li_limit_army').textContent = `Армия - ${thisPlayer.count_army}/${gameSettings.limit_army}`;
-                        document.getElementById('li_limit_warchiefs').textContent = `Вожди - ${thisPlayer.count_warchiefs}/${gameSettings.limit_warchiefs}`;
+                        document.getElementById('li_limit_leaders').textContent = `Лидеры - ${thisPlayer.count_leaders}/${gameSettings.limit_leaders}`;
                         document.getElementById('li_limit_townhalls').textContent = `Ратуши - ${thisPlayer.count_townhalls}/${gameSettings.limit_townhalls}`;
                         document.getElementById('li_limit_towers').textContent = `Башни - ${thisPlayer.count_towers}/${gameSettings.limit_towers}`;    
                     
@@ -786,12 +905,13 @@ function loadField(json){
                         document.getElementById('btnBuyT1').textContent = 'Нанять ' + thisPlayer.faction.t1[2];
                         document.getElementById('btnBuyT2').textContent = 'Нанять ' + thisPlayer.faction.t2[2];
                         document.getElementById('btnBuyT3').textContent = 'Нанять ' + thisPlayer.faction.t3[2];
-                        document.getElementById('btnBuyWarchief').textContent = 'Нанять ' + thisPlayer.faction.warchief[2];
+                        document.getElementById('btnBuyLeader').textContent = 'Нанять ' + thisPlayer.faction.leader[2];
                         document.getElementById('btnBuildTownhall').textContent = 'Построить ' + thisPlayer.faction.townhall[2];
                         document.getElementById('btnBuildTower').textContent = 'Построить ' + thisPlayer.faction.tower[2];
                         //Faction tree
                         document.getElementById('dialog-faction-name').innerHTML = thisPlayer.faction.name;
-                        let arrayFactionUnits = [thisPlayer.faction.t1,thisPlayer.faction.t2,thisPlayer.faction.t3,thisPlayer.faction.warchief,thisPlayer.faction.townhall,thisPlayer.faction.tower];
+                        let arrayFactionUnits = [thisPlayer.faction.t1,thisPlayer.faction.t2,thisPlayer.faction.t3,thisPlayer.faction.leader,thisPlayer.faction.townhall,thisPlayer.faction.tower];
+                        
                         arrayFactionUnits.forEach(elem => {
                             let tabIndex = 'tab-' + elem[1];
                             let string = "";
@@ -905,6 +1025,7 @@ function checkAnimation(json){
         }
     }
     let value = [0.40,0.40,0.40,0.40,0.40,];
+    let array = undefined;
     switch(type){
         case 'move':
             animation(fContainer,colorAnimation['white']);
@@ -970,12 +1091,16 @@ function checkAnimation(json){
             animation(fContainer,colorAnimation['white']);
             animation(sContainer,colorAnimation['gold']);
             break;
+        case 'darkPact':
+            animation(fContainer,colorAnimation['white']);
+            animation(sContainer,colorAnimation['darkPurple']);
+            break;
         case 'darkArmy':
             animation(fContainer,colorAnimation['darkPurple']);
             break;
         case 'darkStorm':
             animation(fContainer,colorAnimation['darkPurple']);
-            let array = [undefined,undefined,undefined,undefined];
+            array = [undefined,undefined,undefined,undefined];
             n = Number(fi);
             m = Number(fj);
             if(n+1<iMax) if(json.gameField[n+1][m].view == true && document.getElementById(`${n+1}-${m}`) !== null) 
@@ -992,6 +1117,43 @@ function checkAnimation(json){
                     animation(array[i],colorAnimation['black']);
                 }
             }
+            break;
+        case 'lifeLocket':
+            animation(fContainer,colorAnimation['green']);
+            array = [undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined];
+            n = Number(fi);
+            m = Number(fj);
+            if(n+1<iMax) if(json.gameField[n+1][m].view == true && document.getElementById(`${n+1}-${m}`) !== null) 
+            array[0] = document.getElementById(`${n+1}-${m}`)
+            if(m+1<jMax) if(json.gameField[n][m+1].view == true && document.getElementById(`${n}-${m+1}`) !== null) 
+            array[1] = document.getElementById(`${n}-${m+1}`)
+            if(n-1>sMin)if(json.gameField[n-1][m].view == true && document.getElementById(`${n-1}-${m}`) !== null) 
+            array[2] = document.getElementById(`${n-1}-${m}`)
+            if(m-1>sMin)if(json.gameField[n][m-1].view == true && document.getElementById(`${n}-${m-1}`) !== null) 
+            array[3] = document.getElementById(`${n}-${m-1}`)//
+            if(n+2<iMax) if(json.gameField[n+2][m].view == true && document.getElementById(`${n+2}-${m}`) !== null) 
+            array[4] = document.getElementById(`${n+1}-${m}`)
+            if(m+2<jMax) if(json.gameField[n][m+2].view == true && document.getElementById(`${n}-${m+2}`) !== null) 
+            array[5] = document.getElementById(`${n}-${m+2}`)
+            if(n-2>sMin)if(json.gameField[n-2][m].view == true && document.getElementById(`${n-2}-${m}`) !== null) 
+            array[6] = document.getElementById(`${n-2}-${m}`)
+            if(m-2>sMin)if(json.gameField[n][m-2].view == true && document.getElementById(`${n}-${m-2}`) !== null) 
+            array[7] = document.getElementById(`${n}-${m-2}`)
+            if(n+1<iMax && m+1<jMax) if(json.gameField[n+1][m+1].view == true && document.getElementById(`${n+1}-${m+1}`) !== null) 
+            array[8] = document.getElementById(`${n+1}-${m+1}`)
+            if(n+1<iMax && m-1>sMin) if(json.gameField[n+1][m-1].view == true && document.getElementById(`${n+1}-${m-1}`) !== null) 
+            array[9] = document.getElementById(`${n+1}-${m-1}`)
+            if(n-1>sMin && m+1<jMax)if(json.gameField[n-1][m+1].view == true && document.getElementById(`${n-1}-${m+1}`) !== null) 
+            array[10] = document.getElementById(`${n-1}-${m+1}`)
+            if(n-1>sMin && m-1>sMin)if(json.gameField[n-1][m-1].view == true && document.getElementById(`${n-1}-${m-1}`) !== null) 
+            array[11] = document.getElementById(`${n-1}-${m-1}`)
+            
+            for(let i=0;i<array.length;i++){
+                if(array[i]!=undefined){
+                    animation(array[i],colorAnimation['green']);
+                }
+            }
+
             break;
         
         default:
@@ -1033,11 +1195,15 @@ const gamestring = '<div id="game-header">'+
 '<button id="btnBuyT1" onclick="buyUnit(`t1`)" style="display: none">Нанять T1</button>'+
 '<button id="btnBuyT2" onclick="buyUnit(`t2`)" style="display: none">Нанять T2</button>'+
 '<button id="btnBuyT3" onclick="buyUnit(`t3`)" style="display: none">Нанять T3</button>'+
-'<button id="btnBuyWarchief" onclick="buyUnit(`warchief`)" style="display: none">Нанять Warchief</button>'+
+'<button id="btnBuyLeader" onclick="buyUnit(`leader`)" style="display: none">Нанять Leader</button>'+
 '<button id="btnGrowUp" onclick="spell(`growUp`)" style="display: none">Стать Энтом</button>'+
 '<button id="btnSurgeryHeal" onclick="spell(`surgery`)" style="display: none">Лечение</button>'+
+'<button id="btnDarkPact" onclick="spell(`darkPact`)" style="display: none">Темный союз</button>'+
 '<button id="btnDarkArmy" onclick="spell(`darkArmy`)" style="display: none">Армия Тьмы</button>'+
+'<button id="btnDarkBolt" onclick="spell(`darkBolt`)" style="display: none">Dark bolt</button>'+
 '<button id="btnDarkStorm" onclick="spell(`darkStorm`)" style="display: none">Темная буря</button>'+
+'<button id="btnTeleport" onclick="spell(`teleport`)" style="display: none">Телепорт</button>'+
+'<button id="btnLifeLocket" onclick="spell(`lifeLocket`)" style="display: none">Кулон жизни</button>'+
 '<button id="btnSmith" onclick="spell(`smith`)" style="display: none">Ковка</button>'+
 '<button id="btnDelete" onclick="deleteUnit()" style="display: none">Удалить</button>'+
 '</div>'+
@@ -1049,7 +1215,7 @@ const gamestring = '<div id="game-header">'+
     //'<li id="li_PlayerExp"></li>'+
     '<li id="li_limit_workers"></li>'+
     '<li id="li_limit_army"></li>'+
-    '<li id="li_limit_warchiefs"></li>'+
+    '<li id="li_limit_leaders"></li>'+
     '<li id="li_limit_townhalls"></li>'+
     '<li id="li_limit_towers"></li>'+
 '</ul>'+
@@ -1075,21 +1241,21 @@ const gameSettings = {
     level3: 30,
     limit_workers : 6,
     limit_army : 4,
-    limit_warchiefs : 1,
+    limit_leaders : 1,
     limit_townhalls : 2,
     limit_towers : 4,
     //skills:['Strength I','Strength II','Pathfinder','Surgery','Estates I', 'Estates'];
     skills:[
-        {name:'Strength I', description:'Увеличивает силу атаки Вождя на 1'},
-        {name:'Endurance', description:'Увеличивает здоровье Вождя на 2'},
-        {name:'Pathfinder', description:'Увеличивает скорость Вождя на 1'},
-        {name:'Surgery', description:'Позволяет вождю лечить себя или союзников'},
+        {name:'Strength I', description:'Увеличивает силу атаки Лидера на 1'},
+        {name:'Endurance', description:'Увеличивает здоровье Лидера на 2'},
+        {name:'Pathfinder', description:'Увеличивает скорость Лидера на 1'},
+        {name:'Surgery', description:'Позволяет Лидеру лечить себя или союзников'},
         {name:'Estates I', description:'Единовременно дает 5 золота'},
         {name:'Estates II', description:'Каждый ход дает 1 золото'},
         {name:'Engineering', description:'Все здания получают +1 к прочности'},
-        {name:'Undead I', description:'Увеличивает здоровье Лича на 1 ед., зомби получают спсобность "infect"'},
-        {name:'Undead II', description:'Увеличивает здоровье Лича на 1 ед., Лич получает способность "darkStorm"'},
-        {name:"Scavengers", description:"Получаемый опыт увлечивается на 1 ед., орки (Т2) получают способность 'cannibal'"},// и Warchief
+        {name:'Undead Horde', description:"Лич получает способность 'teleport', zombie получают способность infect, улучшается способность 'darkArmy', теперь создает скелета воина вместо одного обычного скелета"},
+        {name:'Undead Unholy', description:'Увеличивает здоровье Лича на 1 ед., Лич получает способность "darkBolt"'},
+        {name:"Scavengers", description:"Получаемый опыт увлечивается на 1 ед., орки (Т2) получают способность 'cannibal'"},// и Leader
     ]
 };
 

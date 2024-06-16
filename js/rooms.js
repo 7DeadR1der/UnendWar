@@ -143,8 +143,8 @@ function loadGame(num){
                         ine += '<li>Количество очков - '+array[i]['statistic']['score']+'</li>';
                         ine += '<li>Золота получено - '+array[i]['statistic']['goldUp']+'</li>';
                         ine += '<li>Золота потрачено - '+array[i]['statistic']['goldDown']+'</li>';
-                        ine += '<li>Вождей создано - '+array[i]['statistic']['warchiefUp']+'</li>';
-                        ine += '<li>Вождей убито - '+array[i]['statistic']['warchiefDown']+'</li>';
+                        ine += '<li>Лидеров создано - '+array[i]['statistic']['leaderUp']+'</li>';
+                        ine += '<li>Лидеров убито - '+array[i]['statistic']['leaderDown']+'</li>';
                         if(typeof(array[i]['statistic']['workerUp'] != undefined && array[i]['statistic']['workerUp'] !== null)){
                             ine += '<li>Рабочих создано - '+array[i]['statistic']['workerUp']+'</li>';
                             ine += '<li>Рабочих убито - '+array[i]['statistic']['workerDown']+'</li>';

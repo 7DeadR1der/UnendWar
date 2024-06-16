@@ -58,7 +58,7 @@
             удар после движения наносит х1.5 урон. Для его найма требуется 2 башни</p> 
         <ul class="faction-unit-stats-ul"> 
             <li>Type = Unit</li>
-            <li>Class = Warchief</li>
+            <li>Class = Leader</li>
             <li>Health points = 3</li>
             <li>Attack = 1</li>
             <li>Move point = 2</li>
@@ -157,7 +157,7 @@
         <p>Лидер Наемников, который смог обьединить разобщеные банды и построить на костях рабов фракцию. Силен и повидал много битв, засчет чего в невероятно опасен в бою. Для его найма требуется 2 башни</p> 
         <ul class="faction-unit-stats-ul"> 
             <li>Type = Unit</li>
-            <li>Class = Warchief</li>
+            <li>Class = Leader</li>
             <li>Health points = 3</li>
             <li>Attack = 1</li>
             <li>Move point = 1</li>
@@ -231,7 +231,7 @@
             <li>Move point = 1</li> 
             <li>range = 1</li> 
             <li>price = 1</li> 
-            <li>ability = not</li> 
+            <li>ability = infect</li> 
         </ul> 
     </div> 
     <div class="faction-unit-block"> 
@@ -255,13 +255,13 @@
         <p>Лидер Нежити, именно он возглавляет бесчисленное множество мертвых созданий</p> 
         <ul class="faction-unit-stats-ul"> 
             <li>Type = Unit</li>
-            <li>Class = Warchief</li>
+            <li>Class = Leader</li>
             <li>Health points = 2</li>
             <li>Attack = 1</li>
             <li>Move point = 1</li>
             <li>range = 1</li>
-            <li>price = 3</li>
-            <li>ability = darkArmy</li>
+            <li>price = 4</li>
+            <li>ability = darkPact darkArmy</li>
             <li>require = not</li>
         </ul> 
     </div> 
@@ -303,6 +303,21 @@
             <li>Type = Unit</li> 
             <li>Class = T1</li> 
             <li>Health points = 1</li> 
+            <li>Attack = 1</li> 
+            <li>Move point = 1</li> 
+            <li>range = 1</li> 
+            <li>price = 0</li> 
+            <li>ability = not</li> 
+        </ul> 
+    </div>
+    <div class="faction-unit-block"> 
+        <img src="img/units/Undead/Skeleton warrior.png"> 
+        <h6>Skeleton warrior</h6> 
+        <p>Скелет, который появляется из тел сильных соперников</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Unit</li> 
+            <li>Class = T1</li> 
+            <li>Health points = 2</li> 
             <li>Attack = 1</li> 
             <li>Move point = 1</li> 
             <li>range = 1</li> 
@@ -368,12 +383,12 @@
         <p>Вождь - самый сильный орк, которого провозгласили главой клана. опасный противник. Для его найма требуется 2 башни</p> 
         <ul class="faction-unit-stats-ul"> 
             <li>Type = Unit</li>
-            <li>Class = Warchief</li>
+            <li>Class = Leader</li>
             <li>Health points = 4</li>
             <li>Attack = 1</li>
             <li>Move point = 1</li>
             <li>range = 1</li>
-            <li>price = 4</li>
+            <li>price = 3</li>
             <li>ability = not</li>
             <li>require = 2 towers</li>
         </ul> 
@@ -462,6 +477,21 @@
         </ul> 
     </div> 
     <div class="faction-unit-block"> 
+        <img src="img/units/Neutral/Boar.png"> 
+        <h6>Boar</h6> 
+        <p>Кабан, когда миролюбивые животные, полностью изменились после того как орки начали на них охоту. Они настолько одичали, что нападают на любого кто подойдет.</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Unit</li> 
+            <li>Class = T2</li> 
+            <li>Health points = 2</li> 
+            <li>Attack = 1</li> 
+            <li>Move point = 1</li> 
+            <li>range = 1</li> 
+            <li>price = 1</li> 
+            <li>ability = not</li> 
+        </ul> 
+    </div> 
+    <div class="faction-unit-block"> 
         <img src="img/units/Neutral/Ogre.png"> 
         <h6>Ogre</h6> 
         <p>Огр, опасный противник, любят перекусить свеже-побежденными врагами</p> 
@@ -477,17 +507,32 @@
         </ul> 
     </div> 
     <div class="faction-unit-block"> 
+        <img src="img/units/Neutral/Spider.png"> 
+        <h6>Spider</h6> 
+        <p>Огромные пауки, которыми пугают детей, вовсе не выдумка. Обычно они обитают в темных пещерах, но в мертвых землях так давно не было солнца, что теперь они гуляют там как у себя дома</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Unit</li> 
+            <li>Class = T3</li> 
+            <li>Health points = 3</li> 
+            <li>Attack = 1</li> 
+            <li>Move point = 1</li> 
+            <li>range = 1</li> 
+            <li>price = 3</li> 
+            <li>ability = toxin</li> 
+        </ul> 
+    </div> 
+    <div class="faction-unit-block"> 
         <img src="img/units/Neutral/Dragon.png"> 
         <h6>Dragon</h6> 
         <p>Дракон, крайне сильное существо, без подготовки не стоит на него нападать</p> 
         <ul class="faction-unit-stats-ul"> 
             <li>Type = Unit</li>
-            <li>Class = Warchief</li>
-            <li>Health points = 7</li>
+            <li>Class = Leader</li>
+            <li>Health points = 5</li>
             <li>Attack = 2</li>
             <li>Move point = 2</li>
             <li>range = 1</li>
-            <li>price = 10</li>
+            <li>price = 7</li>
             <li>ability = monster</li>
         </ul> 
     </div> 
@@ -498,13 +543,13 @@
         <p>Герцоги это бывшие великие воины, хоть они и стали нежитью, они не подвластны какому-либо контролю. Герцоги ищут битву в которой могли бы достойно упокоится. Побудившему они даруют частичку своей души.</p> 
         <ul class="faction-unit-stats-ul"> 
             <li>Type = Unit</li>
-            <li>Class = Warchief</li>
+            <li>Class = Leader</li>
             <li>Health points = 5</li>
             <li>Attack = 2</li>
             <li>Move point = 1</li>
             <li>range = 1</li>
             <li>price = 7</li>
-            <li>ability = lifeGift infect</li>
+            <li>ability = lifeGift cannibal</li>
         </ul> 
     </div>
     <div class="faction-unit-block"> 
@@ -518,8 +563,23 @@
             <li>Attack = 1</li> 
             <li>Move point = 0</li> 
             <li>range = 1</li> 
-            <li>price = 8</li> 
+            <li>price = 6</li> 
             <li>ability = prison</li> 
+        </ul> 
+    </div> 
+    <div class="faction-unit-block"> 
+        <img src="img/units/Neutral/Sacrifice stones.png"> 
+        <h6>Sacrifice stones</h6> 
+        <p>Один из алтарей жертвопринешения некромантов. Неизвестно чем именно эти камни привлекли их. Но после бесчисленных обрядов, эти камни так сильно напитались черной магией, что начали сами излучать ее, убивая все живое рядом.</p> 
+        <ul class="faction-unit-stats-ul"> 
+            <li>Type = Building</li> 
+            <li>Class = Townhall</li> 
+            <li>Health points = 5</li> 
+            <li>Attack = 0</li> 
+            <li>Move point = 0</li> 
+            <li>range = 0</li> 
+            <li>price = 5</li> 
+            <li>ability = lifeLocket deathAura</li> 
         </ul> 
     </div> 
     <div class="faction-unit-block"> 

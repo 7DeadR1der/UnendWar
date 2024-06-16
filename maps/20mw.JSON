@@ -57,7 +57,7 @@
         {
             "defaultUnit" : true,
             "pack" : false, 
-            "type" : "warchief",
+            "type" : "leader",
             "owner" : 1,
             "row" : 0,
             "column" : 4
@@ -147,7 +147,7 @@
         {
             "defaultUnit" : true,
             "pack" : false, 
-            "type" : "warchief",
+            "type" : "leader",
             "owner" : 2,
             "row" : 7,
             "column" : 3

@@ -219,7 +219,7 @@
         {
             "defaultUnit" : true,
             "pack" : false, 
-            "type" : "warchief",
+            "type" : "leader",
             "owner" : 1,
             "row" : 2,
             "column" : 1
@@ -227,7 +227,7 @@
         {
             "defaultUnit" : true,
             "pack" : false, 
-            "type" : "warchief",
+            "type" : "leader",
             "owner" : 2,
             "row" : 5,
             "column" : 6
@@ -276,7 +276,7 @@
             "Ogre fort",
             "Dragon",
             "Ogre fort",
-            ["unit","warchief","Skeleton King",4,2,1,1,6,["infect","armor","monster"],"img/units/Undead/Happy Skeleton.png","",""]
+            ["unit","leader","Skeleton King",4,2,1,1,6,["infect","armor","monster"],"img/units/Undead/Happy Skeleton.png","",""]
         ]
     },
     "settings" : {

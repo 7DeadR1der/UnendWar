@@ -37,9 +37,17 @@ if (session_status() === PHP_SESSION_NONE) {
                     $game["gameVictoryCond"]["type"] = false;
                     $game["gameVictoryCond"]["condition"] = false;
                     break;
-                case"score":
+                case"score_45":
                     $game["gameVictoryCond"]["type"] = 'score';
                     $game["gameVictoryCond"]["condition"] = 45;
+                    break;
+                case"score_60":
+                    $game["gameVictoryCond"]["type"] = 'score';
+                    $game["gameVictoryCond"]["condition"] = 60;
+                    break;
+                case"score_75":
+                    $game["gameVictoryCond"]["type"] = 'score';
+                    $game["gameVictoryCond"]["condition"] = 75;
                     break;
                 case"collect":
                     $game["gameVictoryCond"]["type"] = 'collect';
@@ -52,11 +60,6 @@ if (session_status() === PHP_SESSION_NONE) {
             }
             $game["gameVictoryCond"]["winner"] = false;
             $array = json_decode($room['players_id'],true);
-            for($i=0;$i<8;$i++){
-                for($j=0;$j<8;$j++){
-                    $game['gameField'][$i][$j] = new Cell($i,$j);
-                }
-            };
             $neutral = new Player(' ',0,'Neutral');
             // $game['gameStatistic'][0]=[
             //     "name" => 'Neutral',

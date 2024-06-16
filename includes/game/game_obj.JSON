@@ -5,51 +5,58 @@
     "Peasant" : ["unit","t1","Peasant",1,1,1,1,0,["worker"],"img/units/Kingdom/Peasant.png","",""],
     "Scout" : ["unit","t2","Scout",1,1,2,1,1,[],"img/units/Kingdom/Scout.png","",""],
     "Knight" : ["unit","t3","Knight",3,1,1,1,2,[],"img/units/Kingdom/Knight.png","",""],
-    "Lord" : ["unit","warchief","Lord",3,1,2,1,5,["cavalryStrike"],"img/units/Kingdom/Lord.png","","2t"],
+    "Lord" : ["unit","leader","Lord",3,1,2,1,5,["cavalryStrike"],"img/units/Kingdom/Lord.png","","2t"],
     "Townhall" : ["building","townhall","Townhall",5,0,0,0,4,["hire"],"img/units/Kingdom/Townhall.png","t1-t2",""],
-    "Tower" : ["building","tower","Tower",3,1,0,2,3,["hire"],"img/units/Kingdom/Tower.png","t3-warchief",""],
+    "Tower" : ["building","tower","Tower",3,1,0,2,3,["hire"],"img/units/Kingdom/Tower.png","t3-leader",""],
 
 
     "Slave" : ["unit","t1","Slave",1,1,1,1,0,["worker"],"img/units/SeaMercs/Slave.png","",""],
     "Raider" : ["unit","t2","Raider",1,1,2,1,1,[],"img/units/SeaMercs/Raider.png","",""],
     "Merc" : ["unit","t3","Merc",2,1,1,1,1,["pillage","mercPath"],"img/units/SeaMercs/Merc.png","",""],
-    "Berserk" : ["unit","warchief","Berserk",3,1,1,1,4,["bloodAxe"],"img/units/SeaMercs/Berserk.png","","2t"],
+    "Berserk" : ["unit","leader","Berserk",3,1,1,1,4,["bloodAxe"],"img/units/SeaMercs/Berserk.png","","2t"],
     "Forge" : ["building","townhall","Forge",5,0,0,0,4,["hire","smith"],"img/units/SeaMercs/Forge.png","t1-t2",""],
-    "Outpost" : ["building","tower","Outpost",3,1,0,2,3,["hire"],"img/units/SeaMercs/Outpost.png","t3-warchief",""],
+    "Outpost" : ["building","tower","Outpost",3,1,0,2,3,["hire"],"img/units/SeaMercs/Outpost.png","t3-leader",""],
 
 
     "Cultist" : ["unit","t1","Cultist",1,1,1,1,0,["worker"],"img/units/Undead/Cultist.png","",""],
-    "Zombie" : ["unit","t2","Zombie",2,1,1,1,1,[],"img/units/Undead/Zombie.png","",""],
+    "Zombie" : ["unit","t2","Zombie",2,1,1,1,1,["infect"],"img/units/Undead/Zombie.png","",""],
     "Ghost" : ["unit","t3","Ghost",2,1,2,1,3,["vampir"],"img/units/Undead/Ghost.png","",""],
-    "Lich" : ["unit","warchief","Lich",2,1,1,1,3,["darkArmy"],"img/units/Undead/Lich.png","",""],
+    "Lich" : ["unit","leader","Lich",2,1,1,1,4,["darkPact","darkArmy"],"img/units/Undead/Lich.png","",""],
     "Necropolis" : ["building","townhall","Necropolis",5,0,0,0,4,["hire"],"img/units/Undead/Necropolis.png","t1-t2",""],
-    "Soul tower" : ["building","tower","Soul tower",3,1,0,2,3,["hire"],"img/units/Undead/Soul tower.png","t3-warchief",""],
+    "Soul tower" : ["building","tower","Soul tower",3,1,0,2,3,["hire"],"img/units/Undead/Soul tower.png","t3-leader",""],
     "Skeleton" : ["unit","t1","Skeleton",1,1,1,1,0,[],"img/units/Undead/Skeleton.png","",""],
+    "Skeleton warrior" : ["unit","t1","Skeleton warrior",2,1,1,1,0,[],"img/units/Undead/Skeleton warrior.png","",""],
 
 
     "Goblin" : ["unit","t1","Goblin",1,1,1,1,0,["worker"],"img/units/Orcs/Goblin.png","",""],
     "Battler" : ["unit","t2","Battler",2,1,1,1,1,[],"img/units/Orcs/Battler.png","",""],
     "Onager" : ["building","t3","Onager",1,1,1,2,4,["siegeDmg"],"img/units/Orcs/Onager.png","",""],
-    "War Boss" : ["unit","warchief","War Boss",4,1,1,1,4,[],"img/units/Orcs/War Boss.png","","2t"],
+    "War Boss" : ["unit","leader","War Boss",4,1,1,1,3,[],"img/units/Orcs/War Boss.png","","2t"],
     "Warhouse" : ["building","townhall","Warhouse",5,0,0,0,4,["hire"],"img/units/Orcs/Warhouse.png","t1-t3",""],
-    "Turret" : ["building","tower","Turret",2,1,0,2,3,["hire"],"img/units/Orcs/Turret.png","t2-warchief",""],
+    "Turret" : ["building","tower","Turret",2,1,0,2,3,["hire"],"img/units/Orcs/Turret.png","t2-leader",""],
 
 
     "Wind" : ["unit","t1","Wind",1,0,1,0,0,["worker","ethereal","growUp"],"img/units/Elves/Wind.png","",""],
     "Treant" : ["unit","t2","Treant",2,1,1,1,0,[],"img/units/Elves/Treant.png","",""],
     "Pegas" : ["unit","t3","Pegas",2,2,3,1,4,[],"img/units/Elves/Pegas.png","",""],
-    "Ihasabia" : ["unit","warchief","Ihasabia",2,1,1,1,3,["farSight","magic"],"img/units/Elves/Ihasabia.png","","2t"],
-    "Temple" : ["building","townhall","Temple",5,0,0,0,4,["hire"],"img/units/Elves/Temple.png","t1-t2-wachief",""],
+    "Ihasabia" : ["unit","leader","Ihasabia",2,1,1,1,3,["farSight","magic"],"img/units/Elves/Ihasabia.png","","2t"],
+    "Temple" : ["building","townhall","Temple",5,0,0,0,4,["hire"],"img/units/Elves/Temple.png","t1-t2-leader",""],
     "Torre" : ["building","tower","Torre",3,1,0,2,3,["hire"],"img/units/Elves/Torre.png","t3",""],
 
 
     "Chest" : ["building","t1","Chest",2,0,0,0,0,["object","treasure"],"img/units/Neutral/Chest.png","",""],
     "Wolf" : ["unit","t2","Wolf",2,1,1,1,1,[],"img/units/Neutral/Wolf.png","",""],
     "Ogre" : ["unit","t3","Ogre",4,1,1,1,3,[],"img/units/Neutral/Ogre.png","",""],
-    "Dragon" : ["unit","warchief","Dragon",7,2,2,1,10,["monster"],"img/units/Neutral/Dragon.png","","2t"],
+    "Dragon" : ["unit","leader","Dragon",5,2,2,1,7,["monster"],"img/units/Neutral/Dragon.png","","2t"],
     "Ogre fort" : ["building","townhall","Ogre fort",6,1,0,1,6,["prison"],"img/units/Neutral/Ogre fort.png","",""],
     "Bandit outpost" : ["building","tower","Bandit outpost",3,1,0,1,3,[],"img/units/Neutral/Bandit outpost.png","",""],
 
+    
+    "Boar" : ["unit","t2","Boar",2,1,1,1,1,[],"img/units/Neutral/Boar.png","",""],
+
     "Grave" : ["building","t1","Grave",1,0,0,0,0,["object","grave"],"img/units/Neutral/Grave.png","",""],
-    "Herzog" : ["unit","warchief","Herzog",5,2,1,1,7,["infect","lifeGift"],"img/units/Neutral/Herzog.png","","2t"]
+    "Spider" : ["unit","t3","Spider",3,1,1,1,3,["toxin"],"img/units/Neutral/Spider.png","",""],
+    "Herzog" : ["unit","leader","Herzog",5,2,1,1,7,["cannibal","lifeGift"],"img/units/Neutral/Herzog.png","","2t"],
+    "Sacrifice stones" : ["building","townhall","Sacrifice stones",5,0,0,0,5,["lifeLocket","deathAura"],"img/units/Neutral/Sacrifice Stones.png","",""]
+
 }

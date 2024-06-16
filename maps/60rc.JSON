@@ -1,0 +1,248 @@
+{
+    "name": "Royal Conquest",
+    "shortName" : "rc",
+    "field" : [
+        [
+            {"contains":false,"resCount":0,"obstacle":2,"row":0,"column":0},
+            {"contains":false,"resCount":0,"obstacle":0,"row":0,"column":1},
+            {"contains":false,"resCount":12,"obstacle":0,"row":0,"column":2},
+            {"contains":false,"resCount":0,"obstacle":0,"row":0,"column":3},
+            {"contains":false,"resCount":15,"obstacle":0,"row":0,"column":4},
+            {"contains":false,"resCount":0,"obstacle":0,"row":0,"column":5},
+            {"contains":false,"resCount":0,"obstacle":0,"row":0,"column":6},
+            {"contains":false,"resCount":12,"obstacle":0,"row":0,"column":7},
+            {"contains":false,"resCount":0,"obstacle":0,"row":0,"column":8},
+            {"contains":false,"resCount":0,"obstacle":1,"row":0,"column":9},
+            {"contains":false,"resCount":0,"obstacle":2,"row":0,"column":10}
+        ],
+        [
+            {"contains":false,"resCount":0,"obstacle":2,"row":1,"column":0},
+            {"contains":false,"resCount":0,"obstacle":0,"row":1,"column":1},
+            {"contains":false,"resCount":0,"obstacle":0,"row":1,"column":2},
+            {"contains":false,"resCount":0,"obstacle":0,"row":1,"column":3},
+            {"contains":false,"resCount":0,"obstacle":0,"row":1,"column":4},
+            {"contains":false,"resCount":0,"obstacle":0,"row":1,"column":5},
+            {"contains":false,"resCount":0,"obstacle":0,"row":1,"column":6},
+            {"contains":false,"resCount":0,"obstacle":0,"row":1,"column":7},
+            {"contains":false,"resCount":0,"obstacle":0,"row":1,"column":8},
+            {"contains":false,"resCount":0,"obstacle":0,"row":1,"column":9},
+            {"contains":false,"resCount":15,"obstacle":0,"row":1,"column":10}
+        ],
+        [
+            {"contains":false,"resCount":15,"obstacle":0,"row":2,"column":0},
+            {"contains":false,"resCount":0,"obstacle":0,"row":2,"column":1},
+            {"contains":false,"resCount":0,"obstacle":0,"row":2,"column":2},
+            {"contains":false,"resCount":0,"obstacle":0,"row":2,"column":3},
+            {"contains":false,"resCount":0,"obstacle":0,"row":2,"column":4},
+            {"contains":false,"resCount":0,"obstacle":0,"row":2,"column":5},
+            {"contains":false,"resCount":0,"obstacle":0,"row":2,"column":6},
+            {"contains":false,"resCount":0,"obstacle":0,"row":2,"column":7},
+            {"contains":false,"resCount":0,"obstacle":0,"row":2,"column":8},
+            {"contains":false,"resCount":0,"obstacle":0,"row":2,"column":9},
+            {"contains":false,"resCount":0,"obstacle":0,"row":2,"column":10}
+        ],
+        [
+            {"contains":false,"resCount":0,"obstacle":0,"row":3,"column":0},
+            {"contains":false,"resCount":0,"obstacle":0,"row":3,"column":1},
+            {"contains":false,"resCount":0,"obstacle":0,"row":3,"column":2},
+            {"contains":false,"resCount":0,"obstacle":0,"row":3,"column":3},
+            {"contains":false,"resCount":0,"obstacle":1,"row":3,"column":4},
+            {"contains":false,"resCount":0,"obstacle":1,"row":3,"column":5},
+            {"contains":false,"resCount":0,"obstacle":2,"row":3,"column":6},
+            {"contains":false,"resCount":0,"obstacle":0,"row":3,"column":7},
+            {"contains":false,"resCount":0,"obstacle":0,"row":3,"column":8},
+            {"contains":false,"resCount":0,"obstacle":0,"row":3,"column":9},
+            {"contains":false,"resCount":0,"obstacle":0,"row":3,"column":10}
+        ],
+        [
+            {"contains":false,"resCount":0,"obstacle":0,"row":4,"column":0},
+            {"contains":false,"resCount":0,"obstacle":0,"row":4,"column":1},
+            {"contains":false,"resCount":0,"obstacle":0,"row":4,"column":2},
+            {"contains":false,"resCount":0,"obstacle":0,"row":4,"column":3},
+            {"contains":false,"resCount":0,"obstacle":0,"row":4,"column":4},
+            {"contains":false,"resCount":0,"obstacle":0,"row":4,"column":5},
+            {"contains":false,"resCount":0,"obstacle":0,"row":4,"column":6},
+            {"contains":false,"resCount":15,"obstacle":0,"row":4,"column":7},
+            {"contains":false,"resCount":0,"obstacle":0,"row":4,"column":8},
+            {"contains":false,"resCount":0,"obstacle":0,"row":4,"column":9},
+            {"contains":false,"resCount":0,"obstacle":0,"row":4,"column":10}
+        ],
+        [
+            {"contains":false,"resCount":0,"obstacle":0,"row":5,"column":0},
+            {"contains":false,"resCount":0,"obstacle":0,"row":5,"column":1},
+            {"contains":false,"resCount":0,"obstacle":0,"row":5,"column":2},
+            {"contains":false,"resCount":0,"obstacle":0,"row":5,"column":3},
+            {"contains":false,"resCount":0,"obstacle":0,"row":5,"column":4},
+            {"contains":false,"resCount":21,"obstacle":0,"row":5,"column":5},
+            {"contains":false,"resCount":0,"obstacle":0,"row":5,"column":6},
+            {"contains":false,"resCount":0,"obstacle":0,"row":5,"column":7},
+            {"contains":false,"resCount":0,"obstacle":0,"row":5,"column":8},
+            {"contains":false,"resCount":0,"obstacle":0,"row":5,"column":9},
+            {"contains":false,"resCount":0,"obstacle":0,"row":5,"column":10}
+        ],
+        [
+            {"contains":false,"resCount":0,"obstacle":0,"row":6,"column":0},
+            {"contains":false,"resCount":0,"obstacle":0,"row":6,"column":1},
+            {"contains":false,"resCount":0,"obstacle":0,"row":6,"column":2},
+            {"contains":false,"resCount":15,"obstacle":0,"row":6,"column":3},
+            {"contains":false,"resCount":0,"obstacle":0,"row":6,"column":4},
+            {"contains":false,"resCount":0,"obstacle":0,"row":6,"column":5},
+            {"contains":false,"resCount":0,"obstacle":0,"row":6,"column":6},
+            {"contains":false,"resCount":0,"obstacle":0,"row":6,"column":7},
+            {"contains":false,"resCount":0,"obstacle":0,"row":6,"column":8},
+            {"contains":false,"resCount":0,"obstacle":0,"row":6,"column":9},
+            {"contains":false,"resCount":0,"obstacle":0,"row":6,"column":10}
+        ],
+        [
+            {"contains":false,"resCount":0,"obstacle":0,"row":7,"column":0},
+            {"contains":false,"resCount":0,"obstacle":0,"row":7,"column":1},
+            {"contains":false,"resCount":0,"obstacle":0,"row":7,"column":2},
+            {"contains":false,"resCount":0,"obstacle":0,"row":7,"column":3},
+            {"contains":false,"resCount":0,"obstacle":2,"row":7,"column":4},
+            {"contains":false,"resCount":0,"obstacle":1,"row":7,"column":5},
+            {"contains":false,"resCount":0,"obstacle":1,"row":7,"column":6},
+            {"contains":false,"resCount":0,"obstacle":0,"row":7,"column":7},
+            {"contains":false,"resCount":0,"obstacle":0,"row":7,"column":8},
+            {"contains":false,"resCount":0,"obstacle":0,"row":7,"column":9},
+            {"contains":false,"resCount":0,"obstacle":0,"row":7,"column":10}
+        ],
+        [
+            {"contains":false,"resCount":0,"obstacle":0,"row":8,"column":0},
+            {"contains":false,"resCount":0,"obstacle":0,"row":8,"column":1},
+            {"contains":false,"resCount":0,"obstacle":0,"row":8,"column":2},
+            {"contains":false,"resCount":0,"obstacle":0,"row":8,"column":3},
+            {"contains":false,"resCount":0,"obstacle":0,"row":8,"column":4},
+            {"contains":false,"resCount":0,"obstacle":0,"row":8,"column":5},
+            {"contains":false,"resCount":0,"obstacle":0,"row":8,"column":6},
+            {"contains":false,"resCount":0,"obstacle":0,"row":8,"column":7},
+            {"contains":false,"resCount":0,"obstacle":0,"row":8,"column":8},
+            {"contains":false,"resCount":0,"obstacle":0,"row":8,"column":9},
+            {"contains":false,"resCount":15,"obstacle":0,"row":8,"column":10}
+        ],
+        [
+            {"contains":false,"resCount":15,"obstacle":0,"row":9,"column":0},
+            {"contains":false,"resCount":0,"obstacle":0,"row":9,"column":1},
+            {"contains":false,"resCount":0,"obstacle":0,"row":9,"column":2},
+            {"contains":false,"resCount":0,"obstacle":0,"row":9,"column":3},
+            {"contains":false,"resCount":0,"obstacle":0,"row":9,"column":4},
+            {"contains":false,"resCount":0,"obstacle":0,"row":9,"column":5},
+            {"contains":false,"resCount":0,"obstacle":0,"row":9,"column":6},
+            {"contains":false,"resCount":0,"obstacle":0,"row":9,"column":7},
+            {"contains":false,"resCount":0,"obstacle":0,"row":9,"column":8},
+            {"contains":false,"resCount":0,"obstacle":0,"row":9,"column":9},
+            {"contains":false,"resCount":0,"obstacle":2,"row":9,"column":10}
+        ],
+        [
+            {"contains":false,"resCount":0,"obstacle":1,"row":10,"column":0},
+            {"contains":false,"resCount":0,"obstacle":2,"row":10,"column":1},
+            {"contains":false,"resCount":0,"obstacle":0,"row":10,"column":2},
+            {"contains":false,"resCount":12,"obstacle":0,"row":10,"column":3},
+            {"contains":false,"resCount":0,"obstacle":0,"row":10,"column":4},
+            {"contains":false,"resCount":0,"obstacle":0,"row":10,"column":5},
+            {"contains":false,"resCount":15,"obstacle":0,"row":10,"column":6},
+            {"contains":false,"resCount":0,"obstacle":0,"row":10,"column":7},
+            {"contains":false,"resCount":12,"obstacle":0,"row":10,"column":8},
+            {"contains":false,"resCount":0,"obstacle":0,"row":10,"column":9},
+            {"contains":false,"resCount":0,"obstacle":2,"row":10,"column":10}
+        ]
+    ],
+    "creationUnits" : [
+        {
+            "defaultUnit" : false,
+            "pack" : false, 
+            "type" : "Dragon",
+            "owner" : 0,
+            "row" : 5,
+            "column" : 5
+        },
+        {
+            "defaultUnit" : false,
+            "pack" : false, 
+            "type" : "Ogre fort",
+            "owner" : 0,
+            "row" : 4,
+            "column" : 10
+        },
+        {
+            "defaultUnit" : false,
+            "pack" : false, 
+            "type" : "Ogre fort",
+            "owner" : 0,
+            "row" : 6,
+            "column" : 0
+        },
+        {
+            "defaultUnit" : true,
+            "pack" : false, 
+            "type" : "t3",
+            "owner" : 0,
+            "row" : 4,
+            "column" : 7
+        },
+        {
+            "defaultUnit" : true,
+            "pack" : false, 
+            "type" : "t3",
+            "owner" : 0,
+            "row" : 6,
+            "column" : 3
+        },
+        {
+            "defaultUnit" : true,
+            "pack" : false, 
+            "type" : "tower",
+            "owner" : 0,
+            "row" : 0,
+            "column" : 2
+        },
+        {
+            "defaultUnit" : true,
+            "pack" : false, 
+            "type" : "tower",
+            "owner" : 0,
+            "row" : 0,
+            "column" : 7
+        },
+        {
+            "defaultUnit" : true,
+            "pack" : false, 
+            "type" : "tower",
+            "owner" : 0,
+            "row" : 10,
+            "column" : 3
+        },
+        {
+            "defaultUnit" : true,
+            "pack" : false, 
+            "type" : "tower",
+            "owner" : 0,
+            "row" : 10,
+            "column" : 8
+        }
+
+    ],
+    "startPositions" : [
+        [1,5],
+        [2,9],
+        [3,1],
+        [7,9],
+        [8,1],
+        [9,5]
+    ],
+    "unitPacks" : {
+    },
+    "settings" : {
+        "land" : 0,
+        "maxPlayers" : 6,
+        "typeGame" : 0,
+        "customGame" : false,
+        "randomSpawn" : true,
+        "neutralSpawnOnStart" : true,
+        "spawnStartUnit" : true,
+        "rowLength" : 11,
+        "columnLength" : 11
+    },
+    "factions" : {
+        "customFactions" : false
+    }
+}
