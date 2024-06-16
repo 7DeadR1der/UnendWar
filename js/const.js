@@ -1,5 +1,5 @@
 "use strict"
-const version = '1.2.6';
+const version = '1.3.0';
 //for local
 //const folder = "/game.exe";
 //for server
