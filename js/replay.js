@@ -2,30 +2,34 @@
 let historyBlock = document.getElementById("history");
 let replayBlock = document.getElementById("replay");
 replayBlock.style.display = "none";
-let replayJson;
+let replayJson = false;
 let replayStatistic;
 let replayTurn = 0;
+let isDown = false;
+let startX;
+let startY;
+let scrollLeft;
+let scrollTop;
+let zoom = false;
 //const colorPlayers = ['#bababa', '#fc9393', '#60c0ff', '#ffae58', '#f190ff', '#54fd7a', '#e3f054'];
             //      gray        red         blue    orange   purple    yellow  dark-blue     green   brown
 let colorPlayers = ['#bababa','#f59678','#6bccf7','#ffbd76','#8d87be','#fdf777','#cf8fd1','#f39aac','#7eca9c'];
 const colorLands = ['#b1c37b','#f0fafa','#e8d479','#c7a787'];
 //const colorLands = ['#b1c37b','#f0fafa','#efc279','#b1c37b'];'#fdf777','#cf8fd1',
-for(let i=0;i<8;i++){
-    let stroke = document.createElement('div');
-    stroke.className = 'gfRow';
-
-    for(let j=0;j<8;j++){
-        let cellAdd = document.createElement('img');
-        cellAdd.className = 'gfCell';
-        cellAdd.id = `${i}-${j}`;
-        cellAdd.src = '';
-        cellAdd.onclick = function (){pressCell(i,j)};
-        stroke.appendChild(cellAdd);
-
+document.addEventListener('keydown', function(event){
+    if(replayJson!=false){
+        switch(event.code){
+            case 'ArrowRight':
+                transit('+');
+                break;
+            case 'ArrowLeft':
+                transit('-');
+                break;
+            default:
+                break;
+        }
     }
-    document.getElementById('game-field').appendChild(stroke);
-}
-
+});
 
 function loadReplay(id){
     if(!isNaN(id)){
@@ -42,6 +46,53 @@ function loadReplay(id){
 
             gameSettings.land = replayStatistic.gameLand;
             //console.log(replayJson);
+            let iMax = replayJson[0]['field'].length;
+            let jMax = 0;
+            for(let i=0;i<iMax;i++){
+                jMax = replayJson[0]['field'][i].length;
+                let stroke = document.createElement('div');
+                stroke.className = 'gfRow';
+
+                for(let j=0;j<jMax;j++){
+                    let cellAdd = document.createElement('img');
+                    cellAdd.className = 'gfCell';
+                    cellAdd.id = `${i}-${j}`;
+                    cellAdd.src = '';
+                    cellAdd.onclick = function (){pressCell(i,j)};
+                    stroke.appendChild(cellAdd);
+
+                }
+                document.getElementById('game-field').appendChild(stroke);
+            }
+
+            
+            document.getElementById('game-field').addEventListener('mousedown', (e)=> {
+                isDown = true;
+                startX = e.pageX - document.getElementById('game-field').offsetLeft;
+                startY = e.pageY - document.getElementById('game-field').offsetTop;
+                scrollLeft = document.getElementById('game-field').scrollLeft;
+                scrollTop = document.getElementById('game-field').scrollTop;
+            })
+            document.getElementById('game-field').addEventListener('mouseleave', (e)=>{
+                isDown = false;
+                document.getElementById('game-field').style.cursor = 'default';
+            })
+            document.getElementById('game-field').addEventListener('mouseup', (e)=>{
+                isDown = false;
+                document.getElementById('game-field').style.cursor = 'default';
+            })
+            document.getElementById('game-field').addEventListener('mousemove', (e)=>{
+                if (!isDown) return;
+                document.getElementById('game-field').style.cursor = 'all-scroll'//'grabbing';
+                e.preventDefault();
+                const x = e.pageX - document.getElementById('game-field').offsetLeft;
+                const y = e.pageY - document.getElementById('game-field').offsetTop;
+                const walkX = (x - startX) * 1; // Change this number to adjust the scroll speed
+                const walkY = (y - startY) * 1; // Change this number to adjust the scroll speed
+                document.getElementById('game-field').scrollLeft = scrollLeft - walkX;
+                document.getElementById('game-field').scrollTop = scrollTop - walkY;
+            })
+
             display();
         };
         xhr.send();
@@ -79,8 +130,8 @@ function transit(type){
 
 function display(){
     let gameField = replayJson[replayTurn]["field"];
-    for(let i=0;i<8;i++){
-        for(let j=0;j<8;j++){
+    for(let i=0;i<gameField.length;i++){
+        for(let j=0;j<gameField[i].length;j++){
                 let titleText = "";
                 if(gameField[i][j].resCount>0)
                     {titleText=`Золото = ${gameField[i][j].resCount},`;}
@@ -121,6 +172,7 @@ function display(){
     }
     
     document.querySelector(`input[name='timeLine']`).value = replayTurn;
+    document.querySelector(`input[name='timeLineNum']`).value = replayTurn;
 }
 
 function pressCell(i,j){
@@ -152,7 +204,12 @@ function pressCell(i,j){
 
         
         document.getElementById('list_player').style.backgroundColor = colorPlayers[thisPlayer.owner];
-        document.getElementById('li_PlayerName').textContent = `${thisPlayer.name}`;
+        let winnerFire = '';
+        if(replayJson[replayJson.length-1].stats[cell.contains.owner].statistic.winner == 1){
+            winnerFire = `&#128293;`;
+        }
+        winnerFire+=`${thisPlayer.name}`;
+        document.getElementById('li_PlayerName').innerHTML = winnerFire;
         let imgs = '';
         thisPlayer.skills.forEach(skill => {
             let text = "";
@@ -187,6 +244,12 @@ function pressCell(i,j){
                 case"Scavengers":
                     text = gameSettings.skills[9].description;
                     break;
+                case"Undead Horde":
+                    text = gameSettings.skills[10].description;
+                    break;
+                case"Undead Unholy":
+                    text = gameSettings.skills[11].description;
+                    break;
                 default:
                     text = "ошибка описания";
                     break;
@@ -202,8 +265,8 @@ function pressCell(i,j){
         document.getElementById('li_PlayerScore').textContent = `Очки = ${thisPlayer.statistic.score}`;
         document.getElementById('li_goldUp').textContent = `Золота заработано = ${thisPlayer.statistic.goldUp}`;
         document.getElementById('li_goldDown').textContent = `Золота потрачено = ${thisPlayer.statistic.goldDown}`;
-        document.getElementById('li_warchiefUp').textContent = `Вождей нанято = ${thisPlayer.statistic.warchiefUp}`;
-        document.getElementById('li_warchiefDown').textContent = `Вождей убито = ${thisPlayer.statistic.warchiefDown}`;
+        document.getElementById('li_leaderUp').textContent = `Лидеров нанято = ${thisPlayer.statistic.leaderUp}`;
+        document.getElementById('li_leaderDown').textContent = `Лидеров убито = ${thisPlayer.statistic.leaderDown}`;
         if(typeof(thisPlayer.statistic.workerUp) != undefined && thisPlayer.statistic.workerUp !== null){
             document.getElementById('li_workerUp').textContent = `Рабочих нанято = ${thisPlayer.statistic.workerUp}`;
             document.getElementById('li_workerDown').textContent = `Рабочих убито = ${thisPlayer.statistic.workerDown}`;
@@ -233,12 +296,28 @@ function pressCell(i,j){
         document.getElementById('li_goldDown').textContent = ``;
         document.getElementById('li_workerUp').textContent = ``;
         document.getElementById('li_workerDown').textContent = ``;
-        document.getElementById('li_warchiefUp').textContent = ``;
-        document.getElementById('li_warchiefDown').textContent = ``;
+        document.getElementById('li_leaderUp').textContent = ``;
+        document.getElementById('li_leaderDown').textContent = ``;
         document.getElementById('li_unitUp').textContent = ``;
         document.getElementById('li_unitDown').textContent = ``;
         document.getElementById('li_buildUp').textContent = ``;
         document.getElementById('li_buildDown').textContent = ``;
+    }
+}
+function Zoom(){
+    let px = "50px";
+    if(zoom){
+        zoom=false;
+        px = "50px";
+    }else{
+        px = '36px';
+        zoom=true;
+    }
+    for(let i=0;i<replayJson[0]['field'].length;i++){
+        for(let j=0;j<replayJson[0]['field'][i].length;j++){
+            document.getElementById(`${i}-${j}`).style.width = px;
+            document.getElementById(`${i}-${j}`).style.height = px;
+        }
     }
 }
 
@@ -250,21 +329,23 @@ const gameSettings = {
     level3: 30,
     limit_workers : 6,
     limit_army : 4,
-    limit_warchiefs : 1,
+    limit_leaders : 1,
     limit_townhalls : 2,
     limit_towers : 4,
     //skills:['Strength I','Strength II','Pathfinder','Surgery','Estates I', 'Estates'];
     skills:[
-        {name:'Strength I', description:'Увеличивает силу атаки Вождя на 1'},
-        {name:'Strength II', description:'Увеличивает здоровье Вождя на 2'},
-        {name:'Pathfinder', description:'Увеличивает скорость Вождя на 1'},
-        {name:'Surgery', description:'Позволяет вождю лечить себя или союзников'},
+        {name:'Strength I', description:'Увеличивает силу атаки Лидера на 1'},
+        {name:'Strength II', description:'Увеличивает здоровье Лидера на 2'},
+        {name:'Pathfinder', description:'Увеличивает скорость Лидера на 1'},
+        {name:'Surgery', description:'Позволяет Лидеру лечить себя или союзников'},
         {name:'Estates I', description:'Единовременно дает 4 золота'},
         {name:'Estates II', description:'Каждый ход дает 1 золото'},
         {name:'Engineering', description:'Все здания получают +1 к прочности'},
         {name:'Undead I', description:'Увеличивает здоровье Лича на 1 ед., зомби получают спсобность "infect"'},
         {name:'Undead II', description:'Увеличивает здоровье Лича на 1 ед., Лич получает способность "darkStorm"'},
-        {name:"Scavengers", description:"T2 при убийстве восстанавливают себе здоровье"},// и Warchief
+        {name:"Scavengers", description:"Получаемый опыт увлечивается на 1 ед., орки (Т2) получают способность 'cannibal'"},// и Leader
+        {name:'Undead Horde', description:"Лич получает способность 'teleport', zombie получают способность infect, улучшается способность 'darkArmy', теперь создает скелета воина вместо одного обычного скелета"},
+        {name:'Undead Unholy', description:'Увеличивает здоровье Лича на 1 ед., Лич получает способность "darkBolt"'},
     ]
 };
 
@@ -307,4 +388,6 @@ function loadHistory(){
         xhr.send();
 }
 
+/*
+*/
 loadHistory();

@@ -30,7 +30,9 @@
                 <!-- <label id="gameType">Classic</label> -->
                 <select id="selectGameType" name="gameType"> 
                     <option selected value="classic">Classic</option> 
-                    <option value="score">Score (45)</option>
+                    <option value="score_45">Score (45)</option>
+                    <option value="score_60">Score (60)</option>
+                    <option value="score_75">Score (75)</option>
                 </select>
                 <br>
                 <p><input id="classicWinCheck" type="checkbox" name="classicWin" value="classic" checked disabled> - classic win available</p>
@@ -42,6 +44,8 @@
                     <option value="20ds">(2)Dragon Storm</option>
                     <option value="20wp">(2)Wolf Pit</option>
                     <option value="20dv">(2)Death Valley</option>
+                    <option value="20sc">(2)Spider Caves</option>
+                    <option value="30t">(3)Trinity</option>
                     <!-- <option value="20gm">(2)Golden Mountains</option>
                     <option value="20lm">(2)Lonely Mountain</option>
                     <option value="20mc">(2)Meeting Cave</option>
@@ -53,11 +57,13 @@
                     <option value="40s">(4)Socotra</option>
                     <option value="40cf">(4)Central Force</option>
                     <option value="40sp">(4)Snowy Peaks</option>
+                    <!-- <option value="40dl">(4)Damned Lands</option> -->
                     <!-- <option value="40lt">(4)Lost Temple</option> -->
                     <!-- <option value="40cg">(4)Centour Grove</option>
                     <option value="40of">(4)Old Fortress</option> -->
                     <option value="60gw">(6)Gnoll Wood</option>
                     <option value="60bg">(6)Battleground</option>
+                    <option value="60rc">(6)Royal Conquest</option>
                     <option value="60gn">(6)Gold Nothing</option>
                     <option value="60on">(6)Object Nothing</option>
                     <option value="40rnd">(4)Random generation</option>
@@ -122,15 +128,15 @@
                     <button class="tab-link" onclick="changeTab(this,0)">T1</button>
                     <button class="tab-link" onclick="changeTab(this,1)">T2</button>
                     <button class="tab-link" onclick="changeTab(this,2)">T3</button>
-                    <button class="tab-link" onclick="changeTab(this,3)">Warchief</button>
+                    <button class="tab-link" onclick="changeTab(this,3)">Leader</button>
                     <button class="tab-link" onclick="changeTab(this,4)">Townhall</button>
                     <button class="tab-link" onclick="changeTab(this,5)">Tower</button>
                 </div>
                 <div class="tab-content">
-                    <div class="tab-item" id="tab-t1"></div>
+                    <div class="tab-item" id="tab-t1" style="display: flex;"></div>
                     <div class="tab-item" id="tab-t2"></div>
                     <div class="tab-item" id="tab-t3"></div>
-                    <div class="tab-item" id="tab-warchief"></div>
+                    <div class="tab-item" id="tab-leader"></div>
                     <div class="tab-item" id="tab-townhall"></div>
                     <div class="tab-item" id="tab-tower"></div>
                 </div>

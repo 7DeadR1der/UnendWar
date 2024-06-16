@@ -4,36 +4,37 @@
     "level3" : 30,
     "limit_workers" : 6,
     "limit_army" : 4,
-    "limit_warchiefs" : 1,
+    "limit_leaders" : 1,
     "limit_townhalls" : 2,
     "limit_towers" : 4,
     "skills" : [
         {
-            "name" : "Undead I", 
+            "name" : "Undead Horde", 
+            "require" : "---", 
             "faction" : "Undead",
-            "description" : "Увеличивает здоровье Лича на 1 ед., зомби получают спсобность 'infect'"
+            "description" : "Лич получает способность 'teleport', zombie получают способность infect, улучшается способность 'darkArmy', теперь создает скелета воина вместо одного обычного скелета"
         },
         {
-            "name" : "Undead II", 
+            "name" : "Undead Unholy", 
+            "require" : "---", 
             "faction" : "Undead",
-            "require" : "Undead I", 
-            "description" : "Увеличивает здоровье Лича на 1 ед., Лич получает способность 'darkStorm'"
+            "description" : "Увеличивает здоровье Лича на 1 ед., Лич получает способность 'darkBolt'"
         },
         {
             "name" : "Strength I", 
-            "description" : "Увеличивает силу атаки Вождя на 1"
+            "description" : "Увеличивает силу атаки Лидера на 1"
         },
         {
             "name" : "Endurance",
-            "description" : "Увеличивает здоровье Вождя на 2"
+            "description" : "Увеличивает здоровье Лидера на 2"
         },
         {
             "name" : "Pathfinder", 
-            "description" : "Увеличивает скорость Вождя на 1"
+            "description" : "Увеличивает скорость Лидера на 1"
         },
         {
             "name" : "Surgery", 
-            "description" : "Позволяет вождю лечить себя или союзников"
+            "description" : "Позволяет Лидеру лечить себя или союзников"
         },
         {
             "name" : "Estates I", 
@@ -56,7 +57,7 @@
         {
             "name" : "Lighting", 
             "faction" : "Elves",
-            "description" : "Warchief получает ..."
+            "description" : "Leader получает ..."
         }
     ]
 }

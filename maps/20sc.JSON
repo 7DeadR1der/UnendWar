@@ -1,0 +1,119 @@
+{
+    "name": "Spider Caves",
+    "shortName" : "sc",
+    "field" : [
+        [
+            {"contains":false,"resCount":0,"obstacle":1,"row":0,"column":2},
+            {"contains":false,"resCount":9,"obstacle":0,"row":0,"column":3},
+            {"contains":false,"resCount":0,"obstacle":1,"row":0,"column":4}
+        ],
+        [
+            {"contains":false,"resCount":0,"obstacle":1,"row":1,"column":0},
+            {"contains":false,"resCount":0,"obstacle":1,"row":1,"column":6}
+        ],
+        [
+            {"contains":false,"resCount":9,"obstacle":0,"row":2,"column":0},
+            {"contains":false,"resCount":9,"obstacle":0,"row":2,"column":6}
+        ],
+        [
+            {"contains":false,"resCount":0,"obstacle":1,"row":3,"column":0},
+            {"contains":false,"resCount":0,"obstacle":1,"row":3,"column":6}
+        ],
+        [
+        ],
+        [
+        ],
+        [
+            {"contains":false,"resCount":12,"obstacle":0,"row":6,"column":0},
+            {"contains":false,"resCount":0,"obstacle":2,"row":6,"column":3},
+            {"contains":false,"resCount":12,"obstacle":0,"row":6,"column":6}
+        ]
+    ],
+    "creationUnits" : [
+        {
+            "defaultUnit" : true,
+            "pack" : false, 
+            "type" : "townhall",
+            "owner" : 0,
+            "row" : 2,
+            "column" : 3
+        },
+        {
+            "defaultUnit" : true,
+            "pack" : false, 
+            "type" : "t3",
+            "owner" : 0,
+            "row" : 0,
+            "column" : 3
+        },
+        {
+            "defaultUnit" : true,
+            "pack" : false, 
+            "type" : "t3",
+            "owner" : 0,
+            "row" : 2,
+            "column" : 0
+        },
+        {
+            "defaultUnit" : true,
+            "pack" : false, 
+            "type" : "t3",
+            "owner" : 0,
+            "row" : 2,
+            "column" : 6
+        },
+        {
+            "defaultUnit" : true,
+            "pack" : false, 
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 0,
+            "column" : 0
+        },
+        {
+            "defaultUnit" : true,
+            "pack" : false, 
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 0,
+            "column" : 6
+        },
+        {
+            "defaultUnit" : true,
+            "pack" : false, 
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 3,
+            "column" : 2
+        },
+        {
+            "defaultUnit" : true,
+            "pack" : false, 
+            "type" : "t1",
+            "owner" : 0,
+            "row" : 3,
+            "column" : 4
+        }
+
+    ],
+    "startPositions" : [
+        [5,1],
+        [5,5]
+    ],
+    "unitPacks" : {
+    },
+    "settings" : {
+        "land" : 3,
+        "maxPlayers" : 2,
+        "typeGame" : 0,
+        "customGame" : false,
+        "randomSpawn" : true,
+        "neutralSpawnOnStart" : true,
+        "spawnStartUnit" : true,
+        "rowLength" : 7,
+        "columnLength" : 7
+    },
+    "factions" : {
+        "customFactions" : false
+    }
+}

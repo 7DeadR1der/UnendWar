@@ -55,44 +55,44 @@ if (session_status() === PHP_SESSION_NONE) {
                         switch($choise){
                             case "Strength I": //Strength I
                                 array_push($json->gamePlayers[$owner]->skills,$choise);
-                                $array = selectUnits('warchief',$owner,$json->gameField);
+                                $array = selectUnits('leader',$owner,$json->gameField);
                                 if(count($array)>0){
                                     for($k=0;$k<count($array);$k++){
                                         $array[$k]->attack +=1;
                                     }
                                 }
-                                $json->gamePlayers[$owner]->faction->warchief[4] += 1;
+                                $json->gamePlayers[$owner]->faction->leader[4] += 1;
                                 break;
                             case "Endurance": // Strength II
                                 array_push($json->gamePlayers[$owner]->skills,$choise);
-                                $array = selectUnits('warchief',$owner,$json->gameField);
+                                $array = selectUnits('leader',$owner,$json->gameField);
                                 if(count($array)>0){
                                     for($k=0;$k<count($array);$k++){
                                         $array[$k]->hp +=2;
                                         $array[$k]->hpMax +=2;
                                     }
                                 }
-                                $json->gamePlayers[$owner]->faction->warchief[3] += 2;
+                                $json->gamePlayers[$owner]->faction->leader[3] += 2;
                                 break;
                             case "Pathfinder":
                                 array_push($json->gamePlayers[$owner]->skills,$choise);
-                                $array = selectUnits('warchief',$owner,$json->gameField);
+                                $array = selectUnits('leader',$owner,$json->gameField);
                                 if(count($array)>0){
                                     for($k=0;$k<count($array);$k++){
                                         $array[$k]->movePoint +=1;
                                     }
                                 }
-                                $json->gamePlayers[$owner]->faction->warchief[5] += 1;
+                                $json->gamePlayers[$owner]->faction->leader[5] += 1;
                                 break;
                             case "Surgery":
                                 array_push($json->gamePlayers[$owner]->skills,$choise);
-                                $array = selectUnits('warchief',$owner,$json->gameField);
+                                $array = selectUnits('leader',$owner,$json->gameField);
                                 if(count($array)>0){
                                     for($k=0;$k<count($array);$k++){
                                         array_push($array[$k]->ability,'surgery');
                                     }
                                 }
-                                array_push($json->gamePlayers[$owner]->faction->warchief[8],'surgery');
+                                array_push($json->gamePlayers[$owner]->faction->leader[8],'surgery');
                                 break;
                             case "Estates I":
                                 array_push($json->gamePlayers[$owner]->skills,$choise);
@@ -126,13 +126,13 @@ if (session_status() === PHP_SESSION_NONE) {
                                 break;
                             case "Scavengers":
                                 array_push($json->gamePlayers[$owner]->skills,$choise);
-                                /*$array = selectUnits('warchief',$owner,$json->gameField);
+                                /*$array = selectUnits('leader',$owner,$json->gameField);
                                 if(count($array)>0){
                                     for($k=0;$k<count($array);$k++){
                                         array_push($array[$k]->ability,'cannibal');
                                     }
                                 }
-                                array_push($json->gamePlayers[$owner]->faction->warchief[8],'cannibal');*/
+                                array_push($json->gamePlayers[$owner]->faction->leader[8],'cannibal');*/
                                 $array = selectUnits('t2',$owner,$json->gameField);
                                 if(count($array)>0){
                                     for($k=0;$k<count($array);$k++){
@@ -142,7 +142,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                 array_push($json->gamePlayers[$owner]->faction->t2[8],'cannibal');
 
                                 /*
-                                $array = selectUnits('warchief',$owner,$json->gameField);
+                                $array = selectUnits('leader',$owner,$json->gameField);
                                 if(count($array)>0){
                                     for($k=0;$k<count($array);$k++){
                                         array_push($array[$k]->ability,'scavenger');
@@ -150,22 +150,22 @@ if (session_status() === PHP_SESSION_NONE) {
                                         $array[$k]->hpMax +=1;
                                     }
                                 }
-                                $json->gamePlayers[$owner]->faction->warchief[3] += 1;
-                                array_push($json->gamePlayers[$owner]->faction->warchief[8],'scavenger');
+                                $json->gamePlayers[$owner]->faction->leader[3] += 1;
+                                array_push($json->gamePlayers[$owner]->faction->leader[8],'scavenger');
 
                                 array_push($json->gamePlayers[$owner]->faction->t1[8],'rush');
                                 */
                                 break;
-                            case "Undead I":
+                            case "Undead Horde":
                                 array_push($json->gamePlayers[$owner]->skills,$choise);
-                                $array = selectUnits('warchief',$owner,$json->gameField);
+                                $array = selectUnits('leader',$owner,$json->gameField);
                                 if(count($array)>0){
                                     for($k=0;$k<count($array);$k++){
-                                        $array[$k]->hp +=1;
-                                        $array[$k]->hpMax +=1;
+                                        array_push($array[$k]->ability,'teleport');
                                     }
                                 }
-                                $json->gamePlayers[$owner]->faction->warchief[3] += 1;
+                                array_push($json->gamePlayers[$owner]->faction->leader[8],'teleport');
+                                /*
                                 $array = selectUnits('t2',$owner,$json->gameField);
                                 if(count($array)>0){
                                     for($k=0;$k<count($array);$k++){
@@ -173,19 +173,20 @@ if (session_status() === PHP_SESSION_NONE) {
                                     }
                                 }
                                 array_push($json->gamePlayers[$owner]->faction->t2[8],'infect');
+                                */
                                 break;
-                            case "Undead II":
+                            case "Undead Unholy":
                                 array_push($json->gamePlayers[$owner]->skills,$choise);
-                                $array = selectUnits('warchief',$owner,$json->gameField);
+                                $array = selectUnits('leader',$owner,$json->gameField);
                                 if(count($array)>0){
                                     for($k=0;$k<count($array);$k++){
                                         $array[$k]->hp +=1;
                                         $array[$k]->hpMax +=1;
-                                        array_push($array[$k]->ability,'darkStorm');
+                                        array_push($array[$k]->ability,'darkBolt');
                                     }
                                 }
-                                $json->gamePlayers[$owner]->faction->warchief[3] += 1;
-                                array_push($json->gamePlayers[$owner]->faction->warchief[8],'darkStorm');
+                                $json->gamePlayers[$owner]->faction->leader[3] += 1;
+                                array_push($json->gamePlayers[$owner]->faction->leader[8],'darkBolt');
                                 break;
                             default:
                                 $player->level-=1;
@@ -212,14 +213,19 @@ if (session_status() === PHP_SESSION_NONE) {
         //    array_push($skillsData,$gS["orcs_skills"][0]);
         //}
         while($skillsPoint < 2){
-            if($player->faction->name == 'Undead' && $skillsPoint==0){
+            if($player->faction->name == 'Undead' && $player->level == 1){
+                $skillsChoise[$skillsPoint] = $gS["skills"][0]["name"];
+                $skillsPoint+=1;
+                $skillsChoise[$skillsPoint] = $gS["skills"][1]["name"];
+                $skillsPoint+=1;
+                /*
                 if(in_array($gS["skills"][0]["name"],$player->skills)){
                     $skillsChoise[$skillsPoint] = $gS["skills"][1]["name"];
                     $skillsPoint+=1;
                 }else{
                     $skillsChoise[$skillsPoint] = $gS["skills"][0]["name"];
                     $skillsPoint+=1;
-                }
+                }*/
             //}else if(in_array(,$player->skills)){
 
             }else{

@@ -2,6 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+    $ifEnd=false;
     require_once '../general.php';
     $login = $_SESSION['user']['login'];
     $idRoom = $_SESSION['user']['active_room'];
@@ -66,6 +67,8 @@ if (session_status() === PHP_SESSION_NONE) {
                     
                 }
                 $updateRoom = mysqli_query($connect, "UPDATE `rooms` SET `game_state` = 2, `last_mod` = '$ts',`date_end_game`='$ts'  WHERE `id_room` = '$idRoom'");
+                $ifEnd=true;
+
 
 
                 
@@ -76,6 +79,9 @@ if (session_status() === PHP_SESSION_NONE) {
             $jsonData = json_encode($json);
             $updateRoom = mysqli_query($connect, "UPDATE `rooms` SET `game_json` = '$jsonData', `last_mod` = '$ts'  WHERE `id_room` = '$idRoom'");
             $updateReplay = mysqli_query($connect, "UPDATE `rooms` SET `game_field_json` = '$fieldsData'  WHERE `id_room` = '$idRoom'");
+            if($ifEnd==true){
+                $copyReplay = mysqli_query($connect, "INSERT INTO `replays` SELECT * FROM `rooms` WHERE `id_room` = '$idRoom'");
+            }
             echo response(1);
         }
     }
